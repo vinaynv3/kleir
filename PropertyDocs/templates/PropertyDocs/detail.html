@@ -1,0 +1,21 @@
+{% extends "PropertyDocs/base.html" %}
+
+
+{% block content %}
+<article>
+<div class="container  bg-dark text-white">
+  <h2>{{ customer.Firstname}}</h2>
+</div>
+
+<div class="container mr-2 border">
+  {% for bank in banks %}
+      <a style="color:black" href = "#"><p>{{ bank.Bank_Type}} : {{bank.Reference_Number}}</p></a>
+  {% endfor %}
+</div>
+
+<div>
+  <a class="btn btn-secondary btn-sm mt-1 mb-1" href="#">Add Property record</a>
+</div>
+</article>
+
+{% endblock content %}
