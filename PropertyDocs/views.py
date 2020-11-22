@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView , UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse, HttpResponseRedirect
@@ -8,27 +8,25 @@ from django.contrib import messages
 
 #ListView
 class ListCustomers(ListView):
+    """
+    Display list of last 10 created customer account bank record
+    """
     model = ClientInfo
     template_name = 'PropertyDocs/home.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         customer_reference_details = {}
-        customers = ClientInfo.objects.order_by('-Date_Time')[:5]
+        customers = ClientInfo.objects.order_by('-Date_Time')[:10]
         for customer in customers:
             last_bank_valuation = customer.bankref_set.last()
-            #print(customer.Firstname, last_bank_valuation.Reference_Number)
             try:
-                customer_reference_details[customer] = last_bank_valuation.Reference_Number
+                customer_reference_details[customer] = last_bank_valuation
             except AttributeError:
                 customer.delete()
 
         context = {'customer_reference_details':customer_reference_details}
         return context
-
-
-
-# DoesNotExist exception.
 
 
 #DetailView
@@ -40,12 +38,9 @@ class CustomerDetails(LoginRequiredMixin,DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         banks = BankRef.objects.filter(client_info_id = self.kwargs.get('pk'))
-        customer = ClientInfo.objects.get(pk=self.kwargs.get('pk'))
+        customer = get_object_or_404(ClientInfo,pk=self.kwargs.get('pk'))
         context = {'customer':customer,'banks':banks}
         return context
-
-
-
 
 
 #create customer view

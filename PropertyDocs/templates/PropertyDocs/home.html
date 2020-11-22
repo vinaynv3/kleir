@@ -3,14 +3,24 @@
 
 {% block content %}
 
-  {% for Customer,CustomerRefNum in customer_reference_details.items %}
-  <div  class="container mr-2 border">
+
+  {% for Customer,bank_details in customer_reference_details.items %}
+
     {% if user.is_authenticated %}
-    <a  style="color:black" href=" {% url 'Detail-Page' Customer.Slug Customer.Client_ID %} "><Strong>{{ Customer.Firstname }} </strong></a> <p>{{CustomerRefNum}}</p>
+    <a  style="color:black" href=" {% url 'Detail-Page' Customer.Slug Customer.Client_ID %} ">
+       <Strong><h3>{{ Customer.Firstname }}</h3> </strong></a>
+         <p><kbd>{{bank_details.Reference_Number}}</kbd>
+           <small><i>{{bank_details.Date}}<i></small></p>
+
     {% else %}
-    <a style="color:black" href=" {% url 'login' %}"><Strong>{{ Customer.Firstname }} </strong></a> <p>{{CustomerRefNum}}</p>
+    <a style="color:black" href=" {% url 'login' %}">
+      <Strong><h3> {{ Customer.Firstname }}</h3> </strong></a>
+       <p><kbd>{{bank_details.Reference_Number}}</kbd>
+         <small><i> {{bank_details.Date}}</i></small></p>
     {%endif%}
 
-  </div>
+    {% empty %}
+    <h4>No records Found</h4>
+
   {% endfor %}
 {% endblock content %}
