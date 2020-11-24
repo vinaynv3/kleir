@@ -13,10 +13,13 @@
            <small><i>{{bank_details.Date}}<i></small></p>
 
     {% else %}
+
     <a style="color:black" href=" {% url 'login' %}">
       <Strong><h3> {{ Customer.Firstname }}</h3> </strong></a>
+
        <p><kbd>{{bank_details.Reference_Number}}</kbd>
          <small><i> {{bank_details.Date}}</i></small></p>
+
     {%endif%}
 
     {% empty %}
