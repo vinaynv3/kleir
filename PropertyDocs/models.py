@@ -148,3 +148,85 @@ class Insights(models.Model):
     #get absolute URL
     def get_absolute_url(self):
         return reverse('Home-Page', kwargs={'slug': client.slug,'pk':self.Client_ID})
+
+"""
+class MarketingValue(models.Model):
+
+    #Bangalore city Jurisdiction/ Local Municipal types
+    Jursidi_municipal_bodies = [('BBMP','BBMP'),
+                      ('CMC','CMC'),
+                      ('GP','GP'),
+                      ('BMRDA','BMRDA'),
+                      ('NA','NA')
+        ]
+    # Marketing status
+    marketable = [('LOW','LOW'),
+                      ('Medium','Medium'),
+                      ('Good','Good')
+
+        ]
+
+    # Models attributes (Database columns)
+    connection = models.OneToOneField(BankRef,on_delete=models.CASCADE)
+    Address_Matching =  models.BooleanField(blank=True)
+    Local_Municipal_body =  models.CharField(max_length=50,choices=Jursidi_municipal_bodies,default='NA')
+    Marketability = models.CharField(max_length=50,choices=marketable)
+    Boundaries_matching = models.BooleanField(blank=True)
+    Property_Identified = models.BooleanField(blank=True)
+
+    def __str__(self):
+        return f'{self.Local_Municipal_body}'
+
+    #get absolute URL
+    def get_absolute_url(self):
+        return reverse('Home-Page', kwargs={'slug': client.slug,'pk':self.Client_ID})
+
+class Plan(models.Model):
+
+    # Models attributes (Database columns)
+    connection = models.OneToOneField(BankRef,on_delete=models.CASCADE)
+    Layout_plan_details = models.CharField(max_length=300, blank=True)
+    Approving_authority = models.CharField(max_length=300, blank=True)
+    Construction_plan_details = models.CharField(max_length=300, blank=True)
+    Plan_validity_from = models.CharField(max_length=300, blank=True)
+    To_date = models.CharField(max_length=300, blank=True)
+
+    def __str__(self):
+        return f'{self.Approving_authority}'
+
+    #get absolute URL
+    def get_absolute_url(self):
+        return reverse('Owner-home')
+
+class LegalLandmarks(models.Model):
+
+    # Models attributes (Database columns)
+    connection = models.OneToOneField(BankRef,on_delete=models.CASCADE)
+    East = models.CharField(max_length=300, blank=True)
+    West = models.CharField(max_length=300, blank=True)
+    North = models.CharField(max_length=300, blank=True)
+    South = models.CharField(max_length=300, blank=True)
+
+    def __str__(self):
+        return f'{self.connection}'
+
+    #get absolute URL
+    def get_absolute_url(self):
+        return reverse('Home-Page', kwargs={'slug': client.slug,'pk':self.Client_ID})
+
+class SiteVisitLandmarks(models.Model):
+
+    # Models attributes (Database columns)
+    connection = models.OneToOneField(BankRef,on_delete=models.CASCADE)
+    East = models.CharField(max_length=300, blank=True)
+    West = models.CharField(max_length=300, blank=True)
+    North = models.CharField(max_length=300, blank=True)
+    South = models.CharField(max_length=300, blank=True)
+
+    def __str__(self):
+        return f'{self.connection}'
+
+    #get absolute URL
+    def get_absolute_url(self):
+        return reverse('Home-Page', kwargs={'slug': client.slug,'pk':self.Client_ID})
+"""

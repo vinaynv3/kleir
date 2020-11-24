@@ -3,18 +3,27 @@
 
 {% block content %}
 <article>
-<div class="container  bg-dark text-white">
-  <h2>{{ customer.Firstname}}</h2>
-</div>
+<div class="container ">
+  <h2><b>{{ customer.Firstname}} {{customer.Lastname}}</b>
+    <a href="{% url 'doc-customer-update' customer.Slug customer.Client_ID %}"
+    class="btn btn-primary btn-sm"
+    role="button">UPDATE</a>
 
-<div class="container mr-2 border">
+    <a href="{% url 'doc-customer-delete' customer.Slug customer.Client_ID %}"
+     class="btn btn-danger btn-sm"
+    role="button">DELETE</a></h2>
+</div>
+<hr>
+<div class="container mr-2 border-right-0">
   {% for bank in banks %}
-      <a style="color:black" href = "#"><p>{{ bank.Bank_Type}} : {{bank.Reference_Number}}</p></a>
+      <a style="color:black" href = "#">
+      <p style="font-size:20px;">{{ bank.Bank_Type}} : {{bank.Reference_Number}}</p></a>
   {% endfor %}
 </div>
 
 <div>
-  <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'Ref-Num' customer.Slug customer.Client_ID %}">Add Property record</a>
+  <a class="btn btn-success btn-sm mt-1 mb-1"
+  href="{% url 'Ref-Num' customer.Slug customer.Client_ID %}">Add Property record</a>
 </div>
 </article>
 
