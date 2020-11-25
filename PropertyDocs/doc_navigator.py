@@ -2,7 +2,7 @@
 from .models import *
 
 #models
-database_models = [Documents,Address,Insights]
+database_models = [Documents,Address,Insights,MarketingValue,Plan,LegalLandmarks,SiteVisitLandmarks]
 #model relative url namespaces
 model_urls = []
 
