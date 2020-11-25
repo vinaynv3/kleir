@@ -96,10 +96,11 @@ class Documents(models.Model):
     def __str__(self):
         return f'{self.Product_Loan_Type}'
 
-
     def get_absolute_url(self):
-
-        return reverse('doc-address', kwargs={'slug': client.slug,'pk':self.Client_ID})
+        bank = get_object_or_404(BankRef,pk=self.connection_id)
+        customer = get_object_or_404(ClientInfo,pk=bank.client_info_id)
+        return reverse('doc-address', kwargs={'slug': customer.slug,'pk':customer.Client_ID,
+                                                'bank_type':bank.Bank_Type,'bank_id':bank.id})
 
 class Address(models.Model):
 
@@ -116,7 +117,10 @@ class Address(models.Model):
 
     #get absolute URL
     def get_absolute_url(self):
-        return reverse('doc-insights', kwargs={'slug': client.slug,'pk':self.Client_ID})
+        bank = get_object_or_404(BankRef,pk=self.connection_id)
+        customer = get_object_or_404(ClientInfo,pk=bank.client_info_id)
+        return reverse('doc-insights', kwargs={'slug': customer.slug,'pk':customer.Client_ID,
+                                                'bank_type':bank.Bank_Type,'bank_id':bank.id})
 
 class Insights(models.Model):
 
@@ -147,9 +151,11 @@ class Insights(models.Model):
 
     #get absolute URL
     def get_absolute_url(self):
-        return reverse('Home-Page', kwargs={'slug': client.slug,'pk':self.Client_ID})
+        bank = get_object_or_404(BankRef,pk=self.connection_id)
+        customer = get_object_or_404(ClientInfo,pk=bank.client_info_id)
+        return reverse('doc-market-value', kwargs={'slug': customer.slug,'pk':customer.Client_ID,
+                                                'bank_type':bank.Bank_Type,'bank_id':bank.id})
 
-"""
 class MarketingValue(models.Model):
 
     #Bangalore city Jurisdiction/ Local Municipal types
@@ -179,7 +185,10 @@ class MarketingValue(models.Model):
 
     #get absolute URL
     def get_absolute_url(self):
-        return reverse('Home-Page', kwargs={'slug': client.slug,'pk':self.Client_ID})
+        bank = get_object_or_404(BankRef,pk=self.connection_id)
+        customer = get_object_or_404(ClientInfo,pk=bank.client_info_id)
+        return reverse('doc-apt-plan', kwargs={'slug': customer.slug,'pk':customer.Client_ID,
+                                                'bank_type':bank.Bank_Type,'bank_id':bank.id})
 
 class Plan(models.Model):
 
@@ -196,7 +205,10 @@ class Plan(models.Model):
 
     #get absolute URL
     def get_absolute_url(self):
-        return reverse('Owner-home')
+        bank = get_object_or_404(BankRef,pk=self.connection_id)
+        customer = get_object_or_404(ClientInfo,pk=bank.client_info_id)
+        return reverse('doc-legal-landmarks', kwargs={'slug': customer.slug,'pk':customer.Client_ID,
+                                                'bank_type':bank.Bank_Type,'bank_id':bank.id})
 
 class LegalLandmarks(models.Model):
 
@@ -212,7 +224,10 @@ class LegalLandmarks(models.Model):
 
     #get absolute URL
     def get_absolute_url(self):
-        return reverse('Home-Page', kwargs={'slug': client.slug,'pk':self.Client_ID})
+        bank = get_object_or_404(BankRef,pk=self.connection_id)
+        customer = get_object_or_404(ClientInfo,pk=bank.client_info_id)
+        return reverse('doc-site-landmarks', kwargs={'slug': customer.slug,'pk':customer.Client_ID,
+                                                'bank_type':bank.Bank_Type,'bank_id':bank.id})
 
 class SiteVisitLandmarks(models.Model):
 
@@ -228,5 +243,6 @@ class SiteVisitLandmarks(models.Model):
 
     #get absolute URL
     def get_absolute_url(self):
-        return reverse('Home-Page', kwargs={'slug': client.slug,'pk':self.Client_ID})
-"""
+        bank = get_object_or_404(BankRef,pk=self.connection_id)
+        customer = get_object_or_404(ClientInfo,pk=bank.client_info_id)
+        return reverse('Detail-Page', kwargs={'slug': customer.slug,'pk':customer.Client_ID,})

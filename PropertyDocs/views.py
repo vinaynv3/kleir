@@ -108,12 +108,11 @@ class DeleteCustomer(LoginRequiredMixin,DeleteView):
         context['customer'] = customer
         return context
 
-
+#Add Bank detauls
 class AddBankRef(LoginRequiredMixin,SuccessMessageMixin,CreateView):
     model = BankRef
     fields = ['Reference_Number','Bank_Type']
     success_message = "Bank record %(bank)s was added successfully"
-
 
     def form_valid(self, form):
         form.instance.client_info_id = self.kwargs.get('pk')
@@ -136,6 +135,7 @@ class AddBankRef(LoginRequiredMixin,SuccessMessageMixin,CreateView):
             context['form'] = self.get_form()
         return context
 
+#Update Bank detauls
 class UpdateBankRef(LoginRequiredMixin,SuccessMessageMixin,UpdateView):
     model = BankRef
     fields = ['Reference_Number','Bank_Type']
@@ -167,6 +167,7 @@ class UpdateBankRef(LoginRequiredMixin,SuccessMessageMixin,UpdateView):
             context['form'] = self.get_form()
         return context
 
+#Delete Bank details
 class DeleteBankRef(LoginRequiredMixin,DeleteView):
     model = BankRef
 
@@ -200,3 +201,191 @@ class DeleteBankRef(LoginRequiredMixin,DeleteView):
         success_url = self.get_success_url()
         self.object.delete()
         return HttpResponseRedirect(success_url)
+
+
+"""
+SiteVisit data business logic : create and update documents
+"""
+
+class AddLoanType(LoginRequiredMixin,SuccessMessageMixin,CreateView):
+    model = Documents
+    fields = ['SFDC_no','Product_Loan_Type','Person_met_at_site','Name_of_Applicant',
+            'Name_of_Property_Owner_as_per_legal_document','Documents_Provided']
+    success_message = "Customer bank Loan record %(loan)s added successfully"
+
+    def form_valid(self, form):
+        form.instance.connection_id = self.kwargs.get('bank_id')
+        return super(AddLoanType, self).form_valid(form)
+
+    def get_success_message(self, cleaned_data):
+        """
+        cleaned_data is the cleaned data from the form which is used for string formatting
+        """
+        return self.success_message % dict(cleaned_data, loan=self.object.Product_Loan_Type,)
+
+    def get_context_data(self,**kwargs):
+        """
+        FormMixin: insert customer info and BankRef model form into context data
+        """
+        context = super(AddLoanType,self).get_context_data(**kwargs)
+        customer = get_object_or_404(ClientInfo,pk = self.kwargs.get('pk'))
+        context['customer'] = customer
+        if 'form' not in context:
+            context['form'] = self.get_form()
+        return context
+
+class AddAddress(LoginRequiredMixin,SuccessMessageMixin,CreateView):
+    model = Address
+    fields = ['Postal_address_of_the_property','Legal_address_of_the_property',
+            'Landmark_nearby','Lat_and_Long','Distance_from_City_Centre']
+    success_message = "Customer property %(address)s added successfully"
+
+    def form_valid(self, form):
+        form.instance.connection_id = self.kwargs.get('bank_id')
+        return super(AddAddress, self).form_valid(form)
+
+    def get_success_message(self, cleaned_data):
+        """
+        cleaned_data is the cleaned data from the form which is used for string formatting
+        """
+        return self.success_message % dict(cleaned_data, loan=self.object.Postal_address_of_the_property,)
+
+    def get_context_data(self,**kwargs):
+        """
+        FormMixin: insert customer info and BankRef model form into context data
+        """
+        context = super(AddAddress,self).get_context_data(**kwargs)
+        customer = get_object_or_404(ClientInfo,pk = self.kwargs.get('pk'))
+        context['customer'] = customer
+        if 'form' not in context:
+            context['form'] = self.get_form()
+        return context
+
+class AddInsights(LoginRequiredMixin,SuccessMessageMixin,CreateView):
+
+    model = Insights
+    fields = ['Property_holding_type','Type_of_the_property',
+            'Approved_usage','Actual_usage','Current_Zoning_as_per_CDP','Occupancy_details_floorwise']
+    success_message = "Customer property type %(property_type)s added successfully"
+
+    def form_valid(self, form):
+        form.instance.connection_id = self.kwargs.get('bank_id')
+        return super(AddInsights, self).form_valid(form)
+
+    def get_success_message(self, cleaned_data):
+        """
+        cleaned_data is the cleaned data from the form which is used for string formatting
+        """
+        return self.success_message % dict(cleaned_data, property_type=self.object.Type_of_the_property,)
+
+    def get_context_data(self,**kwargs):
+        """
+        FormMixin: insert customer info and BankRef model form into context data
+        """
+        context = super(AddInsights,self).get_context_data(**kwargs)
+        customer = get_object_or_404(ClientInfo,pk = self.kwargs.get('pk'))
+        context['customer'] = customer
+        if 'form' not in context:
+            context['form'] = self.get_form()
+        return context
+
+class AddMarketingValue(LoginRequiredMixin,SuccessMessageMixin,CreateView):
+
+    model = MarketingValue
+    fields = ['Address_Matching','Local_Municipal_body',
+            'Marketability','Boundaries_matching','Property_Identified']
+    success_message = "Customer property jurisdiction  %(jurisdiction)s added successfully"
+
+    def form_valid(self, form):
+        form.instance.connection_id = self.kwargs.get('bank_id')
+        return super(AddMarketingValue, self).form_valid(form)
+
+    def get_success_message(self, cleaned_data):
+        """
+        cleaned_data is the cleaned data from the form which is used for string formatting
+        """
+        return self.success_message % dict(cleaned_data, jurisdiction=self.object.Local_Municipal_body,)
+
+    def get_context_data(self,**kwargs):
+        """
+        FormMixin: insert customer info and BankRef model form into context data
+        """
+        context = super(AddMarketingValue,self).get_context_data(**kwargs)
+        customer = get_object_or_404(ClientInfo,pk = self.kwargs.get('pk'))
+        context['customer'] = customer
+        if 'form' not in context:
+            context['form'] = self.get_form()
+        return context
+
+class AddAptPlan(LoginRequiredMixin,SuccessMessageMixin,CreateView):
+
+    model = Plan
+    fields = ['Layout_plan_details','Approving_authority',
+            'Construction_plan_details','Plan_validity_from','To_date']
+    success_message = "Customer property plan details added successfully"
+
+    def form_valid(self, form):
+        form.instance.connection_id = self.kwargs.get('bank_id')
+        return super(AddAptPlan, self).form_valid(form)
+
+    def get_success_message(self, *args,**kwrgs):
+        return self.success_message
+
+    def get_context_data(self,**kwargs):
+        """
+        FormMixin: insert customer info and BankRef model form into context data
+        """
+        context = super(AddAptPlan,self).get_context_data(**kwargs)
+        customer = get_object_or_404(ClientInfo,pk = self.kwargs.get('pk'))
+        context['customer'] = customer
+        if 'form' not in context:
+            context['form'] = self.get_form()
+        return context
+
+class AddLegalLandmarks(LoginRequiredMixin,SuccessMessageMixin,CreateView):
+
+    model = LegalLandmarks
+    fields = ['East','West','North','South']
+    success_message = "Customer property legal landmark details added successfully"
+
+    def form_valid(self, form):
+        form.instance.connection_id = self.kwargs.get('bank_id')
+        return super(AddLegalLandmarks, self).form_valid(form)
+
+    def get_success_message(self, *args,**kwrgs):
+        return self.success_message
+
+    def get_context_data(self,**kwargs):
+        """
+        FormMixin: insert customer info and BankRef model form into context data
+        """
+        context = super(AddLegalLandmarks,self).get_context_data(**kwargs)
+        customer = get_object_or_404(ClientInfo,pk = self.kwargs.get('pk'))
+        context['customer'] = customer
+        if 'form' not in context:
+            context['form'] = self.get_form()
+        return context
+
+class AddSiteVisitLandmarks(LoginRequiredMixin,SuccessMessageMixin,CreateView):
+
+    model = SiteVisitLandmarks
+    fields = ['East','West','North','South']
+    success_message = "Customer property site visit landmark details added successfully"
+
+    def form_valid(self, form):
+        form.instance.connection_id = self.kwargs.get('bank_id')
+        return super(AddSiteVisitLandmarks, self).form_valid(form)
+
+    def get_success_message(self, *args,**kwrgs):
+        return self.success_message
+
+    def get_context_data(self,**kwargs):
+        """
+        FormMixin: insert customer info and BankRef model form into context data
+        """
+        context = super(AddSiteVisitLandmarks,self).get_context_data(**kwargs)
+        customer = get_object_or_404(ClientInfo,pk = self.kwargs.get('pk'))
+        context['customer'] = customer
+        if 'form' not in context:
+            context['form'] = self.get_form()
+        return context
