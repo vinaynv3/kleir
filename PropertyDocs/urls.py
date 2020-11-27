@@ -1,9 +1,10 @@
 from django.urls import path, include
 from PropertyDocs.views import *
-
+from PropertyDocs.business_logic_views import *
 
 #URL routes - post site vist detail entries
 SiteDocs_patterns = [
+            path('navigator/', DirectionView.re_direct, name='doc-navigator'),
             path('loan_type/', AddLoanType.as_view(), name='doc-loantype'),
             path('address/', AddAddress.as_view(), name='doc-address'),
             path('insights/', AddInsights.as_view(), name='doc-insights'),
@@ -13,11 +14,14 @@ SiteDocs_patterns = [
             path('SiteVisitLandmarks/', AddSiteVisitLandmarks.as_view(), name='doc-site-landmarks'),
             ]
 
+SiteDocs_update_patterns = [
+            path('collections/', Collections.as_view(), name='doc-collections'),]
+
 Bank_Ref_url_patterns = [
-                        path('AddBankRefNum/', AddBankRef.as_view(), name='Ref-Num'),
-                        path('<str:bank_type>/<int:bank_id>/UpdateBankRefNum/', UpdateBankRef.as_view(), name='Ref-Num-update'),
-                        path('<str:bank_type>/<int:bank_id>/DeleteBankRefNum/', DeleteBankRef.as_view(), name='Ref-Num-delete'),
-                        ]
+            path('AddBankRefNum/', AddBankRef.as_view(), name='Ref-Num'),
+            path('<str:bank_type>/<int:bank_id>/UpdateBankRefNum/', UpdateBankRef.as_view(), name='Ref-Num-update'),
+            path('<str:bank_type>/<int:bank_id>/DeleteBankRefNum/', DeleteBankRef.as_view(), name='Ref-Num-delete'),
+            ]
 
 
 urlpatterns = [
@@ -27,4 +31,5 @@ urlpatterns = [
     path('<slug:slug>/<int:pk>/update/', UpdateCustomer.as_view(), name='doc-customer-update'),
     path('<slug:slug>/<int:pk>/delete/', DeleteCustomer.as_view(), name='doc-customer-delete'),
     path('<slug:slug>/<int:pk>/', include(Bank_Ref_url_patterns)),
-    path('<slug:slug>/<int:pk>/<str:bank_type>/<int:bank_id>/', include(SiteDocs_patterns)),]
+    path('<slug:slug>/<int:pk>/<str:bank_type>/<int:bank_id>/', include(SiteDocs_patterns)),
+    path('<slug:slug>/<int:pk>/<str:bank_type>/<int:bank_id>/', include(SiteDocs_update_patterns)),]

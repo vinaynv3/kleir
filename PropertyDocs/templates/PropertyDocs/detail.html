@@ -18,8 +18,9 @@
 <hr>
 <div class="container mr-2 border-right-0">
   {% for bank in banks %}
-      <a style="color:black" href = "#">
-      <p style="font-size:20px;">{{ bank.Bank_Type}} : {{bank.Reference_Number}}</p></a>
+      <a style="color:black"
+      href = "{% url 'doc-navigator' customer.Slug customer.Client_ID bank.Bank_Type bank.id %}">
+      <p style="font-size:20px;"><i>{{ bank.Bank_Type}} : {{bank.Reference_Number}}</i></p></a>
   {% endfor %}
 </div>
 
