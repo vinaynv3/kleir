@@ -248,7 +248,7 @@ class AddAddress(LoginRequiredMixin,SuccessMessageMixin,CreateView):
         """
         cleaned_data is the cleaned data from the form which is used for string formatting
         """
-        return self.success_message % dict(cleaned_data, loan=self.object.Postal_address_of_the_property,)
+        return self.success_message % dict(cleaned_data, address=self.object.Postal_address_of_the_property,)
 
     def get_context_data(self,**kwargs):
         """

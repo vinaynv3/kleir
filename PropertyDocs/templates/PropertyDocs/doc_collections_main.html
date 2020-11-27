@@ -1,0 +1,31 @@
+{% extends "PropertyDocs/base.html" %}
+
+
+{% block content %}
+
+<div class="container ">
+  <h2><b>{{ customer.Firstname}} {{customer.Lastname}} : {{bank.Bank_Type}}</b>
+    <a href="{% url 'doc-customer-update' customer.Slug customer.Client_ID %}"
+    class="btn btn-primary btn-sm"
+    role="button">UPDATE</a>
+
+    <a href="{% url 'doc-customer-delete' customer.Slug customer.Client_ID %}"
+     class="btn btn-danger btn-sm"
+    role="button">DELETE</a></h2>
+</div>
+<hr>
+<div class="container mr-2 border-right-0" >
+{% for DocumentName, ID in documents.items %}
+  <div class="row">
+    <div class="col">
+      <p>{{ DocumentName }}</P>
+    </div>
+    <div class="col">
+      <p>{{ DocumentName }}</P>
+    </div>
+  </div>
+</div>
+{% endfor %}
+
+
+{% endblock content %}
