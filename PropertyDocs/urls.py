@@ -15,7 +15,12 @@ SiteDocs_patterns = [
             ]
 
 SiteDocs_update_patterns = [
-            path('collections/', Collections.as_view(), name='doc-collections'),]
+            path('collections/', Collections.as_view(), name='doc-collections'),
+            path('loan_type/<int:doc_id>/', UpdateLoanType.as_view(), name='doc-loantype-update'),
+            path('address/<int:doc_id>/', UpdateAddress.as_view(), name='doc-address-update'),
+            path('insights/<int:doc_id>/', UpdateInsights.as_view(), name='doc-insights-update'),
+            path('MarketingValue/<int:doc_id>/', UpdateMarketingValue.as_view(), name='doc-market-value-update'),
+            ]
 
 Bank_Ref_url_patterns = [
             path('AddBankRefNum/', AddBankRef.as_view(), name='Ref-Num'),
