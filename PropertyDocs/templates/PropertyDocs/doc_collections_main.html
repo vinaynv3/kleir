@@ -1,4 +1,6 @@
 {% extends "PropertyDocs/base.html" %}
+{% load static %}
+{% load PropertyDocs_extras %}
 
 
 {% block content %}
@@ -15,17 +17,62 @@
 </div>
 <hr>
 <div class="container mr-2 border-right-0" >
-{% for DocumentName, ID in documents.items %}
+  <div class="row">
+
+    <div class="col">
+      <a style="color:black" href="{% url 'doc-loantype-update' customer.Slug customer.Client_ID bank.Bank_Type bank.id  documents|dict_lookup:'Documents' %}"
+      <p><b>Documents</b></p>
+        <img src = "{% static 'PropertyDocs/edit-doc.png' %}"
+             alt="Img" width="100" height="110"></a>
+    </div>
+
+    <div class="col">
+      <a style="color:black" href="{% url 'doc-address-update' customer.Slug customer.Client_ID bank.Bank_Type bank.id  documents|dict_lookup:'Address' %}"
+      <p><b>Address</b></P>
+        <img src = "{% static 'PropertyDocs/edit-doc.png' %}"
+             alt="Img" width="100" height="110"></a>
+    </div>
+
+  <div class="col">
+    <a style="color:black" href="{% url 'doc-insights-update' customer.Slug customer.Client_ID bank.Bank_Type bank.id  documents|dict_lookup:'Insights' %}"
+    <p><b>Insights</b></P>
+      <img src = "{% static 'PropertyDocs/edit-doc.png' %}"
+           alt="Img" width="100" height="110"></a>
+  </div>
+
+  <div class="col">
+    <a style="color:black" href="{% url 'doc-market-value-update' customer.Slug customer.Client_ID bank.Bank_Type bank.id  documents|dict_lookup:'Insights' %}"
+    <p><b>Marketing Value</b></P>
+      <img src = "{% static 'PropertyDocs/edit-doc.png' %}"
+           alt="Img" width="100" height="110"></a>
+  </div>
+  </div>
+<br>
+<br>
   <div class="row">
     <div class="col">
-      <p>{{ DocumentName }}</P>
+      <p><b>Plan</b></P>
+        <img src = "{% static 'PropertyDocs/edit-doc.png' %}"
+             alt="Img" width="100" height="110">
     </div>
     <div class="col">
-      <p>{{ DocumentName }}</P>
+      <p><b>LegalLandmarks</b></P>
+        <img src = "{% static 'PropertyDocs/edit-doc.png' %}"
+             alt="Img" width="100" height="110">
     </div>
+
+  <div class="col">
+    <p><b>SiteVisitLandmarks</b></P>
+      <img src = "{% static 'PropertyDocs/edit-doc.png' %}"
+           alt="Img" width="100" height="110">
+  </div>
+
+  <div class="col">
+    <p><b>Technical</b></P>
+      <img src = "{% static 'PropertyDocs/edit-doc.png' %}"
+           alt="Img" width="100" height="110">
+  </div>
   </div>
 </div>
-{% endfor %}
-
 
 {% endblock content %}

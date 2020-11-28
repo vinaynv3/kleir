@@ -234,6 +234,44 @@ class AddLoanType(LoginRequiredMixin,SuccessMessageMixin,CreateView):
             context['form'] = self.get_form()
         return context
 
+
+class UpdateLoanType(LoginRequiredMixin,SuccessMessageMixin,UpdateView):
+    model = Documents
+    fields = ['SFDC_no','Product_Loan_Type','Person_met_at_site','Name_of_Applicant',
+            'Name_of_Property_Owner_as_per_legal_document','Documents_Provided']
+    success_message = "Customer bank Loan record %(loan)s updated successfully"
+
+
+    def get_success_message(self, cleaned_data):
+        """
+        cleaned_data is the cleaned data from the form which is used for string formatting
+        """
+        return self.success_message % dict(cleaned_data, loan=self.object.Product_Loan_Type,)
+
+    def get_object(self,*args,**kwargs):
+        """
+        accessing record from db by passing bank_id & bank_type URL keys
+        """
+        document_record = get_object_or_404(Documents,pk = self.kwargs.get('doc_id'))
+        return document_record
+
+    def get_context_data(self,**kwargs):
+        """
+        FormMixin: insert customer info and BankRef model form into context data
+        """
+        context = super(UpdateLoanType,self).get_context_data(**kwargs)
+        bank = get_object_or_404(BankRef,pk = self.kwargs.get('bank_id'))
+        customer = get_object_or_404(ClientInfo,pk = self.kwargs.get('pk'))
+        context = {'customer':customer,'bank':bank,'document':self.get_object()}
+        if 'form' not in context:
+            context['form'] = self.get_form()
+        return context
+
+    def get_success_url(self):
+        return reverse_lazy('doc-collections', kwargs={'slug':self.kwargs.get('slug'),'pk': self.kwargs.get('pk'),
+                            'bank_type':self.kwargs.get('bank_type'),'bank_id':self.kwargs.get('bank_id')})
+
+
 class AddAddress(LoginRequiredMixin,SuccessMessageMixin,CreateView):
     model = Address
     fields = ['Postal_address_of_the_property','Legal_address_of_the_property',
@@ -260,6 +298,42 @@ class AddAddress(LoginRequiredMixin,SuccessMessageMixin,CreateView):
         if 'form' not in context:
             context['form'] = self.get_form()
         return context
+
+class UpdateAddress(LoginRequiredMixin,SuccessMessageMixin,UpdateView):
+    model = Address
+    fields = ['Postal_address_of_the_property','Legal_address_of_the_property',
+            'Landmark_nearby','Lat_and_Long','Distance_from_City_Centre']
+    success_message = "Customer property %(address)s updated successfully"
+
+    def get_object(self,*args,**kwargs):
+        """
+        accessing record from db by passing bank_id & bank_type URL keys
+        """
+        document_record = get_object_or_404(Address, pk = self.kwargs.get('doc_id'))
+        return document_record
+
+    def get_success_message(self, cleaned_data):
+        """
+        cleaned_data is the cleaned data from the form which is used for string formatting
+        """
+        return self.success_message % dict(cleaned_data, address=self.object.Postal_address_of_the_property,)
+
+    def get_context_data(self,**kwargs):
+        """
+        FormMixin: insert customer info and BankRef model form into context data
+        """
+        context = super(UpdateAddress,self).get_context_data(**kwargs)
+        bank = get_object_or_404(BankRef,pk = self.kwargs.get('bank_id'))
+        customer = get_object_or_404(ClientInfo,pk = self.kwargs.get('pk'))
+        context = {'customer':customer,'bank':bank, 'document':self.get_object()}
+        if 'form' not in context:
+            context['form'] = self.get_form()
+        return context
+
+    def get_success_url(self):
+        return reverse_lazy('doc-collections', kwargs={'slug':self.kwargs.get('slug'),'pk': self.kwargs.get('pk'),
+                            'bank_type':self.kwargs.get('bank_type'),'bank_id':self.kwargs.get('bank_id')})
+
 
 class AddInsights(LoginRequiredMixin,SuccessMessageMixin,CreateView):
 
@@ -289,6 +363,44 @@ class AddInsights(LoginRequiredMixin,SuccessMessageMixin,CreateView):
             context['form'] = self.get_form()
         return context
 
+
+class UpdateInsights(LoginRequiredMixin,SuccessMessageMixin,UpdateView):
+
+    model = Insights
+    fields = ['Property_holding_type','Type_of_the_property',
+            'Approved_usage','Actual_usage','Current_Zoning_as_per_CDP','Occupancy_details_floorwise']
+    success_message = "Customer property type %(property_type)s added successfully"
+
+    def get_object(self,*args,**kwargs):
+        """
+        accessing record from db by passing property Insights URL keys
+        """
+        document_record = get_object_or_404(Insights, pk = self.kwargs.get('doc_id'))
+        return document_record
+
+    def get_success_message(self, cleaned_data):
+        """
+        cleaned_data is the cleaned data from the form which is used for string formatting
+        """
+        return self.success_message % dict(cleaned_data, property_type=self.object.Type_of_the_property,)
+
+    def get_context_data(self,**kwargs):
+        """
+        FormMixin: insert customer info and BankRef model form into context data
+        """
+        context = super(UpdateInsights,self).get_context_data(**kwargs)
+        bank = get_object_or_404(BankRef,pk = self.kwargs.get('bank_id'))
+        customer = get_object_or_404(ClientInfo,pk = self.kwargs.get('pk'))
+        context = {'customer':customer,'bank':bank, 'document':self.get_object()}
+        if 'form' not in context:
+            context['form'] = self.get_form()
+        return context
+
+    def get_success_url(self):
+        return reverse_lazy('doc-collections', kwargs={'slug':self.kwargs.get('slug'),'pk': self.kwargs.get('pk'),
+                            'bank_type':self.kwargs.get('bank_type'),'bank_id':self.kwargs.get('bank_id')})
+
+
 class AddMarketingValue(LoginRequiredMixin,SuccessMessageMixin,CreateView):
 
     model = MarketingValue
@@ -316,6 +428,45 @@ class AddMarketingValue(LoginRequiredMixin,SuccessMessageMixin,CreateView):
         if 'form' not in context:
             context['form'] = self.get_form()
         return context
+
+
+class UpdateMarketingValue(LoginRequiredMixin,SuccessMessageMixin,UpdateView):
+
+    model = MarketingValue
+    fields = ['Address_Matching','Local_Municipal_body',
+            'Marketability','Boundaries_matching','Property_Identified']
+    success_message = "Customer property jurisdiction  %(jurisdiction)s updated successfully"
+
+
+    def get_object(self,*args,**kwargs):
+        """
+        accessing record from db by passing property Insights URL keys
+        """
+        document_record = get_object_or_404(MarketingValue, pk = self.kwargs.get('doc_id'))
+        return document_record
+
+    def get_success_message(self, cleaned_data):
+        """
+        cleaned_data is the cleaned data from the form which is used for string formatting
+        """
+        return self.success_message % dict(cleaned_data, jurisdiction=self.object.Local_Municipal_body,)
+
+    def get_context_data(self,**kwargs):
+        """
+        FormMixin: insert customer info and BankRef model form into context data
+        """
+        context = super(UpdateMarketingValue,self).get_context_data(**kwargs)
+        bank = get_object_or_404(BankRef,pk = self.kwargs.get('bank_id'))
+        customer = get_object_or_404(ClientInfo,pk = self.kwargs.get('pk'))
+        context = {'customer':customer,'bank':bank, 'document':self.get_object()}
+        if 'form' not in context:
+            context['form'] = self.get_form()
+        return context
+
+    def get_success_url(self):
+        return reverse_lazy('doc-collections', kwargs={'slug':self.kwargs.get('slug'),'pk': self.kwargs.get('pk'),
+                            'bank_type':self.kwargs.get('bank_type'),'bank_id':self.kwargs.get('bank_id')})
+
 
 class AddAptPlan(LoginRequiredMixin,SuccessMessageMixin,CreateView):
 
