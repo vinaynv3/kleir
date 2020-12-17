@@ -19,6 +19,7 @@ class DirectionView:
         bankid = kwargs['bank_id']
         obj = Direction()
         url_namespace = obj.get_url_namespace(bankid)
+        
 
         if obj.doc_complete(bankid):
             return HttpResponseRedirect(reverse(url_namespace, kwargs={'slug': kwargs['slug'],

@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'PropertyDocs.apps.PropertydocsConfig',
     'user.apps.UserConfig',
+    'ImageUpload.apps.ImageuploadConfig',
     'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -88,10 +89,8 @@ DATABASES = {
                 'PASSWORD': 'WinterMute531@',
                 'HOST': 'localhost',
                 'PORT': '3306',
-
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -134,6 +133,14 @@ STATICFILES_DIRS = (
 )
 """
 STATIC_URL = '/static/'
+
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGIN_REDIRECT_URL = 'Home-Page'
 LOGIN_URL = 'login'
+
+
+"""
+MEDIA - Images
+"""
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'ImageUpload/media')

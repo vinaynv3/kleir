@@ -20,12 +20,16 @@ SiteDocs_update_patterns = [
             path('address/<int:doc_id>/', UpdateAddress.as_view(), name='doc-address-update'),
             path('insights/<int:doc_id>/', UpdateInsights.as_view(), name='doc-insights-update'),
             path('MarketingValue/<int:doc_id>/', UpdateMarketingValue.as_view(), name='doc-market-value-update'),
+            path('AptPlan/<int:doc_id>/', UpdateAptPlan.as_view(), name='doc-apt-plan-update'),
+            path('LegalLandmarks/<int:doc_id>/', UpdateLegalLandmarks.as_view(), name='doc-legal-landmarks-update'),
+            path('SiteVisitLandmarks/<int:doc_id>/', UpdateSiteVisitLandmarks.as_view(), name='doc-site-landmarks-update'),
             ]
 
 Bank_Ref_url_patterns = [
             path('AddBankRefNum/', AddBankRef.as_view(), name='Ref-Num'),
             path('<str:bank_type>/<int:bank_id>/UpdateBankRefNum/', UpdateBankRef.as_view(), name='Ref-Num-update'),
             path('<str:bank_type>/<int:bank_id>/DeleteBankRefNum/', DeleteBankRef.as_view(), name='Ref-Num-delete'),
+
             ]
 
 

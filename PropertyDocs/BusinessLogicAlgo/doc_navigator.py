@@ -1,11 +1,12 @@
 
 from PropertyDocs.models import *
+from ImageUpload.models import *
 
 #models
-database_models = [Documents,Address,Insights,MarketingValue,Plan,LegalLandmarks,SiteVisitLandmarks]
+database_models = [Documents,Address,Insights,MarketingValue,Plan,LegalLandmarks,SiteVisitLandmarks,Photos,Maps]
 #model relative url namespaces
 model_urls = ['doc-loantype','doc-address','doc-insights','doc-market-value','doc-apt-plan',
-              'doc-legal-landmarks','doc-site-landmarks','doc-collections']
+              'doc-legal-landmarks','doc-site-landmarks','doc-photo','doc-maps','doc-collections']
 
 class Direction:
 
@@ -45,9 +46,9 @@ class Direction:
         """
         try:
             #Check in final model
-            if SiteVisitLandmarks.objects.get(connection_id=bank_id):
+            if Maps.objects.get(connection_id=bank_id):
                 return True
-        except SiteVisitLandmarks.DoesNotExist:
+        except Maps.DoesNotExist:
             return False
 
 

@@ -5,6 +5,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse_lazy, reverse
 from PropertyDocs.models import *
 from django.contrib.messages.views import SuccessMessageMixin
+from django.core.exceptions import ObjectDoesNotExist
+
 
 #ListView
 class ListCustomers(ListView):
@@ -100,9 +102,6 @@ class DeleteCustomer(LoginRequiredMixin,DeleteView):
     success_url = '/'
 
     def get_context_data(self,**kwargs):
-        """
-        context customer object
-        """
         context = super().get_context_data(**kwargs)
         customer = get_object_or_404(ClientInfo,pk = self.kwargs.get('pk'))
         context['customer'] = customer
@@ -214,8 +213,24 @@ class AddLoanType(LoginRequiredMixin,SuccessMessageMixin,CreateView):
     success_message = "Customer bank Loan record %(loan)s added successfully"
 
     def form_valid(self, form):
-        form.instance.connection_id = self.kwargs.get('bank_id')
-        return super(AddLoanType, self).form_valid(form)
+        try:
+            form.instance.connection_id = self.kwargs.get('bank_id')
+            return super().form_valid(form)
+
+        except IntegrityError:
+            form.instance.connection_id = self.kwargs.get('bank_id')
+            return super().form_valid(form)
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        if hasattr(self, 'object'):
+            try:
+                object = self.model.objects.get(connection_id = self.kwargs.get('bank_id'))
+                kwargs.update({'instance': object})
+            except ObjectDoesNotExist:
+                kwargs.update({'instance': self.object})
+        return kwargs
+
 
     def get_success_message(self, cleaned_data):
         """
@@ -230,7 +245,7 @@ class AddLoanType(LoginRequiredMixin,SuccessMessageMixin,CreateView):
         context = super(AddLoanType,self).get_context_data(**kwargs)
         customer = get_object_or_404(ClientInfo,pk = self.kwargs.get('pk'))
         context['customer'] = customer
-        if 'form' not in context:
+        if 'form' not in context :
             context['form'] = self.get_form()
         return context
 
@@ -281,6 +296,18 @@ class AddAddress(LoginRequiredMixin,SuccessMessageMixin,CreateView):
     def form_valid(self, form):
         form.instance.connection_id = self.kwargs.get('bank_id')
         return super(AddAddress, self).form_valid(form)
+
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        if hasattr(self, 'object'):
+            try:
+                object = self.model.objects.get(connection_id = self.kwargs.get('bank_id'))
+                kwargs.update({'instance': object})
+            except ObjectDoesNotExist:
+                print("test=self.object")
+                kwargs.update({'instance': self.object})
+        return kwargs
 
     def get_success_message(self, cleaned_data):
         """
@@ -345,6 +372,18 @@ class AddInsights(LoginRequiredMixin,SuccessMessageMixin,CreateView):
     def form_valid(self, form):
         form.instance.connection_id = self.kwargs.get('bank_id')
         return super(AddInsights, self).form_valid(form)
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        if hasattr(self, 'object'):
+            try:
+                object = self.model.objects.get(connection_id = self.kwargs.get('bank_id'))
+                kwargs.update({'instance': object})
+            except ObjectDoesNotExist:
+                print("test=self.object")
+                kwargs.update({'instance': self.object})
+        return kwargs
+
 
     def get_success_message(self, cleaned_data):
         """
@@ -411,6 +450,19 @@ class AddMarketingValue(LoginRequiredMixin,SuccessMessageMixin,CreateView):
     def form_valid(self, form):
         form.instance.connection_id = self.kwargs.get('bank_id')
         return super(AddMarketingValue, self).form_valid(form)
+
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        if hasattr(self, 'object'):
+            try:
+                object = self.model.objects.get(connection_id = self.kwargs.get('bank_id'))
+                kwargs.update({'instance': object})
+            except ObjectDoesNotExist:
+                print("test=self.object")
+                kwargs.update({'instance': self.object})
+        return kwargs
+
 
     def get_success_message(self, cleaned_data):
         """
@@ -479,6 +531,17 @@ class AddAptPlan(LoginRequiredMixin,SuccessMessageMixin,CreateView):
         form.instance.connection_id = self.kwargs.get('bank_id')
         return super(AddAptPlan, self).form_valid(form)
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        if hasattr(self, 'object'):
+            try:
+                object = self.model.objects.get(connection_id = self.kwargs.get('bank_id'))
+                kwargs.update({'instance': object})
+            except ObjectDoesNotExist:
+                print("test=self.object")
+                kwargs.update({'instance': self.object})
+        return kwargs
+
     def get_success_message(self, *args,**kwrgs):
         return self.success_message
 
@@ -493,6 +556,43 @@ class AddAptPlan(LoginRequiredMixin,SuccessMessageMixin,CreateView):
             context['form'] = self.get_form()
         return context
 
+
+class UpdateAptPlan(LoginRequiredMixin,SuccessMessageMixin,UpdateView):
+
+    model = Plan
+    fields = ['Layout_plan_details','Approving_authority',
+            'Construction_plan_details','Plan_validity_from','To_date']
+    success_message = "Customer property plan details added successfully"
+
+
+
+    def get_object(self,*args,**kwargs):
+        """
+        accessing record from db by passing property Insights URL keys
+        """
+        document_record = get_object_or_404(Plan, pk = self.kwargs.get('doc_id'))
+        return document_record
+
+    def get_success_message(self, cleaned_data):
+        return self.success_message
+
+    def get_context_data(self,**kwargs):
+        """
+        FormMixin: insert customer info and BankRef model form into context data
+        """
+        context = super(UpdateAptPlan,self).get_context_data(**kwargs)
+        bank = get_object_or_404(BankRef,pk = self.kwargs.get('bank_id'))
+        customer = get_object_or_404(ClientInfo,pk = self.kwargs.get('pk'))
+        context = {'customer':customer,'bank':bank, 'document':self.get_object()}
+        if 'form' not in context:
+            context['form'] = self.get_form()
+        return context
+
+    def get_success_url(self):
+        return reverse_lazy('doc-collections', kwargs={'slug':self.kwargs.get('slug'),'pk': self.kwargs.get('pk'),
+                            'bank_type':self.kwargs.get('bank_type'),'bank_id':self.kwargs.get('bank_id')})
+
+
 class AddLegalLandmarks(LoginRequiredMixin,SuccessMessageMixin,CreateView):
 
     model = LegalLandmarks
@@ -502,6 +602,29 @@ class AddLegalLandmarks(LoginRequiredMixin,SuccessMessageMixin,CreateView):
     def form_valid(self, form):
         form.instance.connection_id = self.kwargs.get('bank_id')
         return super(AddLegalLandmarks, self).form_valid(form)
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        if hasattr(self, 'object'):
+            try:
+                object = self.model.objects.get(connection_id = self.kwargs.get('bank_id'))
+                kwargs.update({'instance': object})
+            except ObjectDoesNotExist:
+                print("test=self.object")
+                kwargs.update({'instance': self.object})
+        return kwargs
+
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        if hasattr(self, 'object'):
+            try:
+                object = self.model.objects.get(connection_id = self.kwargs.get('bank_id'))
+                kwargs.update({'instance': object})
+            except ObjectDoesNotExist:
+                print("test=self.object")
+                kwargs.update({'instance': self.object})
+        return kwargs
 
     def get_success_message(self, *args,**kwrgs):
         return self.success_message
@@ -517,6 +640,40 @@ class AddLegalLandmarks(LoginRequiredMixin,SuccessMessageMixin,CreateView):
             context['form'] = self.get_form()
         return context
 
+
+class UpdateLegalLandmarks(LoginRequiredMixin,SuccessMessageMixin,UpdateView):
+
+    model = LegalLandmarks
+    fields = ['East','West','North','South']
+    success_message = "Customer property legal landmark details added successfully"
+
+    def get_object(self,*args,**kwargs):
+        """
+        accessing record from db by passing property Insights URL keys
+        """
+        document_record = get_object_or_404(LegalLandmarks, pk = self.kwargs.get('doc_id'))
+        return document_record
+
+    def get_success_message(self, cleaned_data):
+        return self.success_message
+
+    def get_context_data(self,**kwargs):
+        """
+        FormMixin: insert customer info and BankRef model form into context data
+        """
+        context = super(UpdateLegalLandmarks,self).get_context_data(**kwargs)
+        bank = get_object_or_404(BankRef,pk = self.kwargs.get('bank_id'))
+        customer = get_object_or_404(ClientInfo,pk = self.kwargs.get('pk'))
+        context = {'customer':customer,'bank':bank, 'document':self.get_object()}
+        if 'form' not in context:
+            context['form'] = self.get_form()
+        return context
+
+    def get_success_url(self):
+        return reverse_lazy('doc-collections', kwargs={'slug':self.kwargs.get('slug'),'pk': self.kwargs.get('pk'),
+                            'bank_type':self.kwargs.get('bank_type'),'bank_id':self.kwargs.get('bank_id')})
+
+
 class AddSiteVisitLandmarks(LoginRequiredMixin,SuccessMessageMixin,CreateView):
 
     model = SiteVisitLandmarks
@@ -526,6 +683,19 @@ class AddSiteVisitLandmarks(LoginRequiredMixin,SuccessMessageMixin,CreateView):
     def form_valid(self, form):
         form.instance.connection_id = self.kwargs.get('bank_id')
         return super(AddSiteVisitLandmarks, self).form_valid(form)
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        if hasattr(self, 'object'):
+            try:
+                object = self.model.objects.get(connection_id = self.kwargs.get('bank_id'))
+                kwargs.update({'instance': object})
+            except ObjectDoesNotExist:
+                print("test=self.object")
+                kwargs.update({'instance': self.object})
+        return kwargs
+
+
 
     def get_success_message(self, *args,**kwrgs):
         return self.success_message
@@ -540,3 +710,37 @@ class AddSiteVisitLandmarks(LoginRequiredMixin,SuccessMessageMixin,CreateView):
         if 'form' not in context:
             context['form'] = self.get_form()
         return context
+
+
+class UpdateSiteVisitLandmarks(LoginRequiredMixin,SuccessMessageMixin,UpdateView):
+
+    model = SiteVisitLandmarks
+    fields = ['East','West','North','South']
+    success_message = "Customer property site visit landmark details added successfully"
+
+
+    def get_object(self,*args,**kwargs):
+        """
+        accessing record from db by passing property Insights URL keys
+        """
+        document_record = get_object_or_404(SiteVisitLandmarks, pk = self.kwargs.get('doc_id'))
+        return document_record
+
+    def get_success_message(self, cleaned_data):
+        return self.success_message
+
+    def get_context_data(self,**kwargs):
+        """
+        FormMixin: insert customer info and BankRef model form into context data
+        """
+        context = super(UpdateSiteVisitLandmarks,self).get_context_data(**kwargs)
+        bank = get_object_or_404(BankRef,pk = self.kwargs.get('bank_id'))
+        customer = get_object_or_404(ClientInfo,pk = self.kwargs.get('pk'))
+        context = {'customer':customer,'bank':bank, 'document':self.get_object()}
+        if 'form' not in context:
+            context['form'] = self.get_form()
+        return context
+
+    def get_success_url(self):
+        return reverse_lazy('doc-collections', kwargs={'slug':self.kwargs.get('slug'),'pk': self.kwargs.get('pk'),
+                            'bank_type':self.kwargs.get('bank_type'),'bank_id':self.kwargs.get('bank_id')})
