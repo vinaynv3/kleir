@@ -6,7 +6,7 @@
         <form method="POST">
             {% csrf_token %}
 
-            {% if site %}
+            {% if document %}
             <fieldset class="form-group">
               <legend class="border-bottom mb-4"><b>{{customer.Firstname}} {{customer.Lastname}} : {{bank.Bank_Type}}</b></legend>
                 {{ form | crispy}}
@@ -16,11 +16,11 @@
                   </div>
                   {% else %}
             <fieldset class="form-group">
-                <legend class="border-bottom mb-4"><b>{{customer.Firstname}} {{customer.Lastname}} </b></legend>
+                <legend class="border-bottom mb-4"><b>{{customer.Firstname}} {{customer.Lastname}} </b>- As per site visit</legend>
                   {{ form | crispy}}
             </fieldset>
                 <div class="form-group">
-                      <button class="btn btn-outline-info" type="submit">Submit</button>
+                      <button class="btn btn-outline-info" type="submit">Next</button>
                 </div>
             {% endif %}
         </form>

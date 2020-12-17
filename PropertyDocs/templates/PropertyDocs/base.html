@@ -19,6 +19,7 @@
     <title>Kleir</title>
     {% endif %}
 
+
 </head>
 <body>
     <div class="topnav">
@@ -30,6 +31,8 @@
       <div style="float:right" class = 'right'>
 
         {% if user.is_authenticated %}
+
+
           <a href="{% url 'logout' %}"><b>Logout</b></a>
         {% else %}
           <a href="{% url 'login' %}"><b>Login</b></a>

@@ -16,7 +16,7 @@ class ClientInfo(models.Model):
     Firstname = models.CharField(max_length=200)
     Lastname = models.CharField(max_length=200)
     Contact = models.PositiveBigIntegerField()
-    Email = models.EmailField(max_length=200)
+    Email = models.EmailField(max_length=200,null=True, blank = True)
     Date_Time = models.DateField(auto_now = True)
     Created_By = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     Slug = models.SlugField(null=False, unique=True)
@@ -89,7 +89,7 @@ class Documents(models.Model):
     Product_Loan_Type = models.CharField(max_length=50,choices=Loan_types,default='NA')
     Person_met_at_site = models.CharField(max_length=200)
     Name_of_Applicant  =  models.CharField(max_length=200)
-    Name_of_Property_Owner_as_per_legal_document =   models.CharField(max_length=200)
+    Name_of_Property_Owner_as_per_legal_document = models.CharField(max_length=200)
     Documents_Provided =  models.CharField(max_length=300)
 
 
@@ -141,9 +141,9 @@ class Insights(models.Model):
     connection = models.OneToOneField(BankRef,on_delete=models.CASCADE)
     Property_holding_type  =  models.CharField(max_length=50,choices=Holding)
     Type_of_the_property  =  models.CharField(max_length=50,choices=Property_types)
-    Approved_usage = models.CharField(max_length=200)
+    Approved_usage = models.CharField(max_length=200, choices=Property_types)
     Actual_usage = models.CharField(max_length=50,choices=Property_types)
-    Current_Zoning_as_per_CDP = models.CharField(max_length=50,choices=Holding)
+    Current_Zoning_as_per_CDP = models.CharField(max_length=50,choices=Property_types)
     Occupancy_details_floorwise = models.CharField(max_length=200)
 
     def __str__(self):
@@ -166,7 +166,7 @@ class MarketingValue(models.Model):
                       ('NA','NA')
         ]
     # Marketing status
-    marketable = [('LOW','LOW'),
+    marketable = [('Low','Low'),
                       ('Medium','Medium'),
                       ('Good','Good')
 
@@ -245,4 +245,5 @@ class SiteVisitLandmarks(models.Model):
     def get_absolute_url(self):
         bank = get_object_or_404(BankRef,pk=self.connection_id)
         customer = get_object_or_404(ClientInfo,pk=bank.client_info_id)
-        return reverse('Detail-Page', kwargs={'slug': customer.Slug,'pk':customer.Client_ID,})
+        return reverse('doc-photo', kwargs={'slug': customer.Slug,'pk':customer.Client_ID,
+                                                'bank_type':bank.Bank_Type,'bank_id':bank.id})

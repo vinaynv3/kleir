@@ -1,23 +1,25 @@
 {% extends "PropertyDocs/base.html" %}
 
-
 {% block content %}
+
 
 
   {% for Customer,bank_details in customer_reference_details.items %}
 
     {% if user.is_authenticated %}
     <a  style="color:black" href=" {% url 'Detail-Page' Customer.Slug Customer.Client_ID %} ">
-       <Strong><h3>{{ Customer.Firstname }}</h3> </strong></a>
-         <p><kbd>{{bank_details.Reference_Number}}</kbd>
-           <small><i>{{bank_details.Date}}<i></small></p>
+       <Strong><h3><kbd>{{ Customer.Firstname}} {{Customer.Lastname }}</kbd></h3> </strong></a>
+         <p>{{bank_details.Reference_Number}} <b>:</b>
+           <small>{{bank_details.Date}}</small></p>
+    <br>
 
     {% else %}
 
     <a style="color:black" href=" {% url 'login' %}">
-      <Strong><h3> {{ Customer.Firstname }}</h3> </strong></a>
-       <p><kbd>{{bank_details.Reference_Number}}</kbd>
-         <small><i> {{bank_details.Date}}</i></small></p>
+      <Strong><h3><kbd> {{ Customer.Firstname}} {{Customer.Lastname }}</kbd></h3> </strong></a>
+       <p>{{bank_details.Reference_Number}} <b>:</b>
+         <small>{{bank_details.Date}}</small></p>
+     <br>
 
     {%endif%}
 
