@@ -27,6 +27,7 @@ SiteDocs_update_patterns = [
 
 Bank_Ref_url_patterns = [
             path('AddBankRefNum/', AddBankRef.as_view(), name='Ref-Num'),
+            path('<str:bank_type>/<int:bank_id>/details/', ViewBankDetails.as_view(), name='Ref-Num-View'),
             path('<str:bank_type>/<int:bank_id>/UpdateBankRefNum/', UpdateBankRef.as_view(), name='Ref-Num-update'),
             path('<str:bank_type>/<int:bank_id>/DeleteBankRefNum/', DeleteBankRef.as_view(), name='Ref-Num-delete'),
 

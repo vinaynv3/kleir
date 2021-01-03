@@ -1,0 +1,114 @@
+
+
+{% extends "PropertyDocs/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block script %}
+
+<script >
+  $(document).ready(function(){
+    $(".docs").on('input', function(){
+
+      var x = $("#d_num1").val();
+      var y = 0;
+      y = $("#d_num2").val();
+      var z = parseFloat(x)+ parseFloat(y);
+      if (isNaN(z)) z = 0;
+
+    $("#d_total").val(z);
+
+    });
+    });
+  </script>
+
+  <script >
+    $(document).ready(function(){
+      $(".plan").on('input', function(){
+
+        var x = $("#p_num1").val();
+        var y = 0;
+        y = $("#p_num2").val();
+        var z = parseFloat(x)+ parseFloat(y);
+        if (isNaN(z)) z = 0;
+
+      $("#p_total").val(z);
+
+      });
+      });
+  </script>
+
+  <script >
+    $(document).ready(function(){
+      $(".actual").on('input', function(){
+
+        var x = $("#a_num1").val();
+        var y = 0;
+        y = $("#a_num2").val();
+        var z = parseFloat(x)+ parseFloat(y);
+        if (isNaN(z)) z = 0;
+
+      $("#a_total").val(z);
+
+      });
+      });
+</script>
+
+    {% endblock %}
+{% block content %}
+
+    <div class="content-section">
+        <form method="POST" >
+            {% csrf_token %}
+            <fieldset class="form-group">
+              <legend class="border-bottom mb-4"><b>{{customer.Firstname}} {{customer.Lastname}} : {{bank.Bank_Type}}</b></legend>
+
+            <div class="container mr-2 border-right-0" >
+              <div class="row">
+                <div class="col">
+                  <p><b>Layout Infrastructure</b></p>
+                  {{ form2 | crispy }}
+                </div>
+                <div class="col">
+                </div>
+              </div>
+            </div>
+
+            <div class="container mr-2 border-right-0" >
+              <div class="row">
+                <div class="col">
+                  <br>
+                  <br>
+                  <p style="padding: 7px;"><b>East/west</b></p>
+                  <p style="padding: 7px;"><b>North/South</b></p>
+                  <p style="padding: 7px;"><b>Land area / UDS</b></p>
+                  <p style="padding: 7px;"><b>Carpet flat area</b></p>
+                  <p style="padding: 7px;"><b>SBUA of Flat</b></p>
+                </div>
+
+                <div class="col">
+                  <p style="text-align:center;"><b>As per documents</b></p>
+                   {{ form1 | crispy }}
+                </div>
+
+                <div class="col">
+                  <p style="text-align:center;"><b>As per Plan</b></p>
+                  {{ form3 | crispy }}
+                </div>
+
+                <div class="col">
+                <p style="text-align:center;"><b>Actuals</b></p>
+                  {{ form4 | crispy }}
+                </div>
+              </div>
+            </div>
+          </fieldset>
+<hr>
+            <div class="form-group">
+              <br>
+                  <button class="btn btn-outline-info float-right" type="submit">Submit</button>
+            </div>
+
+        </form>
+    </div>
+{% endblock content %}

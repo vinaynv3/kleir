@@ -19,7 +19,7 @@ class DirectionView:
         bankid = kwargs['bank_id']
         obj = Direction()
         url_namespace = obj.get_url_namespace(bankid)
-        
+
 
         if obj.doc_complete(bankid):
             return HttpResponseRedirect(reverse(url_namespace, kwargs={'slug': kwargs['slug'],
@@ -40,3 +40,13 @@ class Collections(View):
         customer = get_object_or_404(ClientInfo,pk=self.kwargs.get('pk'))
 
         return render(request, self.template_name, {'documents': docs,'bank':bank,'customer':customer})
+
+class ViewBankDetails(View):
+    template_name = 'PropertyDocs/view.html'
+
+    def get(self, request, *args, **kwargs):
+
+        bank = get_object_or_404(BankRef,pk = self.kwargs.get('bank_id'))
+        customer = get_object_or_404(ClientInfo,pk=self.kwargs.get('pk'))
+
+        return render(request, self.template_name, {'bank':bank,'customer':customer})

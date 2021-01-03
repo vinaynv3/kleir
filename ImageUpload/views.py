@@ -33,7 +33,6 @@ def PhotoView(request,*args,**kwargs):
             for image in images.cleaned_data:
                 if image:
                     get_image = image['image']
-                    print(get_image)
                     image_instance = Images(photos = photo_instance, image = get_image)
                     image_instance.save()
             messages.success(request, 'Images uploaded successfully')

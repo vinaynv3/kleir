@@ -3,7 +3,7 @@
 class implements client information
 """
 
-from django.db import models
+from django.db import models, IntegrityError
 from django.urls import reverse
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
@@ -19,7 +19,7 @@ class ClientInfo(models.Model):
     Email = models.EmailField(max_length=200,null=True, blank = True)
     Date_Time = models.DateField(auto_now = True)
     Created_By = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
-    Slug = models.SlugField(null=False, unique=True)
+    Slug = models.SlugField(null=True,blank = True, unique=True)
 
 
     #GET client
