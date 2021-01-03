@@ -169,6 +169,7 @@ class UpdateBankRef(LoginRequiredMixin,SuccessMessageMixin,UpdateView):
 #Delete Bank details
 class DeleteBankRef(LoginRequiredMixin,DeleteView):
     model = BankRef
+    success_message = "Customer bank %(bank)s record removed successfully"
 
     def get_object(self,*args,**kwargs):
         """
@@ -186,6 +187,12 @@ class DeleteBankRef(LoginRequiredMixin,DeleteView):
         customer = get_object_or_404(ClientInfo,pk=self.kwargs.get('pk'))
         context = {'customer':customer,'bank':bank}
         return context
+
+    def get_success_message(self, cleaned_data):
+        """
+        cleaned_data is the cleaned data from the form which is used for string formatting
+        """
+        return self.success_message % dict(cleaned_data, bank=self.object.Bank_Type)
 
     def get_success_url(self,*args,**kwargs):
         return reverse('Detail-Page',kwargs = {'slug':self.kwargs.get('slug'),

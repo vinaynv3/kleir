@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'PropertyDocs.apps.PropertydocsConfig',
     'user.apps.UserConfig',
     'ImageUpload.apps.ImageuploadConfig',
+    'Technical.apps.TechnicalConfig',
     'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -127,11 +128,11 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
-"""
+
 STATICFILES_DIRS = (
     os.path.join(PROJECT_DIR, 'static'),
 )
-"""
+
 STATIC_URL = '/static/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
