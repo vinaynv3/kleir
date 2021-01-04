@@ -4,21 +4,22 @@ from django import forms
 from django.forms import ModelForm, TextInput
 from Technical.models import *
 
+
+"""
+Layout Forms
+"""
 PLOT_LABELS_FIELD_DICT = {
                         'East_to_west_in_Feet' : '',
                         'North_to_South_in_Feet' : '',
                         'Land_area_or_UDS_in_SFT' : '',
                         'Carpet_area_of_flat_in_SFT' : '',
                         'SBUA_of_Flat_in_SFT' : '',
-
                     }
-
 
 class LayoutForm(ModelForm):
     class Meta:
         model = Layout
         exclude = ['connection']
-
 
 
 class DocsForm(ModelForm):
@@ -33,8 +34,6 @@ class DocsForm(ModelForm):
         labels = PLOT_LABELS_FIELD_DICT
 
 
-
-
 class PlanForm(ModelForm):
     class Meta:
         model = AsPerPlan
@@ -45,7 +44,6 @@ class PlanForm(ModelForm):
             'Land_area_or_UDS_in_SFT': TextInput(attrs={'id':'p_total','class':'plan'}),
         }
         labels = PLOT_LABELS_FIELD_DICT
-
 
 class ActualsForm(ModelForm):
     class Meta:
@@ -59,6 +57,9 @@ class ActualsForm(ModelForm):
         labels = PLOT_LABELS_FIELD_DICT
 
 
+"""
+Floor Forms
+"""
 
 FLOOR_LABELS_FIELD_DICT = {
                         'Basement_Stilt_area' : '',
@@ -127,3 +128,110 @@ class SanctionedAreaForm(ModelForm):
             'FAR_FSI': TextInput(attrs={'id':'s_FAR_FSI','class':'Sanctioned'}),
         }
         labels = FLOOR_LABELS_FIELD_DICT
+
+"""
+Property Value Forms
+"""
+
+
+PROPERTY_LABELS_FIELD_DICT = {
+                        'Land_area' : '',
+                        'BUA_SBUA': '',
+                        'Interiors' : '',
+                        'Car_park' : '',
+
+                    }
+
+class AreaDetailsForm(ModelForm):
+    class Meta:
+        model = AreaDetails
+        exclude = ['connection']
+        widgets = {
+            'Land_area': TextInput(attrs={'id':'area_land','class':'Area'}),
+            'BUA_SBUA': TextInput(attrs={'id':'area_BUA','class':'Area'}),
+            'Interiors': TextInput(attrs={'id':'area_interior','class':'Area'}),
+            'Car_park': TextInput(attrs={'id':'area_park','class':'Area'}),
+        }
+        labels = PROPERTY_LABELS_FIELD_DICT
+
+
+class AreaDetailsForm(ModelForm):
+    class Meta:
+        model = AreaDetails
+        exclude = ['connection']
+        widgets = {
+            'Land_area': TextInput(attrs={'id':'area_land','class':'items'}),
+            'BUA_SBUA': TextInput(attrs={'id':'area_BUA','class':'items'}),
+            'Interiors': TextInput(attrs={'id':'area_interior','class':'items'}),
+            'Car_park': TextInput(attrs={'id':'area_park','class':'items'}),
+        }
+        labels = PROPERTY_LABELS_FIELD_DICT
+
+
+class RateForm(ModelForm):
+    class Meta:
+        model = Rate
+        exclude = ['connection']
+        widgets = {
+            'Land_area': TextInput(attrs={'id':'Rate_Land','class':'items'}),
+            'BUA_SBUA': TextInput(attrs={'id':'Rate_BUA','class':'items'}),
+            'Interiors': TextInput(attrs={'id':'Rate_interior','class':'items'}),
+            'Car_park': TextInput(attrs={'id':'Rate_park','class':'items'}),
+        }
+        labels = PROPERTY_LABELS_FIELD_DICT
+
+
+
+class TotalValueForm(ModelForm):
+    class Meta:
+        model = TotalValue
+        exclude = ['connection']
+        widgets = {
+            'Land_area': TextInput(attrs={'id':'total_Land','class':'items'}),
+            'BUA_SBUA': TextInput(attrs={'id':'total_BUA','class':'items'}),
+            'Interiors': TextInput(attrs={'id':'total_interior','class':'items'}),
+            'Car_park': TextInput(attrs={'id':'total_park','class':'items'}),
+        }
+        labels = PROPERTY_LABELS_FIELD_DICT
+
+
+
+class FairMarketValueForm(ModelForm):
+    class Meta:
+        model = FairMarketValue
+        exclude = ['connection']
+        widgets = {
+            'completion': TextInput(attrs={'id':'completion','class':'items'}),
+            'Date': TextInput(attrs={'id':'Date','class':'items'}),
+            'Distressed': TextInput(attrs={'id':'Distressed','class':'items'}),
+            'GovtValue': TextInput(attrs={'id':'GovtValue','class':'items'}),
+        }
+        labels = {
+                  'completion':'',
+                  'Date':'',
+                  'Distressed':'',
+                  'GovtValue':'',
+
+        }
+
+
+
+class PropertyStatusForm(ModelForm):
+    class Meta:
+        model = PropertyStatus
+        exclude = ['connection']
+        labels = {
+                  'Progress':'',
+                  'Recommended':'',
+                  'CurrentAge':'',
+                  'ResidualAge':'',
+
+        }
+
+"""
+Final Notes Form
+"""
+class FinalForm(ModelForm):
+    class Meta:
+        model = FinalNotes
+        exclude = ['connection']
