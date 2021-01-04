@@ -1,0 +1,142 @@
+
+
+{% extends "PropertyDocs/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block script %}
+<script >
+  $(document).ready(function(){
+    $(".items").on('input', function(){
+
+      var a = $("#area_land").val();
+      var b = $("#Rate_Land").val();
+
+      var total_land = parseFloat(a) * parseFloat(b);
+      if (isNaN(total_land)) total_land = 0;
+      $("#total_Land").val(total_land);
+
+
+      var c = $("#area_BUA").val();
+      var d = $("#Rate_BUA").val();
+
+      var total_value = parseFloat(c) * parseFloat(d);
+      if (isNaN(total_value)) total_value = 0;
+      $("#total_BUA").val(total_value);
+
+      var e = $("#area_interior").val();
+      var f = $("#Rate_interior").val();
+
+      var total_interior = parseFloat(e) * parseFloat(f);
+      if (isNaN(total_interior)) total_interior = 0;
+      $("#total_interior").val(total_interior);
+
+      var g = $("#area_park").val();
+      var h = $("#Rate_park").val();
+
+      var total_park = parseFloat(g) * parseFloat(h);
+      if (isNaN(total_park)) total_park = 0;
+      $("#total_park").val(total_park);
+
+      var market_value = total_land + total_value + total_interior + total_park ;
+      if (isNaN(market_value)) market_value = 0;
+      $("#completion").val(market_value);
+
+      var distressed_value = market_value * 0.8 ;
+      if (isNaN(distressed_value)) distressed_value = 0;
+      $("#Distressed").val(distressed_value);
+    });
+    });
+</script>
+{% endblock %}
+
+
+{% block content %}
+
+    <div class="content-section">
+        <form method="POST" >
+            {% csrf_token %}
+            <hr>
+            <div class="container mr-2 border-right-0" >
+              <p><b>PROPERTY STATUS</b></p>
+              <hr>
+              <div class="row">
+                <div class="col">
+
+                  <p style="padding: 7px;">% Progress</p>
+                  <p style="padding: 7px;">% Recommended</p>
+                  <p style="padding: 7px;">Current age</p>
+                  <p style="padding: 7px;">Residual age</p>
+                </div>
+
+                <div class="col">
+                  {{ property_value_form | crispy }}
+                </div>
+
+                <div class="col">
+                </div>
+                <div class="col">
+                </div>
+              </div>
+            </div>
+
+            <hr>
+            <div class="container mr-2 border-right-0" >
+              <p><b>VALUE</b></p>
+              <hr>
+              <div class="row">
+                <div class="col">
+                  <br>
+                  <br>
+                  <p style="padding: 7px;">Land area or UDS in SFT</p>
+                  <p style="padding: 7px;">BUA/SBUA value</p>
+                  <p style="padding: 7px;">Interiors</p>
+                  <p style="padding: 7px;">Car park</p>
+                </div>
+
+                <div class="col">
+                  <p style="text-align:center;">Area details in Sqft</p>
+                   {{ form1 | crispy }}
+                </div>
+
+                <div class="col">
+                  <p style="text-align:center;">Rate/sqft</p>
+                  {{ form2 | crispy }}
+                </div>
+
+                <div class="col">
+                <p style="text-align:center;">Total Value in Rupees </p>
+                  {{ form3 | crispy }}
+                </div>
+              </div>
+              <hr>
+              <div class="container mr-2 border-right-0" >
+                <p><b>FAIR MARKET</b></p>
+                <hr>
+                <div class="row">
+                  <div class="col">
+                    <p style="padding: 7px;">Fair Market value as on Completion </p>
+                    <p style="padding: 7px;">Fair Market value as on Date</p>
+                    <p style="padding: 7px;">DISTRESSED/FORCED VALUE (80% of FMV) </p>
+                    <p style="padding: 7px;">Govt. value</p>
+                  </div>
+
+                  <div class="col">
+
+                    {{ fair_market_form | crispy }}
+                  </div>
+                  <div class="col">
+                  </div>
+                </div>
+              </div>
+
+</div>
+<hr>
+            <div class="form-group">
+              <br>
+                  <button class="btn btn-outline-info float-right" type="submit">Submit</button>
+            </div>
+
+        </form>
+    </div>
+{% endblock content %}

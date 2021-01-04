@@ -131,11 +131,41 @@ def BUA_View(request,*args,**kwargs):
             return HttpResponse("Thanks")
 
 
-
-
     else:
         deviations = DeviationsForm()
         permissible = PermissibleBUAForm()
         actual = ActualBUAForm()
         sactioned = SanctionedAreaForm()
         return render(request,'Technical/BUA.html', {'form1':deviations,'form2':permissible, 'form3':actual,'form4':sactioned})
+
+
+"""
+PropertyValue
+"""
+def PropertyValueView(request,*args,**kwargs):
+    if request.method == 'POST':
+        return HttpResponse("Thanks")
+
+    else:
+        property = PropertyStatusForm()
+        area = AreaDetailsForm()
+        rate = RateForm()
+        total = TotalValueForm()
+        fair_market = FairMarketValueForm()
+        return render(request,'Technical/PropertyValue.html',{'property_value_form':property,'form1':area, 'form2':rate,'form3':total,'fair_market_form':fair_market})
+
+
+
+"""
+FinalNotes
+"""
+def FinalNotesView(request,*args,**kwargs):
+    if request.method == 'POST':
+        return HttpResponse("Thanks")
+
+    else:
+
+        bank = get_object_or_404(BankRef,pk = kwargs['bank_id'])
+        customer = get_object_or_404(ClientInfo,pk = kwargs['pk'])
+        form = FinalForm()
+        return render(request,'Technical/FinalForm.html',{'form':form,'bank':bank,'customer':customer})

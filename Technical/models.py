@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404
 from django.urls import reverse
 
 
-#Layout Layout Infrastructure model
+#Layout  Infrastructure model
 class Layout(models.Model):
     # Models attributes (Database columns)
     connection = models.OneToOneField(BankRef,on_delete=models.CASCADE)
@@ -29,7 +29,9 @@ class Layout(models.Model):
         return reverse('#', kwargs={'slug': customer.Slug,'pk':customer.Client_ID,
                                                 'bank_type':bank.Bank_Type,'bank_id':bank.id})
 
-
+"""
+Abstraction model - Technical Layout
+"""
 class LayoutCommonInfo(models.Model):
     East_to_west_in_Feet = models.PositiveIntegerField(blank = True, null = True)
     North_to_South_in_Feet = models.PositiveIntegerField(blank = True, null = True)
@@ -39,6 +41,7 @@ class LayoutCommonInfo(models.Model):
 
     class Meta:
         abstract = True
+
 
 class AsPerDocuments(LayoutCommonInfo):
     connection = models.OneToOneField(BankRef,on_delete=models.CASCADE)
@@ -65,6 +68,9 @@ class Actuals(LayoutCommonInfo):
         return self.connection
 
 
+"""
+Abstraction model - Technical Floor details
+"""
 class FloorsCommonInfo(models.Model):
 
     Basement_Stilt_area = models.PositiveIntegerField(blank = True, null = True)
@@ -75,6 +81,10 @@ class FloorsCommonInfo(models.Model):
     TF_area_units = models.PositiveIntegerField(blank = True, null = True)
     Total = models.PositiveIntegerField(blank = True, null = True)
     FAR_FSI = models.DecimalField(blank = True, null = True, max_digits=10, decimal_places=2)
+
+    class Meta:
+        abstract = True
+
 
 class Deviations(models.Model):
 
@@ -112,6 +122,95 @@ class SanctionedArea(FloorsCommonInfo):
     connection = models.OneToOneField(BankRef,on_delete=models.CASCADE)
     class Meta:
         db_table = "SanctionedArea"
+
+    def __str__(self):
+        return self.connection
+
+
+
+"""
+Abstraction model - Property value assesment
+"""
+class PropertyValueCommonInfo(models.Model):
+
+    Land_area = models.PositiveIntegerField(blank = True, null = True)
+    BUA_SBUA = models.PositiveIntegerField(blank = True, null = True)
+    Interiors = models.PositiveIntegerField(blank = True, null = True)
+    Car_park = models.PositiveIntegerField(blank = True, null = True)
+
+    class Meta:
+        abstract = True
+
+class AreaDetails(PropertyValueCommonInfo):
+    connection = models.OneToOneField(BankRef,on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = "AreaDetails"
+
+    def __str__(self):
+        return self.connection
+
+
+class Rate(PropertyValueCommonInfo):
+    connection = models.OneToOneField(BankRef,on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = "Rate"
+
+    def __str__(self):
+        return self.connection
+
+
+class TotalValue(PropertyValueCommonInfo):
+    connection = models.OneToOneField(BankRef,on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = "TotalValue"
+
+    def __str__(self):
+        return self.connection
+
+
+#FairMarketValue model
+class FairMarketValue(models.Model):
+
+    completion = models.PositiveIntegerField(blank = True, null = True)
+    Date = models.PositiveIntegerField(blank = True, null = True)
+    Distressed = models.PositiveIntegerField(blank = True, null = True)
+    GovtValue = models.PositiveIntegerField(blank = True, null = True)
+    connection = models.OneToOneField(BankRef,on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = "FairMarketValue"
+
+    def __str__(self):
+        return self.connection
+
+
+#PropertyStatus model
+class PropertyStatus(models.Model):
+    Progress = models.CharField(max_length=200)
+    Recommended = models.CharField(max_length=200)
+    CurrentAge = models.CharField(max_length=200)
+    ResidualAge = models.CharField(max_length=200)
+    connection = models.OneToOneField(BankRef,on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = "PropertyStatus"
+
+    def __str__(self):
+        return self.connection
+
+#FinalPropertyNotes model
+class FinalNotes(models.Model):
+    ValuationDoneEarlier = models.BooleanField(blank=False,verbose_name=" Validation Done Earlier ?")
+    IsNegative = models.BooleanField(blank=False,verbose_name=" Property in bad community ?")
+    IsInDemolitionList = models.BooleanField(blank=False, verbose_name=" Property in Demolition list ?")
+    Remarks =  models.TextField()
+    connection = models.OneToOneField(BankRef,on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = "FinalPropertyNotes"
 
     def __str__(self):
         return self.connection
