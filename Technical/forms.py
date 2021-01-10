@@ -77,7 +77,13 @@ class DeviationsForm(ModelForm):
     class Meta:
         model = Deviations
         exclude = ['connection']
-
+        labels = {
+                  'Total_BUA_deviation':'',
+                  'Total_SBUA_considered':'',
+                  'FAR_FSI_deviation':'',
+                 
+                  'Total_Bedrooms':'',
+        }
 
 class PermissibleBUAForm(ModelForm):
     class Meta:

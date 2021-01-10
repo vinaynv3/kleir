@@ -104,11 +104,17 @@
             </div>
           </fieldset>
 <hr>
+          {% if document %}
             <div class="form-group">
               <br>
-                  <button class="btn btn-outline-info float-right" type="submit">Submit</button>
+                  <button class="btn btn-outline-info float-right" type="submit">UPDATE</button>
             </div>
-
+          {% else %}
+          <div class="form-group">
+            <br>
+                <button class="btn btn-outline-info float-right" type="submit">NEXT</button>
+          </div>
+          {% endif %}
         </form>
     </div>
 {% endblock content %}

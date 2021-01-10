@@ -19,7 +19,8 @@ class ListCustomers(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         customer_reference_details = {}
-        customers = ClientInfo.objects.order_by('-Date_Time')[:10]
+        customer_list = []
+        customers = ClientInfo.objects.order_by('-Date_Time')[:12]
         for customer in customers:
             last_bank_valuation = customer.bankref_set.last()
             try:

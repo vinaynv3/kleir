@@ -1,0 +1,61 @@
+{% extends "PropertyDocs/base.html" %}
+{% load static %}
+{% load PropertyDocs_extras %}
+
+
+{% block content %}
+
+
+<div class="container ">
+  <h2><b>{{ customer.Firstname}} {{customer.Lastname}} : {{bank.Bank_Type}}</b>
+    <a href="{% url 'doc-customer-update' customer.Slug customer.Client_ID %}"
+    class="btn btn-primary btn-sm"
+    role="button">UPDATE</a>
+
+    <a href="{% url 'doc-customer-delete' customer.Slug customer.Client_ID %}"
+     class="btn btn-danger btn-sm"
+    role="button">DELETE</a></h2>
+</div>
+<hr>
+
+<a style="color:black" href = "{% url 'doc-collections' customer.Slug customer.Client_ID bank.Bank_Type bank.id %}"><i class="bi bi-eye-fill" ></i>
+  <svg xmlns="http://www.w3.org/2000/svg" width="46" height="46" fill="currentColor" class="bi bi-journals" viewBox="0 0 16 16">
+    <path d="M5 0h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2 2 2 0 0 1-2 2H3a2 2 0 0 1-2-2h1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1H1a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v9a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1H3a2 2 0 0 1 2-2z"/>
+    <path d="M1 6v-.5a.5.5 0 0 1 1 0V6h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V9h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 2.5v.5H.5a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1H2v-.5a.5.5 0 0 0-1 0z"/>
+  </svg></a>
+
+
+<div class="container mr-1 border-right-0" >
+  <div class="row">
+
+    <div class="col">
+      <a style="color:black" href="{% url 'technical-layout-update' customer.Slug customer.Client_ID bank.Bank_Type bank.id %}">
+      <p><b>Layout Entries</b></p>
+        <img src = "{% static 'PropertyDocs/edit-doc.png' %}"
+             alt="Img" width="100" height="110"></a>
+    </div>
+
+    <div class="col">
+      <a style="color:black" href="{% url 'technical-BUA-update' customer.Slug customer.Client_ID bank.Bank_Type bank.id %}">
+      <p><b>BUA Entries</b></p>
+        <img src = "{% static 'PropertyDocs/edit-doc.png' %}"
+             alt="Img" width="100" height="110"></a>
+    </div>
+
+  <div class="col">
+    <a style="color:black" href="{% url 'technical-PropertyValue-update' customer.Slug customer.Client_ID bank.Bank_Type bank.id %}">
+    <p><b>Property Value</b></p>
+      <img src = "{% static 'PropertyDocs/edit-doc.png' %}"
+           alt="Img" width="100" height="110"></a>
+  </div>
+
+  <div class="col">
+    <a style="color:black" href="{% url 'technical-FairMarket-update' customer.Slug customer.Client_ID bank.Bank_Type bank.id %}">
+    <p><b>Notes</b></p>
+      <img src = "{% static 'PropertyDocs/edit-doc.png' %}"
+           alt="Img" width="100" height="110"></a>
+  </div>
+  </div>
+</div>
+
+{% endblock content %}

@@ -56,7 +56,9 @@
     <div class="content-section">
         <form method="POST" >
             {% csrf_token %}
-            <hr>
+            <fieldset class="form-group">
+              <legend class="border-bottom mb-4"><b>{{customer.Firstname}} {{customer.Lastname}} : {{bank.Bank_Type}}</b></legend>
+              <br>
             <div class="container mr-2 border-right-0" >
               <p><b>PROPERTY STATUS</b></p>
               <hr>
@@ -80,7 +82,7 @@
               </div>
             </div>
 
-            <hr>
+            <br>
             <div class="container mr-2 border-right-0" >
               <p><b>VALUE</b></p>
               <hr>
@@ -109,7 +111,7 @@
                   {{ form3 | crispy }}
                 </div>
               </div>
-              <hr>
+              <br>
               <div class="container mr-2 border-right-0" >
                 <p><b>FAIR MARKET</b></p>
                 <hr>
@@ -130,13 +132,20 @@
                 </div>
               </div>
 
-</div>
-<hr>
-            <div class="form-group">
-              <br>
-                  <button class="btn btn-outline-info float-right" type="submit">Submit</button>
             </div>
-
+  </fieldset>
+<hr>
+          {% if document %}
+            <div class="form-group">
+                <br>
+                <button class="btn btn-outline-info float-right" type="submit">UPDATE</button>
+              </div>
+              {% else %}
+              <div class="form-group">
+                <br>
+                <button class="btn btn-outline-info float-right" type="submit">NEXT</button>
+              </div>
+          {% endif %}
         </form>
     </div>
 {% endblock content %}
