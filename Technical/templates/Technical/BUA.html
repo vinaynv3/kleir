@@ -63,10 +63,22 @@
     <div class="content-section">
         <form method="POST" >
             {% csrf_token %}
+            <fieldset class="form-group">
+              <legend class="border-bottom mb-4"><b>{{customer.Firstname}} {{customer.Lastname}} : {{bank.Bank_Type}}</b></legend>
+
             <div class="container mr-2 border-right-0" >
+              <p><b>No. of Floors</b></p>
               <div class="row">
                 <div class="col">
-                  <p><b>No. of Floors</b></p>
+
+                  <p style="padding: 7px;">% Total BUA deviation</p>
+                  <p style="padding: 7px;">Total SBUA considered</p>
+                  <p style="padding: 7px;">% FAR/FSI deviation</p>
+                  <p style="padding: 7px;"></p>
+                  <p style="padding: 13px;">Total Bedrooms</p>
+                </div>
+
+                <div class="col">
                   {{ form1 | crispy }}
                 </div>
                 <div class="col">
@@ -103,14 +115,21 @@
                 <p style="text-align:center;"><b>140% of sanctioned area</b></p>
                   {{ form4 | crispy }}
                 </div>
-</div>
-</div>
-<hr>
-            <div class="form-group">
-              <br>
-                  <button class="btn btn-outline-info float-right" type="submit">Submit</button>
+              </div>
             </div>
-
+            </fieldset>
+<hr>
+{% if document %}
+  <div class="form-group">
+    <br>
+        <button class="btn btn-outline-info float-right" type="submit">UPDATE</button>
+  </div>
+{% else %}
+<div class="form-group">
+  <br>
+      <button class="btn btn-outline-info float-right" type="submit">NEXT</button>
+</div>
+{% endif %}
         </form>
     </div>
 {% endblock content %}

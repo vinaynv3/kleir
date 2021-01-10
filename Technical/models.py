@@ -19,15 +19,7 @@ class Layout(models.Model):
         db_table = "LayoutInfrastructure"
 
     def __str__(self):
-        return self.connection
-
-
-    #get absolute URL
-    def get_absolute_url(self):
-        bank = get_object_or_404(BankRef,pk=self.connection_id)
-        customer = get_object_or_404(ClientInfo,pk=bank.client_info_id)
-        return reverse('#', kwargs={'slug': customer.Slug,'pk':customer.Client_ID,
-                                                'bank_type':bank.Bank_Type,'bank_id':bank.id})
+        return str(self.id)
 
 """
 Abstraction model - Technical Layout
@@ -49,7 +41,7 @@ class AsPerDocuments(LayoutCommonInfo):
         db_table = "PlotAreaDocuments"
 
     def __str__(self):
-        return self.connection
+        return str(self.id)
 
 class AsPerPlan(LayoutCommonInfo):
     connection = models.OneToOneField(BankRef,on_delete=models.CASCADE)
@@ -57,7 +49,7 @@ class AsPerPlan(LayoutCommonInfo):
         db_table = "PlotAreaPlan"
 
     def __str__(self):
-        return self.connection
+        return str(self.id)
 
 class Actuals(LayoutCommonInfo):
     connection = models.OneToOneField(BankRef,on_delete=models.CASCADE)
@@ -65,7 +57,7 @@ class Actuals(LayoutCommonInfo):
         db_table = "PlotAreaActuals"
 
     def __str__(self):
-        return self.connection
+        return str(self.id)
 
 
 """
@@ -99,7 +91,7 @@ class Deviations(models.Model):
         db_table = "Deviations"
 
     def __str__(self):
-        return self.connection
+        return str(self.id)
 
 
 class PermissibleBUA(FloorsCommonInfo):
@@ -108,7 +100,7 @@ class PermissibleBUA(FloorsCommonInfo):
         db_table = "PermissibleBUA"
 
     def __str__(self):
-        return self.connection
+        return str(self.id)
 
 class ActualBUA(FloorsCommonInfo):
     connection = models.OneToOneField(BankRef,on_delete=models.CASCADE)
@@ -116,7 +108,7 @@ class ActualBUA(FloorsCommonInfo):
         db_table = "ActualBUA"
 
     def __str__(self):
-        return self.connection
+        return str(self.id)
 
 class SanctionedArea(FloorsCommonInfo):
     connection = models.OneToOneField(BankRef,on_delete=models.CASCADE)
@@ -124,7 +116,7 @@ class SanctionedArea(FloorsCommonInfo):
         db_table = "SanctionedArea"
 
     def __str__(self):
-        return self.connection
+        return str(self.id)
 
 
 
@@ -148,7 +140,7 @@ class AreaDetails(PropertyValueCommonInfo):
         db_table = "AreaDetails"
 
     def __str__(self):
-        return self.connection
+        return str(self.id)
 
 
 class Rate(PropertyValueCommonInfo):
@@ -158,7 +150,7 @@ class Rate(PropertyValueCommonInfo):
         db_table = "Rate"
 
     def __str__(self):
-        return self.connection
+        return str(self.id)
 
 
 class TotalValue(PropertyValueCommonInfo):
@@ -168,23 +160,23 @@ class TotalValue(PropertyValueCommonInfo):
         db_table = "TotalValue"
 
     def __str__(self):
-        return self.connection
+        return str(self.id)
 
 
 #FairMarketValue model
 class FairMarketValue(models.Model):
 
     completion = models.PositiveIntegerField(blank = True, null = True)
-    Date = models.PositiveIntegerField(blank = True, null = True)
-    Distressed = models.PositiveIntegerField(blank = True, null = True)
-    GovtValue = models.PositiveIntegerField(blank = True, null = True)
+    Date =  models.DecimalField(blank = True, null = True, max_digits=10, decimal_places=2)
+    Distressed =  models.DecimalField(blank = True, null = True, max_digits=10, decimal_places=2)
+    GovtValue = models.CharField(max_length=200)
     connection = models.OneToOneField(BankRef,on_delete=models.CASCADE)
 
     class Meta:
         db_table = "FairMarketValue"
 
     def __str__(self):
-        return self.connection
+        return str(self.id)
 
 
 #PropertyStatus model
@@ -199,7 +191,7 @@ class PropertyStatus(models.Model):
         db_table = "PropertyStatus"
 
     def __str__(self):
-        return self.connection
+        return str(self.id)
 
 #FinalPropertyNotes model
 class FinalNotes(models.Model):
@@ -213,4 +205,4 @@ class FinalNotes(models.Model):
         db_table = "FinalPropertyNotes"
 
     def __str__(self):
-        return self.connection
+        return str(self.id)
