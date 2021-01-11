@@ -25,10 +25,11 @@ class ListCustomers(ListView):
             last_bank_valuation = customer.bankref_set.last()
             try:
                 customer_reference_details[customer] = last_bank_valuation
+                customer_list.append({customer:last_bank_valuation})
             except AttributeError:
                 customer.delete()
 
-        context = {'customer_reference_details':customer_reference_details}
+        context = {'customer_reference_details':customer_reference_details,'customer_list':customer_list}
         return context
 
 #DetailView

@@ -1,30 +1,306 @@
 {% extends "PropertyDocs/base.html" %}
-
+{% load PropertyDocs_extras %}
+{% load static %}
 {% block content %}
 
 
 
-  {% for Customer,bank_details in customer_reference_details.items %}
+
 
     {% if user.is_authenticated %}
-    <a  style="color:black" href=" {% url 'Detail-Page' Customer.Slug Customer.Client_ID %} ">
-       <Strong><h3>{{ Customer.Firstname}} {{Customer.Lastname }}</h3> </strong></a>
-         <p>{{bank_details.Reference_Number}} <b>:</b>
-           <small>{{bank_details.Date}}</small></p>
-    <br>
+
+    <div class="container mr-2 border-right-0" >
+          <div class="row">
+            <div class="col">
+              {% if customer_list|get_slug:0  %}
+              <a style="color:black" href="{% url 'Detail-Page' customer_list|get_slug:0 customer_list|get_id:0 %}">
+                <img src = "{% static 'PropertyDocs/customer.png' %}"
+                     alt="Img" width="120" height="130"></a>
+              <Strong><b>{{ customer_list | get_firstname:0 }} {{ customer_list | get_lastname:0}} </b></strong>
+
+                {% else %}
+                <a style="color:black" href="#">
+                  <img src = "{% static 'PropertyDocs/customer.png' %}"
+                       alt="Img" width="120" height="130"></a>
+                <Strong><b> + </b></strong>
+                {% endif %}
+            </div>
+
+            <div class="col">
+              {% if customer_list|get_slug:1  %}
+              <a style="color:black" href="{% url 'Detail-Page' customer_list|get_slug:1 customer_list|get_id:1 %}">
+                <img src = "{% static 'PropertyDocs/customer.png' %}"
+                     alt="Img" width="120" height="130"></a>
+              <Strong><b>{{ customer_list | get_firstname:1 }} {{ customer_list | get_lastname:1}} </b></strong>
+
+                {% else %}
+                <a style="color:black" href="#">
+                  <img src = "{% static 'PropertyDocs/customer.png' %}"
+                       alt="Img" width="120" height="130"></a>
+                <Strong><b> + </b></strong>
+                {% endif %}
+            </div>
+
+            <div class="col">
+              {% if customer_list|get_slug:2  %}
+              <a style="color:black" href="{% url 'Detail-Page' customer_list|get_slug:2 customer_list|get_id:2 %}">
+                <img src = "{% static 'PropertyDocs/customer.png' %}"
+                     alt="Img" width="120" height="130"></a>
+              <Strong><b>{{ customer_list | get_firstname:2 }} {{ customer_list | get_lastname:2}} </b></strong>
+
+                {% else %}
+                <a style="color:black" href="#">
+                  <img src = "{% static 'PropertyDocs/customer.png' %}"
+                       alt="Img" width="120" height="130"></a>
+                <Strong><b> + </b></strong>
+                {% endif %}
+            </div>
+
+          </div>
+
+          <div class="row">
+            <div class="col">
+              {% if customer_list|get_slug:3  %}
+              <a style="color:black" href="{% url 'Detail-Page' customer_list|get_slug:3 customer_list|get_id:3 %}">
+                <img src = "{% static 'PropertyDocs/customer.png' %}"
+                     alt="Img" width="120" height="130"></a>
+              <Strong><b>{{ customer_list | get_firstname:3 }} {{ customer_list | get_lastname:3}} </b></strong>
+
+                {% else %}
+                <a style="color:black" href="#">
+                  <img src = "{% static 'PropertyDocs/customer.png' %}"
+                       alt="Img" width="120" height="130"></a>
+                <Strong><b> + </b></strong>
+                {% endif %}
+            </div>
+
+            <div class="col">
+              {% if customer_list|get_slug:4  %}
+              <a style="color:black" href="{% url 'Detail-Page' customer_list|get_slug:4 customer_list|get_id:4 %}">
+                <img src = "{% static 'PropertyDocs/customer.png' %}"
+                     alt="Img" width="120" height="130"></a>
+              <Strong><b>{{ customer_list | get_firstname:4 }} {{ customer_list | get_lastname:4}} </b></strong>
+
+                {% else %}
+                <a style="color:black" href="#">
+                  <img src = "{% static 'PropertyDocs/customer.png' %}"
+                       alt="Img" width="120" height="130"></a>
+                <Strong><b> + </b></strong>
+                {% endif %}
+            </div>
+
+            <div class="col">
+              {% if customer_list|get_slug:5  %}
+              <a style="color:black" href="{% url 'Detail-Page' customer_list|get_slug:5 customer_list|get_id:5 %}">
+                <img src = "{% static 'PropertyDocs/customer.png' %}"
+                     alt="Img" width="120" height="130"></a>
+              <Strong><b>{{ customer_list | get_firstname:5 }} {{ customer_list | get_lastname:5 }} </b></strong>
+
+                {% else %}
+                <a style="color:black" href="#">
+                  <img src = "{% static 'PropertyDocs/customer.png' %}"
+                       alt="Img" width="120" height="130"></a>
+                <Strong><b> + </b></strong>
+                {% endif %}
+            </div>
+
+          </div>
+
+          <div class="row">
+            <div class="col">
+              {% if customer_list|get_slug:6  %}
+              <a style="color:black" href="{% url 'Detail-Page' customer_list|get_slug:6 customer_list|get_id:6 %}">
+                <img src = "{% static 'PropertyDocs/customer.png' %}"
+                     alt="Img" width="120" height="130"></a>
+              <Strong><b>{{ customer_list | get_firstname:6 }} {{ customer_list | get_lastname:6}} </b></strong>
+
+                {% else %}
+                <a style="color:black" href="#">
+                  <img src = "{% static 'PropertyDocs/customer.png' %}"
+                       alt="Img" width="120" height="130"></a>
+                <Strong><b> + </b></strong>
+                {% endif %}
+            </div>
+
+            <div class="col">
+              {% if customer_list|get_slug:7  %}
+              <a style="color:black" href="{% url 'Detail-Page' customer_list|get_slug:7 customer_list|get_id:7 %}">
+                <img src = "{% static 'PropertyDocs/customer.png' %}"
+                     alt="Img" width="120" height="130"></a>
+              <Strong><b>{{ customer_list | get_firstname:7 }} {{ customer_list | get_lastname:7 }} </b></strong>
+
+                {% else %}
+                <a style="color:black" href="#">
+                  <img src = "{% static 'PropertyDocs/customer.png' %}"
+                       alt="Img" width="120" height="130"></a>
+                <Strong><b> + </b></strong>
+                {% endif %}
+            </div>
+
+            <div class="col">
+              {% if customer_list|get_slug:8  %}
+              <a style="color:black" href="{% url 'Detail-Page' customer_list|get_slug:8 customer_list|get_id:8 %}">
+                <img src = "{% static 'PropertyDocs/customer.png' %}"
+                     alt="Img" width="120" height="130"></a>
+              <Strong><b>{{ customer_list | get_firstname:8 }} {{ customer_list | get_lastname:8 }} </b></strong>
+
+                {% else %}
+                <a style="color:black" href="#">
+                  <img src = "{% static 'PropertyDocs/customer.png' %}"
+                       alt="Img" width="120" height="130"></a>
+                <Strong><b> + </b></strong>
+                {% endif %}
+            </div>
+
+          </div>
 
     {% else %}
+    <div class="container mr-2 border-right-0" >
+          <div class="row">
+            <div class="col">
+              {% if customer_list|get_slug:0  %}
+              <a style="color:black" href="{% url 'Detail-Page' customer_list|get_slug:0 customer_list|get_id:0 %}">
+                <img src = "{% static 'PropertyDocs/customer.png' %}"
+                     alt="Img" width="120" height="130"></a>
+              <Strong><b>{{ customer_list | get_firstname:0 }} {{ customer_list | get_lastname:0}} </b></strong>
 
-    <a style="color:black" href=" {% url 'login' %}">
-      <Strong><h3> {{ Customer.Firstname}} {{Customer.Lastname }}</h3> </strong></a>
-       <p>{{bank_details.Reference_Number}} <b>:</b>
-         <small>{{bank_details.Date}}</small></p>
-     <br>
+                {% else %}
+                <a style="color:black" href="#">
+                  <img src = "{% static 'PropertyDocs/customer.png' %}"
+                       alt="Img" width="120" height="130"></a>
+                <Strong><b> + </b></strong>
+                {% endif %}
+            </div>
+
+            <div class="col">
+              {% if customer_list|get_slug:1  %}
+              <a style="color:black" href="{% url 'Detail-Page' customer_list|get_slug:1 customer_list|get_id:1 %}">
+                <img src = "{% static 'PropertyDocs/customer.png' %}"
+                     alt="Img" width="120" height="130"></a>
+              <Strong><b>{{ customer_list | get_firstname:1 }} {{ customer_list | get_lastname:1}} </b></strong>
+
+                {% else %}
+                <a style="color:black" href="#">
+                  <img src = "{% static 'PropertyDocs/customer.png' %}"
+                       alt="Img" width="120" height="130"></a>
+                <Strong><b> + </b></strong>
+                {% endif %}
+            </div>
+
+            <div class="col">
+              {% if customer_list|get_slug:2  %}
+              <a style="color:black" href="{% url 'Detail-Page' customer_list|get_slug:2 customer_list|get_id:2 %}">
+                <img src = "{% static 'PropertyDocs/customer.png' %}"
+                     alt="Img" width="120" height="130"></a>
+              <Strong><b>{{ customer_list | get_firstname:2 }} {{ customer_list | get_lastname:2}} </b></strong>
+
+                {% else %}
+                <a style="color:black" href="#">
+                  <img src = "{% static 'PropertyDocs/customer.png' %}"
+                       alt="Img" width="120" height="130"></a>
+                <Strong><b> + </b></strong>
+                {% endif %}
+            </div>
+
+          </div>
+
+          <div class="row">
+            <div class="col">
+              {% if customer_list|get_slug:3  %}
+              <a style="color:black" href="{% url 'Detail-Page' customer_list|get_slug:3 customer_list|get_id:3 %}">
+                <img src = "{% static 'PropertyDocs/customer.png' %}"
+                     alt="Img" width="120" height="130"></a>
+              <Strong><b>{{ customer_list | get_firstname:3 }} {{ customer_list | get_lastname:3}} </b></strong>
+
+                {% else %}
+                <a style="color:black" href="#">
+                  <img src = "{% static 'PropertyDocs/customer.png' %}"
+                       alt="Img" width="120" height="130"></a>
+                <Strong><b> + </b></strong>
+                {% endif %}
+            </div>
+
+            <div class="col">
+              {% if customer_list|get_slug:4  %}
+              <a style="color:black" href="{% url 'Detail-Page' customer_list|get_slug:4 customer_list|get_id:4 %}">
+                <img src = "{% static 'PropertyDocs/customer.png' %}"
+                     alt="Img" width="120" height="130"></a>
+              <Strong><b>{{ customer_list | get_firstname:4 }} {{ customer_list | get_lastname:4}} </b></strong>
+
+                {% else %}
+                <a style="color:black" href="#">
+                  <img src = "{% static 'PropertyDocs/customer.png' %}"
+                       alt="Img" width="120" height="130"></a>
+                <Strong><b> + </b></strong>
+                {% endif %}
+            </div>
+
+            <div class="col">
+              {% if customer_list|get_slug:5  %}
+              <a style="color:black" href="{% url 'Detail-Page' customer_list|get_slug:5 customer_list|get_id:5 %}">
+                <img src = "{% static 'PropertyDocs/customer.png' %}"
+                     alt="Img" width="120" height="130"></a>
+              <Strong><b>{{ customer_list | get_firstname:5 }} {{ customer_list | get_lastname:5 }} </b></strong>
+
+                {% else %}
+                <a style="color:black" href="#">
+                  <img src = "{% static 'PropertyDocs/customer.png' %}"
+                       alt="Img" width="120" height="130"></a>
+                <Strong><b> + </b></strong>
+                {% endif %}
+            </div>
+
+          </div>
+
+          <div class="row">
+            <div class="col">
+              {% if customer_list|get_slug:6  %}
+              <a style="color:black" href="{% url 'Detail-Page' customer_list|get_slug:6 customer_list|get_id:6 %}">
+                <img src = "{% static 'PropertyDocs/customer.png' %}"
+                     alt="Img" width="120" height="130"></a>
+              <Strong><b>{{ customer_list | get_firstname:6 }} {{ customer_list | get_lastname:6}} </b></strong>
+
+                {% else %}
+                <a style="color:black" href="#">
+                  <img src = "{% static 'PropertyDocs/customer.png' %}"
+                       alt="Img" width="120" height="130"></a>
+                <Strong><b> + </b></strong>
+                {% endif %}
+            </div>
+
+            <div class="col">
+              {% if customer_list|get_slug:7  %}
+              <a style="color:black" href="{% url 'Detail-Page' customer_list|get_slug:7 customer_list|get_id:7 %}">
+                <img src = "{% static 'PropertyDocs/customer.png' %}"
+                     alt="Img" width="120" height="130"></a>
+              <Strong><b>{{ customer_list | get_firstname:7 }} {{ customer_list | get_lastname:7 }} </b></strong>
+
+                {% else %}
+                <a style="color:black" href="#">
+                  <img src = "{% static 'PropertyDocs/customer.png' %}"
+                       alt="Img" width="120" height="130"></a>
+                <Strong><b> + </b></strong>
+                {% endif %}
+            </div>
+
+            <div class="col">
+              {% if customer_list|get_slug:8  %}
+              <a style="color:black" href="{% url 'Detail-Page' customer_list|get_slug:8 customer_list|get_id:8 %}">
+                <img src = "{% static 'PropertyDocs/customer.png' %}"
+                     alt="Img" width="120" height="130"></a>
+              <Strong><b>{{ customer_list | get_firstname:8 }} {{ customer_list | get_lastname:8 }} </b></strong>
+
+                {% else %}
+                <a style="color:black" href="#">
+                  <img src = "{% static 'PropertyDocs/customer.png' %}"
+                       alt="Img" width="120" height="130"></a>
+                <Strong><b> + </b></strong>
+                {% endif %}
+            </div>
+
+          </div>
 
     {%endif%}
 
-    {% empty %}
-    <h4>No records Found</h4>
 
-  {% endfor %}
 {% endblock content %}
