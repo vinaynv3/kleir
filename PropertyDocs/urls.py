@@ -1,6 +1,7 @@
 from django.urls import path, include
 from PropertyDocs.views import *
 from PropertyDocs.business_logic_views import *
+from . import business_logic_views
 
 #URL routes - post site vist detail entries
 SiteDocs_patterns = [
@@ -36,6 +37,7 @@ Bank_Ref_url_patterns = [
 
 urlpatterns = [
     path('', ListCustomers.as_view(), name='Home-Page'),
+    path('search/', business_logic_views.SearchView , name='Search-Ref'),
     path('<slug:slug>/<int:pk>/details/', CustomerDetails.as_view(), name='Detail-Page'),
     path('CreateCustomerProfile/', CreateCustomer.as_view(), name='doc-customer'),
     path('<slug:slug>/<int:pk>/update/', UpdateCustomer.as_view(), name='doc-customer-update'),

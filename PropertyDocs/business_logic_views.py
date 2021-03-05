@@ -1,11 +1,13 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView , UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse_lazy, reverse
 from PropertyDocs.models import *
 from django.views import View
 from .BusinessLogicAlgo.doc_navigator import *
+from django.core.exceptions import ObjectDoesNotExist
 
 
 """
@@ -50,3 +52,23 @@ class ViewBankDetails(View):
         customer = get_object_or_404(ClientInfo,pk=self.kwargs.get('pk'))
 
         return render(request, self.template_name, {'bank':bank,'customer':customer})
+
+def SearchView(request,*args,**kwargs):
+    search_post = request.GET.get('RefNo')
+    search_post = search_post.strip() #strip space
+
+    if len(search_post) is 0:
+        current_url_path = request.headers.get('Referer')
+        return HttpResponseRedirect(current_url_path)
+
+    if search_post:
+
+        try:
+            bank = BankRef.objects.get(Reference_Number = search_post)
+            customer = ClientInfo.objects.get(pk=bank.client_info_id)
+            return render(request,'PropertyDocs/search-result.html' , {'bank':bank,'customer':customer})
+
+        except ObjectDoesNotExist:
+            messages.info(request, 'Invalid Reference Number, please enter valid RefNo')
+            current_url_path = request.headers.get('Referer')
+            return HttpResponseRedirect(current_url_path)
