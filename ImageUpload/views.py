@@ -93,7 +93,7 @@ def PhotoUpdate(request,*args,**kwargs):
 def MapsView(request,*args,**kwargs):
 
     ImageFormSet = modelformset_factory(ImageMaps,
-                                        form=ImageMapsForm, extra=2)
+                                        form=ImageMapsForm, extra=4)
 
     if request.method == 'POST':
         photos = MapsForm(request.POST)
