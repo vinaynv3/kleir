@@ -2,7 +2,7 @@
 {% extends "PropertyDocs/base.html" %}
 {% load crispy_forms_tags %}
 {% load static %}
-
+{% load report_tags %}
 {% block content %}
 
 <form action="{% url 'multi-filter-search-display' %}">
@@ -34,9 +34,76 @@
     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
   </svg>
   </button>
+</div>
+</form>
+<hr>
+{% if total_rows %}
+<button type="button" class="btn btn-primary btn-sm">{{total_rows}} rows found</button>
+<br>
+<br>
+{% endif %}
+<div class="row">
+  <div class="col">
+    <p style="text-align:left;"><b>FIRSTNAME</b></p>
+  </div>
 
+  <div class="col">
+    <p style="text-align:center;"><b>LASTNAME</b></p>
+  </div>
+
+  <div class="col">
+    <p style="text-align:center;"><b>BANK</b></p>
+  </div>
+
+  <div class="col">
+  <p style="text-align:center;"><b>REF NUM</b></p>
+  </div>
+
+
+  <div class="col">
+  <p style="text-align:center;"><b>DATE</b></p>
+  </div>
+
+    <div class="col">
+    <p style="text-align:left;"><b>VIEW</b></p>
+    </div>
 </div>
 
-</form>
+  {% for obj in objects %}
+  <div class="row">
+    {{forloop.counter}}
+    <div class="col">
+      <p style="text-align:left;">{{obj.slug | formatSlug:0}}</p>
+    </div>
+
+    <div class="col">
+      <p style="text-align:center;">{{obj.slug | formatSlug:1}}</p>
+    </div>
+
+    <div class="col">
+      <p style="text-align:center;">{{ obj.bank}}</p>
+    </div>
+
+    <div class="col">
+    <p style="text-align:center;">{{ obj.ref}}</p>
+    </div>
+
+
+    <div class="col">
+    <p style="text-align:center;">{{ obj.date}}</p>
+    </div>
+    <div class="col">
+
+            <a href = "{% url 'Ref-Num-View' obj.slug obj.ids|getId:0 obj.bank obj.ids|getId:1 %}"><i class="bi bi-eye-fill" ></i>
+              <svg xmlns="http://www.w3.org/2000/svg" width="46" height="26" fill="black" class="bi bi-eye-fill" viewBox="0 0 16 16">
+              <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+              <path fill-rule="evenodd" d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
+            </svg>
+            </a>
+      </div>
+  </div>
+
+  {% endfor %}
+
 
 {% endblock content %}
