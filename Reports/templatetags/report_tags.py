@@ -10,3 +10,7 @@ def formatSlug(slug,key):
 @register.filter
 def getId(ids,key):
     return ids[key]
+
+@register.filter
+def pageNo(*args,**kwargs):
+    pass
