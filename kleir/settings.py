@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'ImageUpload.apps.ImageuploadConfig',
     'Technical.apps.TechnicalConfig',
     'Reports.apps.ReportsConfig',
+    'Viewer.apps.ViewerConfig',
     'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
