@@ -14,4 +14,5 @@ urlpatterns = [
     path('', include('ImageUpload.urls')),
     path('', include('Technical.urls')),
     path('', include('Reports.urls')),
+    path('', include('Viewer.urls')),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

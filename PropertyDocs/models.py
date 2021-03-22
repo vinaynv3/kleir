@@ -9,40 +9,6 @@ from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 
-
-from Technical.models import *
-from ImageUpload.models import *
-
-###Managers##
-"""
-Viewer manager, which is in relation to model BankRef
-"""
-
-class ViewerManager(models.Manager):
-
-    models = [Documents,Address,Insights,MarketingValue,Plan,LegalLandmarks,
-                    SiteVisitLandmarks,Photos,Maps,AsPerDocuments,AsPerPlan,
-                    Actuals,Deviations,PermissibleBUA,ActualBUA,SanctionedArea,
-                    AreaDetails,Rate,TotalValue,FairMarketValue,PropertyStatus,FinalNotes
-                    ]
-
-    dataSet = []
-
-    def document(self,DocID = None):
-        pos = 0
-        lookup = True
-        while pos < len(models) and lookup:
-            try:
-                object = models[pos].objects.get(connection_id = DocID)
-                dataSet.append(object)
-                pos +=1
-
-            except ObjectDoesNotExist:
-                lookup = False
-                messages.info(request, 'Document is incomplete, please fill all the details to view')
-
-
-
 class ClientInfo(models.Model):
 
     # Models attributes (Database columns)
@@ -95,8 +61,6 @@ class BankRef(models.Model):
     Bank_Type =  models.CharField(max_length=100,choices=Bank_types,default='NA')
     Date = models.DateField(auto_now = True)
 
-    #Viewer Manager
-    viewer = ViewerManager()
 
     def __str__(self):
         return f'{self.Bank_Type}'
