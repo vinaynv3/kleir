@@ -3,6 +3,7 @@ from django.shortcuts import render
 from PropertyDocs.models import *
 from Technical.models import *
 from ImageUpload.models import *
+from .BankExcelTemplates import *
 from django.http import HttpResponse, HttpResponseRedirect, FileResponse
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -37,13 +38,10 @@ class ViewerManager(models.Manager):
 
         if dataSet != []:
 
-            """
             bank = BankRef.objects.get(pk = DocID)
             customer = ClientInfo.objects.get(pk = bank.client_info_id)
             dataSet.insert(0,bank)
             dataSet.insert(0,customer)
-            """
-
             return dataSet
 
 
@@ -63,35 +61,8 @@ def doc_complete(bank_id):
         return False
 
 
-"""
-Data representation & Manipulation classes
-"""
 
-
-class BFL_Urban:
-
-    def __init__(self,data = None):
-        self.data = data
-
-    def clean(self):
-
-        data = {}
-        for obj in self.data:
-            data[str(obj.__class__).split(".")[-1].split("'")[0]] = []
-
-            for k,v in obj.__dict__.items():
-                if (not k.startswith("_")) and k != "id" and k != "connection_id":
-                        data[str(obj.__class__).split(".")[-1].split("'")[0]].append(v)
-        return data
-
-
-
-
-    def personalDetailsContainer(self):
-        cell_points = [(4,3),(4,9),(5,9),(6,9),(6,3),(7,4),(8,3)]
-        data = self.clean()
-        profile_data = data['BankRef'][0] + data['Documents'][1:4]+data['ClientInfo'][3]+data['Documents'][4:]
-
+#PDF Viewer controller
 def ViewDocument(request,*args,**kwargs):
 
     if doc_complete(kwargs['bank_id']):
@@ -103,16 +74,29 @@ def ViewDocument(request,*args,**kwargs):
         with open(template_path,'rb') as xlsx:
 
             import win32com.client
+            import pythoncom
+            import openpyxl
+
+            #Collect document dataSet
+            data = ViewerManager.viewer.document(DocID = kwargs['bank_id'])
+            bankObj = BFL_Urban(data = data)
+            clean_data = bankObj.clean()
+
+            xl = openpyxl.load_workbook(xlsx)
+            sheet1 = xl.get_sheet_by_name('Sheet1')
+            print(sheet1['B1'].value)
+
+
+            pythoncom.CoInitialize() # COM object threading
             excel = win32com.client.Dispatch("Excel.Application")
+
             excel.Visible = False
             wb = excel.Workbooks.Open(template_path)
-
             work_sheets = wb.Worksheets[0]
 
-            ws_index_list = [1,4,5] #say you want to print these sheets
-            #wb.WorkSheets(ws_index_list).Select()
             work_sheets.ExportAsFixedFormat(0, path_to_pdf)
             excel.Application.Quit()
+            del excel
 
 
         with open(path_to_pdf,'rb') as pdf:
