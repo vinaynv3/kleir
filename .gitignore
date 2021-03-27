@@ -133,3 +133,6 @@ dmypy.json
 
 # Database
 *.sqlite3
+
+*SETTINGS FILE
+*settings.py
