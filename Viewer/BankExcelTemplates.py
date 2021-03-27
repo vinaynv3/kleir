@@ -1,3 +1,4 @@
+import openpyxl
 
 """
 Data representation & Manipulation classes
@@ -20,7 +21,18 @@ class BFL_Urban:
         return data
 
 
-    def personalDetailsContainer(self):
+    def personalDetailsContainer(self,xlsx):
         cell_points = [(4,3),(4,9),(5,9),(6,9),(6,3),(7,4),(8,3)]
         data = self.clean()
-        profile_data = data['BankRef'][0] + data['Documents'][1:4]+data['ClientInfo'][3]+data['Documents'][4:]
+        #print(data['BankRef'])
+        #print(data['Documents'])
+        #print(data['ClientInfo'])
+        profile_data = [data['BankRef'][1]] + data['Documents'][1:4]+[data['ClientInfo'][3]]+data['Documents'][4:]
+        print(profile_data)
+
+        for i in range(len(cell_points)):
+            cell = cell_points[i]
+            sheet = xlsx.get_sheet_by_name('Valuation format')
+            print(sheet.title)
+            sheet = sheet.cell(row = cell[0],column = cell[1])
+            sheet = profile_data[i]
