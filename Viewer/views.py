@@ -77,21 +77,23 @@ def ViewDocument(request,*args,**kwargs):
             import pythoncom
             import openpyxl
 
-            #Collect document dataSet
-            data = ViewerManager.viewer.document(DocID = kwargs['bank_id'])
-            bankObj = BFL_Urban(data = data)
-            clean_data = bankObj.clean()
 
             xl = openpyxl.load_workbook(xlsx)
-            sheet1 = xl.get_sheet_by_name('Sheet1')
-            print(sheet1['B1'].value)
+            sheet = xl.get_sheet_names()[0]
+
+
+
+            #Collect document dataSet
+            data = ViewInterface.viewer.document(DocID = kwargs['bank_id'])
+            bankObj = BFL_Urban(data = data)
+            bankObj.personalDetailsContainer(xl)
 
 
             pythoncom.CoInitialize() # COM object threading
             excel = win32com.client.Dispatch("Excel.Application")
 
             excel.Visible = False
-            wb = excel.Workbooks.Open(template_path)
+            wb = excel.Workbooks.Open(xl)
             work_sheets = wb.Worksheets[0]
 
             work_sheets.ExportAsFixedFormat(0, path_to_pdf)
