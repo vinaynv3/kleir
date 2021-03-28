@@ -137,10 +137,15 @@ USE_TZ = True
 STATICFILES_DIRS = (
     os.path.join(PROJECT_DIR, 'static'),
 )
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
-
+# Simplified static file serving.
+# https://warehouse.python.org/project/whitenoise/
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+#forms template
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+#Login app variables
 LOGIN_REDIRECT_URL = 'Home-Page'
 LOGIN_URL = 'login'
 
