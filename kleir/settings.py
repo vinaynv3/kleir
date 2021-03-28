@@ -78,6 +78,11 @@ TEMPLATES = [
     },
 ]
 
+TEMPLATE_DIRS = (
+    os.path.join(PROJECT_DIR, "templates"),
+    # here you can add another templates directory if you wish.
+)
+
 WSGI_APPLICATION = 'kleir.wsgi.application'
 
 
