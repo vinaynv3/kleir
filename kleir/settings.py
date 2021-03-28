@@ -90,7 +90,7 @@ DATABASES = {
         #},
                 'NAME': 'kleir',
                 'USER': 'root',
-                'PASSWORD': '*************',
+                'PASSWORD': 'WinterMute531@',
                 'HOST': 'localhost',
                 'PORT': '3306',
     }
