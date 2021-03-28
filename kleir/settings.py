@@ -15,7 +15,9 @@ import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
 PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -81,20 +83,20 @@ WSGI_APPLICATION = 'kleir.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        #'OPTIONS': {
-        #    'read_default_file': 'C:\Program Files\MySQL\MySQL Server 8.0\kleir.cnf',
-        #},
+if PROJECT_DIR == 'C:\Project\kleir\kleir':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            #'OPTIONS': {
+            #    'read_default_file': 'C:\Program Files\MySQL\MySQL Server 8.0\kleir.cnf',
+            #},
                 'NAME': 'kleir',
                 'USER': 'root',
                 'PASSWORD': 'WinterMute531@',
                 'HOST': 'localhost',
                 'PORT': '3306',
-    }
-}
+            }
+        }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
