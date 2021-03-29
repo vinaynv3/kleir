@@ -114,6 +114,7 @@ class AddBankRef(LoginRequiredMixin,SuccessMessageMixin,CreateView):
     model = BankRef
     fields = ['Reference_Number','Bank_Type']
     success_message = "Bank record %(bank)s was added successfully"
+    template_name = 'PropertyDocs/bankref_form.html'
 
     def form_valid(self, form):
         form.instance.client_info_id = self.kwargs.get('pk')
@@ -134,6 +135,7 @@ class AddBankRef(LoginRequiredMixin,SuccessMessageMixin,CreateView):
         context['customer'] = customer
         if 'form' not in context:
             context['form'] = self.get_form()
+
         return context
 
 #Update Bank detauls
