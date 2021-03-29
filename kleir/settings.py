@@ -65,7 +65,8 @@ ROOT_URLCONF = 'kleir.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR,'PropertyDocs/templates/PropertyDocs/templates'),],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -78,11 +79,7 @@ TEMPLATES = [
     },
 ]
 
-TEMPLATE_DIRS = (
-    os.path.join(PROJECT_DIR, "templates"),
-    os.path.join(PROJECT_DIR, "PropertyDocs/templates"),
-    # here you can add another templates directory if you wish.
-)
+
 
 WSGI_APPLICATION = 'kleir.wsgi.application'
 
