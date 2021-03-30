@@ -1,0 +1,135 @@
+
+
+{% extends "PropertyDocs/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block script %}
+<script >
+  $(document).ready(function(){
+    $(".Permissible").on('input', function(){
+
+      var a = $("#p_stilt").val();
+
+      var s_stilt = parseFloat(a) * 1.4;
+      if (isNaN(s_stilt)) s_stilt = 0;
+      $("#s_stilt").val(s_stilt);
+
+      var b = 0;
+      b = $("#p_GF").val();
+
+      var s_GF = parseFloat(b) * 1.4;
+      if (isNaN(s_GF)) s_GF = 0;
+      $("#s_GF").val(s_GF);
+
+      var c = 0;
+      c = $("#p_FF").val();
+
+      var s_FF = parseFloat(c) * 1.4;
+      if (isNaN(s_FF)) s_FF = 0;
+      $("#s_FF").val(s_FF);
+
+      var d = 0;
+      d = $("#p_SF").val();
+
+      var s_SF = parseFloat(d) * 1.4;
+      if (isNaN(s_SF)) s_SF = 0;
+      $("#s_SF").val(s_SF);
+
+
+      var e = 0;
+      e = $("#p_TF").val();
+
+      var s_TF = parseFloat(e) * 1.4;
+      if (isNaN(s_TF)) s_TF = 0;
+      $("#s_TF").val(s_TF);
+
+      var total = parseFloat(a)+ parseFloat(b) + parseFloat(c)+ parseFloat(d)+ parseFloat(e);
+      if (isNaN(total)) total = 0;
+
+    $("#perm_total").val(total);
+
+    var s_total = total * 1.4;
+    if (isNaN(s_total)) s_total = 0;
+    $("#s_total").val(s_total);
+
+
+    });
+    });
+</script>
+    {% endblock %}
+
+{% block content %}
+
+    <div class="content-section">
+        <form method="POST" >
+            {% csrf_token %}
+            <fieldset class="form-group">
+              <legend class="border-bottom mb-4"><b>{{customer.Firstname}} {{customer.Lastname}} : {{bank.Bank_Type}}</b></legend>
+
+            <div class="container mr-2 border-right-0" >
+              <p><b>No. of Floors</b></p>
+              <div class="row">
+                <div class="col">
+
+                  <p style="padding: 7px;">% Total BUA deviation</p>
+                  <p style="padding: 7px;">Total SBUA considered</p>
+                  <p style="padding: 7px;">% FAR/FSI deviation</p>
+                  <p style="padding: 7px;"></p>
+                  <p style="padding: 13px;">Total Bedrooms</p>
+                </div>
+
+                <div class="col">
+                  {{ form1 | crispy }}
+                </div>
+                <div class="col">
+                </div>
+              </div>
+            </div>
+
+            <div class="container mr-2 border-right-0" >
+              <div class="row">
+                <div class="col">
+                  <br>
+                  <br>
+                  <p style="padding: 7px;"><b>Basement/Stilt area</b></p>
+                  <p style="padding: 7px;"><b>No. of floors</b></p>
+                  <p style="padding: 7px;"><b>GF area & units</b></p>
+                  <p style="padding: 7px;"><b>FF area & units</b></p>
+                  <p style="padding: 7px;"><b>SF area & units</b></p>
+                  <p style="padding: 7px;"><b>TF area & units</b></p>
+                  <p style="padding: 7px;"><b>Total</b></p>
+                  <p style="padding: 7px;"><b>FAR/FSI</b></p>
+                </div>
+
+                <div class="col">
+                  <p style="text-align:center;"><b>Permissible BUA in Sft</b></p>
+                   {{ form2 | crispy }}
+                </div>
+
+                <div class="col">
+                  <p style="text-align:center;"><b>Actual BUA in Sft</b></p>
+                  {{ form3 | crispy }}
+                </div>
+
+                <div class="col">
+                <p style="text-align:center;"><b>140% of sanctioned area</b></p>
+                  {{ form4 | crispy }}
+                </div>
+              </div>
+            </div>
+            </fieldset>
+<hr>
+{% if document %}
+  <div class="form-group">
+    <br>
+        <button class="btn btn-outline-info float-right" type="submit">UPDATE</button>
+  </div>
+{% else %}
+<div class="form-group">
+  <br>
+      <button class="btn btn-outline-info float-right" type="submit">NEXT</button>
+</div>
+{% endif %}
+        </form>
+    </div>
+{% endblock content %}

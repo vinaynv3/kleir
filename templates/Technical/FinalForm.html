@@ -1,0 +1,27 @@
+{% extends "PropertyDocs/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+    <div class="content-section">
+        <form method="POST">
+            {% csrf_token %}
+
+            <fieldset class="form-group">
+              <legend class="border-bottom mb-4"><b>{{customer.Firstname}} {{customer.Lastname}} : {{bank.Bank_Type}}</b></legend>
+                {{ form | crispy}}
+            </fieldset>
+            {% if document %}
+              <div class="form-group">
+                  <br>
+                  <button class="btn btn-outline-info float-right" type="submit">UPDATE</button>
+                </div>
+                {% else %}
+                <div class="form-group">
+                  <br>
+                  <button class="btn btn-outline-info float-right" type="submit">SUBMIT</button>
+                </div>
+            {% endif %}
+        </form>
+
+    </div>
+{% endblock content %}

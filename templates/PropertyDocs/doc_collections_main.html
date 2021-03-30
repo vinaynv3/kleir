@@ -1,0 +1,106 @@
+{% extends "PropertyDocs/base.html" %}
+{% load static %}
+{% load PropertyDocs_extras %}
+
+
+{% block content %}
+
+<div class="container ">
+  <h2><b>{{ customer.Firstname}} {{customer.Lastname}} : {{bank.Bank_Type}}</b>
+    <a href="{% url 'doc-customer-update' customer.Slug customer.Client_ID %}"
+    class="btn btn-primary btn-sm"
+    role="button">UPDATE</a>
+
+    <a href="{% url 'doc-customer-delete' customer.Slug customer.Client_ID %}"
+     class="btn btn-danger btn-sm"
+    role="button">DELETE</a></h2>
+</div>
+<hr>
+
+
+
+<a style="color:black" href = "{% url 'Detail-Page' customer.Slug customer.Client_ID  %}"><i class="bi bi-arrow-left-square-fill"></i>
+  <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-arrow-left-square-fill" viewBox="0 0 16 16">
+  <path d="M16 14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12zm-4.5-6.5H5.707l2.147-2.146a.5.5 0 1 0-.708-.708l-3 3a.5.5 0 0 0 0 .708l3 3a.5.5 0 0 0 .708-.708L5.707 8.5H11.5a.5.5 0 0 0 0-1z"/>
+</svg></a>
+<br>
+
+
+<div class="container mr-2 border-right-0" >
+  <div class="row">
+
+    <div class="col">
+      <a style="color:black" href="{% url 'doc-loantype-update' customer.Slug customer.Client_ID bank.Bank_Type bank.id  documents|dict_lookup:'Documents' %}">
+      <p><b>Documents</b></p>
+        <img src = "{% static 'PropertyDocs/edit-doc.png' %}"
+             alt="Img" width="100" height="110"></a>
+    </div>
+
+    <div class="col">
+      <a style="color:black" href="{% url 'doc-address-update' customer.Slug customer.Client_ID bank.Bank_Type bank.id  documents|dict_lookup:'Address' %}">
+      <p><b>Address</b></p>
+        <img src = "{% static 'PropertyDocs/edit-doc.png' %}"
+             alt="Img" width="100" height="110"></a>
+    </div>
+
+  <div class="col">
+    <a style="color:black" href="{% url 'doc-insights-update' customer.Slug customer.Client_ID bank.Bank_Type bank.id  documents|dict_lookup:'Insights' %}">
+    <p><b>Insights</b></p>
+      <img src = "{% static 'PropertyDocs/edit-doc.png' %}"
+           alt="Img" width="100" height="110"></a>
+  </div>
+
+  <div class="col">
+    <a style="color:black" href="{% url 'doc-market-value-update' customer.Slug customer.Client_ID bank.Bank_Type bank.id  documents|dict_lookup:'MarketingValue' %}">
+    <p><b>Marketing Value</b></p>
+      <img src = "{% static 'PropertyDocs/edit-doc.png' %}"
+           alt="Img" width="100" height="110"></a>
+  </div>
+  </div>
+<br>
+<br>
+  <div class="row">
+    <div class="col">
+      <a style="color:black" href="{% url 'doc-apt-plan-update' customer.Slug customer.Client_ID bank.Bank_Type bank.id  documents|dict_lookup:'Plan' %}">
+      <p><b>Plan</b></p>
+        <img src = "{% static 'PropertyDocs/edit-doc.png' %}"
+             alt="Img" width="100" height="110"></a>
+    </div>
+    <div class="col">
+      <a style="color:black" href="{% url 'doc-legal-landmarks-update' customer.Slug customer.Client_ID bank.Bank_Type bank.id  documents|dict_lookup:'LegalLandmarks' %}">
+      <p><b>LegalLandmarks</b></p>
+        <img src = "{% static 'PropertyDocs/edit-doc.png' %}"
+             alt="Img" width="100" height="110"></a>
+    </div>
+
+  <div class="col">
+    <a style="color:black" href="{% url 'doc-site-landmarks-update' customer.Slug customer.Client_ID bank.Bank_Type bank.id  documents|dict_lookup:'SiteVisitLandmarks' %}">
+    <p><b>SiteVisitLandmarks</b></p>
+      <img src = "{% static 'PropertyDocs/edit-doc.png' %}"
+           alt="Img" width="100" height="110"></a>
+  </div>
+
+  <div class="col">
+    <a style="color:black" href="{% url 'technical-navigation' customer.Slug customer.Client_ID bank.Bank_Type bank.id %}">
+    <p><b>Technical</b></p>
+      <img src = "{% static 'PropertyDocs/edit-doc.png' %}"
+           alt="Img" width="100" height="110"></a>
+  </div>
+  </div>
+<hr>
+  <div class="row">
+    <div class="col-md-3">
+      <a style="color:black" href="{% url 'doc-photo-update' customer.Slug customer.Client_ID bank.Bank_Type bank.id  documents|dict_lookup:'Photos' %}">
+      <p><b>Images(Interior)</b></p>
+        <img src = "{% static 'PropertyDocs/edit-doc.png' %}"
+             alt="Img" width="100" height="110"></a>
+    </div>
+    <div class="col-md-3">
+      <a style="color:black" href="{% url 'doc-map-update' customer.Slug customer.Client_ID bank.Bank_Type bank.id  documents|dict_lookup:'Maps' %}">
+      <p><b>Images(Exterior)</b></p>
+        <img src = "{% static 'PropertyDocs/edit-doc.png' %}"
+             alt="Img" width="100" height="110"></a>
+    </div>
+</div>
+</div>
+{% endblock content %}

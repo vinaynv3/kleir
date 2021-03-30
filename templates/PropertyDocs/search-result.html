@@ -1,0 +1,17 @@
+{% extends "PropertyDocs/base.html" %}
+
+{% block content %}
+
+<article>
+<div class="container ">
+  <h2>{{ customer.Firstname}} {{customer.Lastname}}</h2>
+</div>
+<hr>
+<div class="container mr-0 border-right-0">
+
+  <a href="{% url 'Ref-Num-View' customer.Slug customer.Client_ID bank.Bank_Type bank.id %}"><p style="font-size:20px;"><b>REF_NUM :</b> {{bank.Reference_Number}}</p></a>
+
+</div>
+</article>
+
+{% endblock content %}

@@ -1,0 +1,19 @@
+{% extends "PropertyDocs/base.html" %}
+
+
+{% block content %}
+
+
+<article>
+<div class="container ">
+  <h2>{{ customer.Firstname}} {{customer.Lastname}}</h2>
+</div>
+<hr>
+<div class="container mr-0 border-right-0">
+  <p style="font-size:20px;"><b>BANK:</b>{{ bank.Bank_Type}}</p>
+  <p style="font-size:20px;"><b>REF_NUM :</b> {{bank.Reference_Number}}</p>
+  <p style="font-size:20px;"><b>DATE:</b>  {{bank.Date}}</p>
+</div>
+</article>
+
+{% endblock content %}

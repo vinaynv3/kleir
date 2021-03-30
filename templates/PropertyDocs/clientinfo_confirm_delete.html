@@ -1,0 +1,18 @@
+{% extends "PropertyDocs/base.html" %}
+
+{% block content %}
+    <div class="content-section">
+        <form method="POST">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4"><b>{{ customer.Firstname}} {{customer.Lastname}}</b></legend>
+                <h5>Are you sure?</h5>
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+                <a class="btn btn-dark btn-sm" href = "{% url 'Home-Page' %}">Cancel</a>
+            </div>
+        </form>
+
+    </div>
+{% endblock content %}
