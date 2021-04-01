@@ -1,5 +1,5 @@
+from __future__ import print_function
 from django.shortcuts import render
-
 from PropertyDocs.models import *
 from Technical.models import *
 from ImageUpload.models import *
@@ -66,45 +66,39 @@ def doc_complete(bank_id):
 def ViewDocument(request,*args,**kwargs):
 
     if doc_complete(kwargs['bank_id']):
+        import openpyxl
+        wb = openpyxl.Workbook('test.xlsx')
+        wb.save('test.xlsx')
+        load_workbook = openpyxl.load_workbook('test.xlsx')
+        sheet = load_workbook.active
+        sheet.title = "vinay"
+        load_workbook.save('test.xlsx')
 
-        bankName = BankRef.objects.get(pk=kwargs['bank_id']).Bank_Type
-        template_path = 'C:\Project\kleir\Viewer\data\ExcelFiles\{0}.xlsx'.format(bankName)
-        path_to_pdf = r'C:\Project\kleir\Viewer\data\ExcelFiles\sample.pdf'
-
-        with open(template_path,'rb') as xlsx:
-
-            import win32com.client
-            import pythoncom
-            import openpyxl
-
-
-            xl = openpyxl.load_workbook(xlsx)
-            sheet = xl.get_sheet_names()[0]
-
-
-
-            #Collect document dataSet
-            data = ViewInterface.viewer.document(DocID = kwargs['bank_id'])
-            bankObj = BFL_Urban(data = data)
-            bankObj.personalDetailsContainer(xl)
-
-
-            pythoncom.CoInitialize() # COM object threading
-            excel = win32com.client.Dispatch("Excel.Application")
-
-            excel.Visible = False
-            wb = excel.Workbooks.Open(xl)
-            work_sheets = wb.Worksheets[0]
-
-            work_sheets.ExportAsFixedFormat(0, path_to_pdf)
-            excel.Application.Quit()
-            del excel
-
-
-        with open(path_to_pdf,'rb') as pdf:
-            response = HttpResponse(pdf.read(), content_type='application/pdf')
-            response['Content-Disposition'] = 'inline;filename=some_file.pdf'
-            return response
-
+        import time
+        import cloudmersive_convert_api_client
+        from cloudmersive_convert_api_client.rest import ApiException
+        from pprint import pprint
+        # Configure API key authorization: Apikey
+        configuration = cloudmersive_convert_api_client.Configuration()
+        configuration.api_key['Apikey'] = '3eafe039-75ee-4cf3-8d7a-38df7c662748'
+        # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+        # configuration.api_key_prefix['Apikey'] = 'Bearer'
+        # create an instance of the API class
+        api_instance = cloudmersive_convert_api_client.ConvertDocumentApi(cloudmersive_convert_api_client.ApiClient(configuration))
+        input_file = 'test.xlsx' # file | Input file to perform the operation on.
+        try:
+            # Convert Document to PDF
+            api_response = api_instance.convert_document_xlsx_to_pdf(input_file)
+            api_response1 = api_instance.convert_document_xlsx_to_pdf_with_http_info(input_file)
+            print(type(api_instance))
+            pprint("pass")
+            pprint(api_response)
+            with open(api_response,'rb') as pdf:
+                response = HttpResponse(pdf.read(), content_type='application/pdf')
+                response['Content-Disposition'] = 'inline;filename=some_file.pdf'
+                return response
+        except ApiException as e:
+            print('failed')
+            print("Exception when calling ConvertDocumentApi->convert_document_autodetect_to_pdf: %s\n" % e)
     else:
         return HttpResponse("Document is In-complete")
