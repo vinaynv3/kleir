@@ -1,4 +1,3 @@
-from __future__ import print_function
 from django.shortcuts import render
 from PropertyDocs.models import *
 from Technical.models import *
@@ -6,7 +5,6 @@ from ImageUpload.models import *
 from .BankExcelTemplates import *
 from django.http import HttpResponse, HttpResponseRedirect, FileResponse
 from django.core.exceptions import ObjectDoesNotExist
-
 from django.db import models
 
 db_models = [Documents,Address,Insights,MarketingValue,Plan,LegalLandmarks,
@@ -66,39 +64,50 @@ def doc_complete(bank_id):
 def ViewDocument(request,*args,**kwargs):
 
     if doc_complete(kwargs['bank_id']):
+        """
         import openpyxl
-        wb = openpyxl.Workbook('test.xlsx')
-        wb.save('test.xlsx')
-        load_workbook = openpyxl.load_workbook('test.xlsx')
+        wb = openpyxl.Workbook('FileOperations/test.xlsx')
+        wb.save('FileOperations/test.xlsx')
+        load_workbook = openpyxl.load_workbook('FileOperations/test.xlsx')
         sheet = load_workbook.active
         sheet.title = "vinay"
-        load_workbook.save('test.xlsx')
+        sheet['A1'] = 'Welcome to the future, Vini!!'
+        load_workbook.save('FileOperations/test.xlsx')
+        """
 
-        import time
-        import cloudmersive_convert_api_client
-        from cloudmersive_convert_api_client.rest import ApiException
-        from pprint import pprint
-        # Configure API key authorization: Apikey
-        configuration = cloudmersive_convert_api_client.Configuration()
-        configuration.api_key['Apikey'] = '3eafe039-75ee-4cf3-8d7a-38df7c662748'
-        # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-        # configuration.api_key_prefix['Apikey'] = 'Bearer'
-        # create an instance of the API class
-        api_instance = cloudmersive_convert_api_client.ConvertDocumentApi(cloudmersive_convert_api_client.ApiClient(configuration))
-        input_file = 'test.xlsx' # file | Input file to perform the operation on.
-        try:
-            # Convert Document to PDF
-            api_response = api_instance.convert_document_xlsx_to_pdf(input_file)
-            api_response1 = api_instance.convert_document_xlsx_to_pdf_with_http_info(input_file)
-            print(type(api_instance))
-            pprint("pass")
-            pprint(api_response)
-            with open(api_response,'rb') as pdf:
-                response = HttpResponse(pdf.read(), content_type='application/pdf')
-                response['Content-Disposition'] = 'inline;filename=some_file.pdf'
-                return response
-        except ApiException as e:
-            print('failed')
-            print("Exception when calling ConvertDocumentApi->convert_document_autodetect_to_pdf: %s\n" % e)
+        input_file = 'FileOperations/test1.xlsx'
+
+        import requests
+        import base64
+        import json
+        
+        excel_base64_data = None
+        with open('FileOperations/test1.xlsx','rb') as excel:
+            read_excel_base64 = excel.read()
+            encode_excel = base64.b64encode(read_excel_base64)
+            excel_base64_data = encode_excel.decode('utf-8')
+
+        url = 'https://getoutpdf.com/api/convert/document-to-pdf'
+        data = {
+                "api_key": "32ffa3a2686cf2a8bc16d98541e9c2f0997de23636adc0d9df7b1b00b9da24b8",
+                "document": excel_base64_data,
+                }
+        headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
+        call_api_convertPdf = requests.post(url, data=json.dumps(data), headers=headers)
+        print(call_api_convertPdf.json())
+
+        pdf_base64_data = call_api_convertPdf.json()['pdf_base64']
+        base64_img_bytes = pdf_base64_data.encode('utf-8')
+
+        with open('FileOperations/decoded_image.pdf', 'wb') as pdf:
+            decoded_image_data = base64.decodebytes(base64_img_bytes)
+            pdf.write(decoded_image_data)
+
+        with open('FileOperations/decoded_image.pdf', 'rb') as pdf:
+            response = HttpResponse(pdf.read(),content_type='application/pdf')
+            response['Content-Disposition'] = 'inline;filename=some_file.pdf'
+            return response
+
+
     else:
         return HttpResponse("Document is In-complete")
