@@ -1,0 +1,17 @@
+{% extends "PropertyDocs/base.html" %}
+
+{% block content %}
+
+  <h2>{{ customer.Firstname}} {{customer.Lastname}} : {{bank.Bank_Type}}</h2>
+
+<hr>
+
+<iframe
+       title="{{bank.Bank_Type}}"
+       loading = "lazy"
+       src="http://127.0.0.1:8000/media/decoded_image.pdf"
+       style="width:1218px; height:900px;padding:20px;"
+       frameborder="0" allowfullscreen>
+</iframe>
+
+{% endblock content %}

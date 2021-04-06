@@ -6,6 +6,7 @@ from .BankExcelTemplates import *
 from django.http import HttpResponse, HttpResponseRedirect, FileResponse
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
+from django.views.decorators.clickjacking import xframe_options_sameorigin
 
 db_models = [Documents,Address,Insights,MarketingValue,Plan,LegalLandmarks,
             SiteVisitLandmarks,Photos,Maps,AsPerDocuments,AsPerPlan,
@@ -61,6 +62,8 @@ def doc_complete(bank_id):
 
 
 #PDF Viewer controller
+
+@xframe_options_sameorigin
 def ViewDocument(request,*args,**kwargs):
 
     if doc_complete(kwargs['bank_id']):
@@ -73,14 +76,14 @@ def ViewDocument(request,*args,**kwargs):
         sheet.title = "vinay"
         sheet['A1'] = 'Welcome to the future, Vini!!'
         load_workbook.save('FileOperations/test.xlsx')
-        """
+
 
         input_file = 'FileOperations/test1.xlsx'
 
         import requests
         import base64
         import json
-        
+
         excel_base64_data = None
         with open('FileOperations/test1.xlsx','rb') as excel:
             read_excel_base64 = excel.read()
@@ -94,7 +97,7 @@ def ViewDocument(request,*args,**kwargs):
                 }
         headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
         call_api_convertPdf = requests.post(url, data=json.dumps(data), headers=headers)
-        print(call_api_convertPdf.json())
+        #print(call_api_convertPdf.json())
 
         pdf_base64_data = call_api_convertPdf.json()['pdf_base64']
         base64_img_bytes = pdf_base64_data.encode('utf-8')
@@ -103,10 +106,20 @@ def ViewDocument(request,*args,**kwargs):
             decoded_image_data = base64.decodebytes(base64_img_bytes)
             pdf.write(decoded_image_data)
 
+
         with open('FileOperations/decoded_image.pdf', 'rb') as pdf:
             response = HttpResponse(pdf.read(),content_type='application/pdf')
             response['Content-Disposition'] = 'inline;filename=some_file.pdf'
             return response
+
+        """
+        if request.method == 'GET':
+
+            bank = get_object_or_404(BankRef,pk = kwargs['bank_id'])
+            customer = get_object_or_404(ClientInfo,pk = kwargs['pk'])
+            context = {'bank':bank,'customer':customer,'path':'http://127.0.0.1:8000/ImageUpload/media/decoded_image.pdf'}
+
+            return render(request,'Viewer/PDFviewer.html',context)
 
 
     else:
