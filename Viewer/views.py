@@ -7,6 +7,7 @@ from django.http import HttpResponse, HttpResponseRedirect, FileResponse
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.views.decorators.clickjacking import xframe_options_sameorigin
+from .BankExcelTemplates import *
 
 db_models = [Documents,Address,Insights,MarketingValue,Plan,LegalLandmarks,
             SiteVisitLandmarks,Photos,Maps,AsPerDocuments,AsPerPlan,
@@ -67,18 +68,15 @@ def doc_complete(bank_id):
 def ViewDocument(request,*args,**kwargs):
 
     if doc_complete(kwargs['bank_id']):
+
+        file_object = ViewInterface.viewer.document(DocID = kwargs['bank_id'])
+        xlsx_doc = BFL_Urban(data = file_object)
+        xlsx_doc.create_xlsx()
+        xlsx_doc.personalDetailsContainer()
+        return HttpResponse("Document is complete")
+
+
         """
-        import openpyxl
-        wb = openpyxl.Workbook('FileOperations/test.xlsx')
-        wb.save('FileOperations/test.xlsx')
-        load_workbook = openpyxl.load_workbook('FileOperations/test.xlsx')
-        sheet = load_workbook.active
-        sheet.title = "vinay"
-        sheet['A1'] = 'Welcome to the future, Vini!!'
-        load_workbook.save('FileOperations/test.xlsx')
-
-
-        input_file = 'FileOperations/test1.xlsx'
 
         import requests
         import base64
@@ -112,7 +110,7 @@ def ViewDocument(request,*args,**kwargs):
             response['Content-Disposition'] = 'inline;filename=some_file.pdf'
             return response
 
-        """
+
         if request.method == 'GET':
 
             bank = get_object_or_404(BankRef,pk = kwargs['bank_id'])
@@ -120,7 +118,7 @@ def ViewDocument(request,*args,**kwargs):
             context = {'bank':bank,'customer':customer,'path':'http://127.0.0.1:8000/ImageUpload/media/decoded_image.pdf'}
 
             return render(request,'Viewer/PDFviewer.html',context)
-
+            """
 
     else:
         return HttpResponse("Document is In-complete")

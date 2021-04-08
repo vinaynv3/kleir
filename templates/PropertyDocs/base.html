@@ -33,12 +33,13 @@
       <a class="active" href="{% url 'Home-Page' %}"><b>Home</b></a>
       <a href="{% url 'doc-customer' %}"><b>Create</b></a>
       <a href="{% url 'multi-filter-search' %}"><b>Reports</b></a>
-      <a href="#about"><b>MyQueue</b></a>
-
+      <a href="#Insights"><b>Contact</b></a>
+      <a href="#Insights"><b>About</b></a>
 
       <div style="float:right" class = 'right'>
 
         {% if user.is_authenticated %}
+
         <a>
           <form class="form-inline" action="{% url 'Search-Ref' %}">
           <input class="form-control mr-sm-1" type="search" placeholder="Enter Ref No" aria-label="Search" name="RefNo">
