@@ -60,22 +60,44 @@ def doc_complete(bank_id):
     except FinalNotes.DoesNotExist:
         return False
 
+def addPropertyDataToExcel(file_object):
+        xlsx_doc = BFL_Urban(data = file_object)
+        xlsx_doc.cleanData()
+        xlsx_doc.personalDetailsContainer()
+        xlsx_doc.UpdateLocation()
+        xlsx_doc.UpdatePropertyDesign()
+        xlsx_doc.VerifyDocs()
+        xlsx_doc.UpdatePropertyPlan()
 
+def changeDir():
+
+    import os
+
+    # file operations are done in below dir
+    cwd = r'C:\Project\kleir\ImageUpload\media'
+
+    if os.getcwd() == cwd:
+        return True
+    else:
+        path = os.getcwd()+r'\\ImageUpload\\media'
+        os.chdir(path)
+        status = True if path == os.getcwd() else False
+        return status
 
 #PDF Viewer controller
-
 @xframe_options_sameorigin
 def ViewDocument(request,*args,**kwargs):
 
     if doc_complete(kwargs['bank_id']):
 
         file_object = ViewInterface.viewer.document(DocID = kwargs['bank_id'])
-        xlsx_doc = BFL_Urban(data = file_object)
-        xlsx_doc.create_xlsx()
-        xlsx_doc.personalDetailsContainer()
-        return HttpResponse("Document is complete")
 
 
+        if changeDir():
+            addPropertyDataToExcel(file_object)
+        """
+        else:
+            raise Exception
         """
 
         import requests
@@ -83,7 +105,7 @@ def ViewDocument(request,*args,**kwargs):
         import json
 
         excel_base64_data = None
-        with open('FileOperations/test1.xlsx','rb') as excel:
+        with open('BFL.xlsx','rb') as excel:
             read_excel_base64 = excel.read()
             encode_excel = base64.b64encode(read_excel_base64)
             excel_base64_data = encode_excel.decode('utf-8')
@@ -100,25 +122,23 @@ def ViewDocument(request,*args,**kwargs):
         pdf_base64_data = call_api_convertPdf.json()['pdf_base64']
         base64_img_bytes = pdf_base64_data.encode('utf-8')
 
-        with open('FileOperations/decoded_image.pdf', 'wb') as pdf:
+        with open('decoded_image.pdf', 'wb') as pdf:
             decoded_image_data = base64.decodebytes(base64_img_bytes)
             pdf.write(decoded_image_data)
 
-
-        with open('FileOperations/decoded_image.pdf', 'rb') as pdf:
+        """
+        with open('decoded_image.pdf', 'rb') as pdf:
             response = HttpResponse(pdf.read(),content_type='application/pdf')
             response['Content-Disposition'] = 'inline;filename=some_file.pdf'
             return response
 
 
         if request.method == 'GET':
-
-            bank = get_object_or_404(BankRef,pk = kwargs['bank_id'])
-            customer = get_object_or_404(ClientInfo,pk = kwargs['pk'])
-            context = {'bank':bank,'customer':customer,'path':'http://127.0.0.1:8000/ImageUpload/media/decoded_image.pdf'}
-
-            return render(request,'Viewer/PDFviewer.html',context)
-            """
+        """
+        bank = get_object_or_404(BankRef,pk = kwargs['bank_id'])
+        customer = get_object_or_404(ClientInfo,pk = kwargs['pk'])
+        context = {'bank':bank,'customer':customer,'path':'http://127.0.0.1:8000/ImageUpload/media/decoded_image.pdf'}
+        return render(request,'Viewer/PDFviewer.html',context)
 
     else:
         return HttpResponse("Document is In-complete")
