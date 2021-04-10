@@ -51,3 +51,12 @@ def get_id(customer_list,index_pos):
 def get_val(customer_list,index_pos):
     customer_dict = customer_list[index_pos]
     return list(customer_dict.values())[0]
+
+
+@register.filter
+def Doc_Complete(bank_record_update,index_pos):
+    try:
+        if bank_record_update[index_pos]:
+            return True
+    except IndexError:
+        return False

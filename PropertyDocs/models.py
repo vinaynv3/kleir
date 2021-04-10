@@ -57,7 +57,7 @@ class BankRef(models.Model):
 
 
     client_info = models.ForeignKey(ClientInfo, on_delete=models.CASCADE)
-    Reference_Number =  models.CharField(max_length=250, unique = True)
+    Reference_Number =  models.CharField(max_length=250)
     Bank_Type =  models.CharField(max_length=100,choices=Bank_types,default='NA')
     Date = models.DateField(auto_now = True)
 

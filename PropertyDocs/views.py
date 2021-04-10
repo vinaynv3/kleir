@@ -4,6 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse_lazy, reverse
 from PropertyDocs.models import *
+from Technical.models import *
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -18,18 +19,28 @@ class ListCustomers(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        customer_reference_details = {}
         customer_list = []
+        bank_record_update = {}
         customers = ClientInfo.objects.order_by('-Date_Time')[:12]
         for customer in customers:
             last_bank_valuation = customer.bankref_set.last()
             try:
-                customer_reference_details[customer] = last_bank_valuation
                 customer_list.append({customer:last_bank_valuation})
             except AttributeError:
                 customer.delete()
 
-        context = {'customer_reference_details':customer_reference_details,'customer_list':customer_list}
+        counter = 0
+        for customer in customers:
+            last_bank_valuation = customer.bankref_set.last()
+            try:
+                #Check in final model
+                if FinalNotes.objects.get(connection_id=last_bank_valuation.id):
+                    bank_record_update[counter]=True
+            except FinalNotes.DoesNotExist:
+                bank_record_update[counter]=False
+            counter +=1
+
+        context = {'customer_list':customer_list,'bank_record_update':bank_record_update}
         return context
 
 #DetailView
@@ -45,7 +56,19 @@ class CustomerDetails(LoginRequiredMixin,DetailView):
         context = super().get_context_data(**kwargs)
         banks = BankRef.objects.filter(client_info_id = self.kwargs.get('pk'))
         customer = get_object_or_404(ClientInfo,pk=self.kwargs.get('pk'))
-        context = {'customer':customer,'banks':banks}
+
+        bank_record_update = {}
+        counter = 0
+        for bank in banks:
+            try:
+                #Check in final model
+                if FinalNotes.objects.get(connection_id=bank.id):
+                    bank_record_update[counter]=True
+            except FinalNotes.DoesNotExist:
+                bank_record_update[counter]=False
+            counter +=1
+
+        context = {'customer':customer,'banks':banks,'bank_record_update':bank_record_update}
         return context
 
 
