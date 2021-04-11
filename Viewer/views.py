@@ -111,7 +111,7 @@ def ViewDocument(request,*args,**kwargs):
         # windows os
         if os.name == 'nt' and changeDirLocal():
             addPropertyDataToExcel(file_object)
-        """
+
         import requests
         import base64
         import json
@@ -137,7 +137,7 @@ def ViewDocument(request,*args,**kwargs):
         with open('decoded_image.pdf', 'wb') as pdf:
             decoded_image_data = base64.decodebytes(base64_img_bytes)
             pdf.write(decoded_image_data)
-        """
+        
         bank = get_object_or_404(BankRef,pk = kwargs['bank_id'])
         customer = get_object_or_404(ClientInfo,pk = kwargs['pk'])
 
