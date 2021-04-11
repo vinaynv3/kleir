@@ -72,29 +72,29 @@ def addPropertyDataToExcel(file_object):
         xlsx_doc.VerifyDocs()
         xlsx_doc.UpdatePropertyPlan()
 
-def changeDir():
+def changeDirHeroku():
 
     # file operations are done in below dir
-    if os.getcwd() == '/app':
-        cwd = '/app/ImageUpload/media'
-        if os.getcwd() == cwd:
-            return True
-        else:
-            path = os.getcwd()+r'/ImageUpload/media'
-            os.chdir(path)
-            status = True if path == os.getcwd() else False
-            return status
 
+    cwd = '/app/ImageUpload/media'
+    if os.getcwd() == cwd:
+        return True
     else:
-        cwd = r'C:\Project\kleir\ImageUpload\media'
+        path = os.getcwd()+r'/ImageUpload/media'
+        os.chdir(path)
+        status = True if path == os.getcwd() else False
+        return status
 
-        if os.getcwd() == cwd:
-            return True
-        else:
-            path = os.getcwd()+r'\\ImageUpload\\media'
-            os.chdir(path)
-            status = True if path == os.getcwd() else False
-            return status
+def changeDirLocal():
+    cwd = r'C:\Project\kleir\ImageUpload\media'
+
+    if os.getcwd() == cwd:
+        return True
+    else:
+        path = os.getcwd()+r'\\ImageUpload\\media'
+        os.chdir(path)
+        status = True if path == os.getcwd() else False
+        return status
 
 #PDF Viewer controller
 @xframe_options_sameorigin
@@ -104,14 +104,14 @@ def ViewDocument(request,*args,**kwargs):
 
         file_object = ViewInterface.viewer.document(DocID = kwargs['bank_id'])
 
+        # UNIX (Linux-posix os)
+        if os.name == 'posix' and changeDirHeroku():
+            addPropertyDataToExcel(file_object)
 
-        if changeDir():
+        # windows os
+        if os.name == 'nt' and changeDirLocal():
             addPropertyDataToExcel(file_object)
         """
-        else:
-            raise Exception
-        """
-
         import requests
         import base64
         import json
@@ -137,14 +137,14 @@ def ViewDocument(request,*args,**kwargs):
         with open('decoded_image.pdf', 'wb') as pdf:
             decoded_image_data = base64.decodebytes(base64_img_bytes)
             pdf.write(decoded_image_data)
-
+        """
         bank = get_object_or_404(BankRef,pk = kwargs['bank_id'])
         customer = get_object_or_404(ClientInfo,pk = kwargs['pk'])
 
         context = {'bank':bank,'customer':customer,'path':None,'env':False}
 
         #Heroku deployment settings
-        if os.getcwd() == '/app':
+        if os.name == 'posix':
             context['path'] = 'https://klarheitvaluers.herokuapp.com/ImageUpload/media/decoded_image.pdf'
             context['env'] = True
         else:
