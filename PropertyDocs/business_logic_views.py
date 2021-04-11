@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse_lazy, reverse
 from PropertyDocs.models import *
+from Technical.models import *
 from django.views import View
 from .BusinessLogicAlgo.doc_navigator import *
 from django.core.exceptions import ObjectDoesNotExist
@@ -61,12 +62,22 @@ def SearchView(request,*args,**kwargs):
         current_url_path = request.headers.get('Referer')
         return HttpResponseRedirect(current_url_path)
 
+    bank_record_update = {}
+    position = 0
+    try:
+        bank = BankRef.objects.get(Reference_Number = search_post)
+        if FinalNotes.objects.get(connection_id=bank.id):
+            bank_record_update[position]=True
+    except ObjectDoesNotExist:
+        bank_record_update[position]=False
+
+
     if search_post:
 
         try:
             bank = BankRef.objects.get(Reference_Number = search_post)
             customer = ClientInfo.objects.get(pk=bank.client_info_id)
-            return render(request,'PropertyDocs/search-result.html' , {'bank':bank,'customer':customer})
+            return render(request,'PropertyDocs/search-result.html' , {'bank':bank,'customer':customer,'bank_record_update':bank_record_update})
 
         except ObjectDoesNotExist:
             messages.info(request, 'Invalid Reference Number, please enter valid RefNo')

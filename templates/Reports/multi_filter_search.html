@@ -8,7 +8,8 @@
 <form action="{% url 'multi-filter-search-display' 1 %}">
 <div class="form-row">
   <div class="col">
-    <select class="form-control" name="bank_type">
+    <select class="form-control border-dark font-weight-bold" name="bank_type">
+      <option>ALL</option>
       <option>BFL</option>
       <option>ABHFL</option>
       <option>L&T</option>
@@ -17,18 +18,18 @@
   <div class="col">
   </div>
   <div class="col">
-    <input class="form-control" type="date" id="fromDate" name="fromDate" placeholder="">
+    <input class="form-control border border-dark font-weight-bold" type="date" id="fromDate" name="fromDate" placeholder="">
   </div>
 
   <div class="col">
   </div>
   <div class="col">
-    <input class="form-control" type="date" id="toDate" name="toDate">
+    <input class="form-control border-dark font-weight-bold" type="date" id="toDate" name="toDate">
   </div>
 
   <div class="col">
   </div>
-  <button class="btn btn my-2 my-sm-0" type="submit">
+  <button class="btn btn my-2 my-sm-0 border-dark" type="submit">
   <i class="bi bi-search"></i>
   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-search" viewBox="0 0 16 16">
     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
@@ -38,34 +39,37 @@
 </form>
 <hr>
 {% if total_rows %}
-<button type="button" class="btn btn-dark btn-sm">{{total_rows}} rows found</button>
+<button type="button" class="btn btn-info btn-sm">
+  Loans <span class="badge badge-light">{{total_rows}}</span>
+  <span class="sr-only">unread messages</span>
+</button>
 <br>
 <br>
 {% endif %}
 <div class="row">
   <div class="col">
-    <p style="text-align:left;"><b>FIRSTNAME</b></p>
+    <p style="text-align:left;font-family:Lucida Console;" ><u><b>FIRSTNAME</b></u></p>
   </div>
 
   <div class="col">
-    <p style="text-align:center;"><b>LASTNAME</b></p>
+    <p style="text-align:center;font-family:Lucida Console;"><u><b>LASTNAME</b></u></p>
   </div>
 
   <div class="col">
-    <p style="text-align:center;"><b>BANK</b></p>
+    <p style="text-align:center;font-family:Lucida Console;"><u><b>BANK</b></u></p>
   </div>
 
   <div class="col">
-  <p style="text-align:center;"><b>REF NUM</b></p>
+  <p style="text-align:center;font-family:Lucida Console;"><u><b>REF NUM</b></u></p>
   </div>
 
 
   <div class="col">
-  <p style="text-align:center;"><b>DATE</b></p>
+  <p style="text-align:center;font-family:Lucida Console;"><u><b>DATE</b></u></p>
   </div>
 
     <div class="col">
-    <p style="text-align:left;"><b>VIEW</b></p>
+    <p style="text-align:left;"></p>
     </div>
 </div>
 
@@ -73,32 +77,31 @@
   <div class="row">
     {{forloop.counter}}
     <div class="col">
-      <p style="text-align:left;">{{obj.slug | formatSlug:0}}</p>
+      <p style="text-align:left; font-family:Lucida Console;">{{obj.slug | formatSlug:0}}</p>
     </div>
 
     <div class="col">
-      <p style="text-align:center;">{{obj.slug | formatSlug:1}}</p>
+      <p style="text-align:center;font-family:Lucida Console;">{{obj.slug | formatSlug:1}}</p>
     </div>
 
     <div class="col">
-      <p style="text-align:center;">{{ obj.bank}}</p>
+      <p style="text-align:center;font-family:Lucida Console;">{{ obj.bank}}</p>
     </div>
 
     <div class="col">
-    <p style="text-align:center;">{{ obj.ref}}</p>
+    <p style="text-align:center;font-family:Lucida Console;">{{ obj.ref}}</p>
     </div>
 
 
     <div class="col">
-    <p style="text-align:center;">{{ obj.date}}</p>
+    <p style="text-align:center;font-family:Lucida Console;">{{ obj.date}}</p>
     </div>
     <div class="col">
 
-            <a href = "{% url 'viewer' obj.slug obj.ids|getId:0 obj.bank obj.ids|getId:1 %}"><i class="bi bi-eye-fill" ></i>
-              <svg xmlns="http://www.w3.org/2000/svg" width="46" height="26" fill="black" class="bi bi-eye-fill" viewBox="0 0 16 16">
-              <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
-              <path fill-rule="evenodd" d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
-            </svg>
+            <a href = "{% url 'single-report-options' obj.slug obj.ids|getId:0 obj.bank obj.ids|getId:1 %}"><i class="bi bi-folder2-open"></i>
+              <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="black" class="bi bi-folder2-open" viewBox="0 0 16 16">
+                <path d="M1 3.5A1.5 1.5 0 0 1 2.5 2h2.764c.958 0 1.76.56 2.311 1.184C7.985 3.648 8.48 4 9 4h4.5A1.5 1.5 0 0 1 15 5.5v.64c.57.265.94.876.856 1.546l-.64 5.124A2.5 2.5 0 0 1 12.733 15H3.266a2.5 2.5 0 0 1-2.481-2.19l-.64-5.124A1.5 1.5 0 0 1 1 6.14V3.5zM2 6h12v-.5a.5.5 0 0 0-.5-.5H9c-.964 0-1.71-.629-2.174-1.154C6.374 3.334 5.82 3 5.264 3H2.5a.5.5 0 0 0-.5.5V6zm-.367 1a.5.5 0 0 0-.496.562l.64 5.124A1.5 1.5 0 0 0 3.266 14h9.468a1.5 1.5 0 0 0 1.489-1.314l.64-5.124A.5.5 0 0 0 14.367 7H1.633z"/>
+              </svg>
             </a>
       </div>
   </div>
@@ -109,16 +112,17 @@
         <span class="step-links">
             {% if page_obj.has_previous %}
                 <a  href="{% url 'multi-filter-search-display' 1 %}">
-                  <i class="bi bi-arrow-left-circle-fill"></i>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="black" class="bi bi-arrow-left-circle-fill" viewBox="0 0 16 16">
-                    <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/>
+                  <i class="bi bi-caret-left-square-fill"></i>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="black" class="bi bi-caret-left-square-fill" viewBox="0 0 16 16">
+                    <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm10.5 10V4a.5.5 0 0 0-.832-.374l-4.5 4a.5.5 0 0 0 0 .748l4.5 4A.5.5 0 0 0 10.5 12z"/>
                   </svg>
                 </a>
 
                 <a style="padding: 7px;" href="{% url 'multi-filter-search-display' page_obj.previous_page_number %}">
-                  <i class="bi bi-arrow-left-circle"></i>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="black" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
-                      <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/>
+                  <i class="bi bi-caret-left-square"></i>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="black" class="bi bi-caret-left-square" viewBox="0 0 16 16">
+                    <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                    <path d="M10.205 12.456A.5.5 0 0 0 10.5 12V4a.5.5 0 0 0-.832-.374l-4.5 4a.5.5 0 0 0 0 .748l4.5 4a.5.5 0 0 0 .537.082z"/>
                   </svg>
                 </a>
             {% endif %}
@@ -131,15 +135,16 @@
 
             {% if page_obj.has_next %}
                 <a style="padding: 7px;" href="{% url 'multi-filter-search-display' page_obj.next_page_number %}">
-                  <i class="bi bi-arrow-right-circle"></i>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="black" class="bi bi-arrow-right-circle" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/>
+                  <i class="bi bi-caret-right-square"></i>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="black" class="bi bi-caret-right-square" viewBox="0 0 16 16">
+                    <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                    <path d="M5.795 12.456A.5.5 0 0 1 5.5 12V4a.5.5 0 0 1 .832-.374l4.5 4a.5.5 0 0 1 0 .748l-4.5 4a.5.5 0 0 1-.537.082z"/>
                   </svg>
                 </a>
                 <a href="{% url 'multi-filter-search-display' page_obj.paginator.num_pages %}">
-                  <i class="bi bi-arrow-right-circle-fill"></i>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="black" class="bi bi-arrow-right-circle-fill" viewBox="0 0 16 16">
-                    <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/>
+                  <i class="bi bi-caret-right-square-fill"></i>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="black" class="bi bi-caret-right-square-fill" viewBox="0 0 16 16">
+                    <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm5.5 10a.5.5 0 0 0 .832.374l4.5-4a.5.5 0 0 0 0-.748l-4.5-4A.5.5 0 0 0 5.5 4v8z"/>
                   </svg>
                 </a>
             {% endif %}

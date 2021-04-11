@@ -8,6 +8,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.views.decorators.clickjacking import xframe_options_sameorigin
 from .BankExcelTemplates import *
+from django.contrib import messages
 
 db_models = [Documents,Address,Insights,MarketingValue,Plan,LegalLandmarks,
             SiteVisitLandmarks,Photos,Maps,AsPerDocuments,AsPerPlan,
@@ -74,15 +75,26 @@ def changeDir():
     import os
 
     # file operations are done in below dir
-    cwd = r'C:\Project\kleir\ImageUpload\media'
+    if os.getcwd() == '/app':
+        cwd = '/app/ImageUpload/media'
+        if os.getcwd() == cwd:
+            return True
+        else:
+            path = os.getcwd()+r'/ImageUpload/media'
+            os.chdir(path)
+            status = True if path == os.getcwd() else False
+            return status
 
-    if os.getcwd() == cwd:
-        return True
     else:
-        path = os.getcwd()+r'\\ImageUpload\\media'
-        os.chdir(path)
-        status = True if path == os.getcwd() else False
-        return status
+        cwd = r'C:\Project\kleir\ImageUpload\media'
+
+        if os.getcwd() == cwd:
+            return True
+        else:
+            path = os.getcwd()+r'\\ImageUpload\\media'
+            os.chdir(path)
+            status = True if path == os.getcwd() else False
+            return status
 
 #PDF Viewer controller
 @xframe_options_sameorigin
@@ -126,19 +138,12 @@ def ViewDocument(request,*args,**kwargs):
             decoded_image_data = base64.decodebytes(base64_img_bytes)
             pdf.write(decoded_image_data)
 
-        """
-        with open('decoded_image.pdf', 'rb') as pdf:
-            response = HttpResponse(pdf.read(),content_type='application/pdf')
-            response['Content-Disposition'] = 'inline;filename=some_file.pdf'
-            return response
-
-
-        if request.method == 'GET':
-        """
         bank = get_object_or_404(BankRef,pk = kwargs['bank_id'])
         customer = get_object_or_404(ClientInfo,pk = kwargs['pk'])
         context = {'bank':bank,'customer':customer,'path':'http://127.0.0.1:8000/ImageUpload/media/decoded_image.pdf'}
         return render(request,'Viewer/PDFviewer.html',context)
 
     else:
-        return HttpResponse("Document is In-complete")
+        messages.info(request, 'Property valuation details are incomplete, please complete the document')
+        current_url_path = request.headers.get('Referer')
+        return HttpResponseRedirect(current_url_path)

@@ -6,6 +6,8 @@ from django.urls import reverse_lazy, reverse
 from PropertyDocs.models import ClientInfo, BankRef
 from django.contrib import messages
 from django.core.paginator import Paginator
+from django.core.exceptions import ObjectDoesNotExist
+from Technical.models import *
 
 """
 Utility Class for BankRef & ClientInfo Model
@@ -36,19 +38,32 @@ def getObjects(data):
 
     if len(data) == 3:
 
-        bank_reports = BankRef.objects.filter(Date__gte =  data['fromDate']).filter( Date__lte= data['toDate']).filter(Bank_Type = data['bank'])
-        return bank_reports
+        if data['bank'] == 'ALL':
+            bank_reports = BankRef.objects.filter(Date__gte =  data['fromDate']).filter( Date__lte= data['toDate'])
+            return bank_reports
+
+        else:
+            bank_reports = BankRef.objects.filter(Date__gte =  data['fromDate']).filter( Date__lte= data['toDate']).filter(Bank_Type = data['bank'])
+            return bank_reports
 
     elif len(data) == 2:
-        date = list(data.keys())[1]
-        bank_reports = BankRef.objects.filter(Date =  data[date]).filter( Bank_Type = data['bank'])
-        return bank_reports
-
+        if data['bank'] == 'ALL':
+            date = list(data.keys())[1]
+            bank_reports = BankRef.objects.filter(Date =  data[date])
+            return bank_reports
+        else:
+            date = list(data.keys())[1]
+            bank_reports = BankRef.objects.filter(Date =  data[date]).filter( Bank_Type = data['bank'])
+            return bank_reports
     else:
-        import datetime
-        today = datetime.date.today()
-        bank_reports = BankRef.objects.filter(Date =  today).filter( Bank_Type = data['bank'])
-        return bank_reports
+        if data['bank'] == 'ALL':
+            bank_reports = BankRef.objects.all()
+            return bank_reports
+        else:
+            import datetime
+            today = datetime.date.today()
+            bank_reports = BankRef.objects.filter(Date =  today).filter( Bank_Type = data['bank'])
+            return bank_reports
 
 
 def ReportsDispalyView(request,*args,**kwargs):
@@ -76,10 +91,32 @@ def ReportsDispalyView(request,*args,**kwargs):
         Bankobjects = list(getObjects(data))
         utility_class_list = [ DisplayDetails() for i in range(len(Bankobjects))]
         report_display_list = [ utility_class_list[i].create(Bankobjects[i]) for i in range(len(Bankobjects))]
-        pagerObject = Paginator(report_display_list,2)
+        pagerObject = Paginator(report_display_list,10)
         context = { 'objects':pagerObject.page(page_no), 'total_rows':len(report_display_list),'page_obj':pagerObject.page(page_no)}
 
         if len(report_display_list) == 0:
             messages.info(request, '0 records found')
 
         return render(request,'Reports/multi_filter_search.html',context)
+
+def ReportOptions(request,*args,**kwargs):
+
+    bank_id = kwargs['bank_id']
+    bank_record_update = {}
+    position = 0
+    try:
+        if FinalNotes.objects.get(connection_id=bank_id):
+            bank_record_update[position]=True
+    except ObjectDoesNotExist:
+        bank_record_update[position]=False
+
+
+    try:
+        bank = BankRef.objects.get(pk = bank_id)
+        customer = ClientInfo.objects.get(pk=bank.client_info_id)
+        return render(request,'Reports/home_loan.html' , {'bank':bank,'customer':customer,'bank_record_update':bank_record_update})
+
+    except ObjectDoesNotExist:
+            messages.info(request, 'Something went wrong, Try again!')
+            current_url_path = request.headers.get('Referer')
+            return HttpResponseRedirect(current_url_path)
