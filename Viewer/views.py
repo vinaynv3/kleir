@@ -1,3 +1,5 @@
+
+import os
 from django.shortcuts import render
 from PropertyDocs.models import *
 from Technical.models import *
@@ -72,8 +74,6 @@ def addPropertyDataToExcel(file_object):
 
 def changeDir():
 
-    import os
-
     # file operations are done in below dir
     if os.getcwd() == '/app':
         cwd = '/app/ImageUpload/media'
@@ -140,7 +140,15 @@ def ViewDocument(request,*args,**kwargs):
 
         bank = get_object_or_404(BankRef,pk = kwargs['bank_id'])
         customer = get_object_or_404(ClientInfo,pk = kwargs['pk'])
-        context = {'bank':bank,'customer':customer,'path':'http://127.0.0.1:8000/ImageUpload/media/decoded_image.pdf'}
+
+        context = {'bank':bank,'customer':customer,'path':None,'env':False}
+
+        #Heroku deployment settings
+        if os.getcwd() == '/app':
+            context['path'] = 'https://klarheitvaluers.herokuapp.com/ImageUpload/media/decoded_image.pdf'
+            context['env'] = True
+        else:
+            context['path'] = 'http://127.0.0.1:8000/ImageUpload/media/decoded_image.pdf'
         return render(request,'Viewer/PDFviewer.html',context)
 
     else:

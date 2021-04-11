@@ -5,7 +5,15 @@
   <h2><strong>{{ customer.Firstname}} {{customer.Lastname}} -  {{bank.Bank_Type}}</strong></h2>
 
 <hr>
-
+{% if env %}
+<iframe
+       title="{{bank.Bank_Type}}"
+       loading = "lazy"
+       src="https://klarheitvaluers.herokuapp.com/media/decoded_image.pdf"
+       style="width:1218px; height:900px;padding:20px;"
+       frameborder="0" allowfullscreen>
+</iframe>
+{% else %}
 <iframe
        title="{{bank.Bank_Type}}"
        loading = "lazy"
@@ -13,5 +21,5 @@
        style="width:1218px; height:900px;padding:20px;"
        frameborder="0" allowfullscreen>
 </iframe>
-
+{% endif %}
 {% endblock content %}
