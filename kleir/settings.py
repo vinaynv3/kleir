@@ -176,4 +176,4 @@ if os.getcwd() == '/app':
 
     # Allow all host headers
     ALLOWED_HOSTS = ['*']
-    DEBUG = False
+    DEBUG = True
