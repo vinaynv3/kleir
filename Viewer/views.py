@@ -63,7 +63,13 @@ def doc_complete(bank_id):
     except FinalNotes.DoesNotExist:
         return False
 
+
+
 def addPropertyDataToExcel(file_object):
+    Lender = None
+    if str(file_object[1]) == 'BFL':
+        Lender = 'BFL.xlsx'
+
         xlsx_doc = BFL_Urban(data = file_object)
         xlsx_doc.cleanData()
         xlsx_doc.personalDetailsContainer()
@@ -71,6 +77,24 @@ def addPropertyDataToExcel(file_object):
         xlsx_doc.UpdatePropertyDesign()
         xlsx_doc.VerifyDocs()
         xlsx_doc.UpdatePropertyPlan()
+
+    elif str(file_object[1]) == 'ABHFL':
+        Lender = 'ABHFL.xlsx'
+
+        xlsx_doc = ABHFL(data = file_object)
+        xlsx_doc.cleanData()
+        xlsx_doc.personalDetailsContainer()
+
+    elif str(file_object[1]) == 'L&T':
+        Lender = 'LT.xlsx'
+
+        xlsx_doc = LT(data = file_object)
+        xlsx_doc.cleanData()
+        xlsx_doc.personalDetailsContainer()
+        xlsx_doc.VerifyDocs()
+
+    return Lender
+
 
 def changeDirHeroku():
 
@@ -87,13 +111,13 @@ def changeDirHeroku():
 
 def changeDirLocal():
     cwd = r'C:\Project\kleir\ImageUpload\media'
-
     if os.getcwd() == cwd:
         return True
     else:
         path = os.getcwd()+r'\\ImageUpload\\media'
         os.chdir(path)
         status = True if path == os.getcwd() else False
+        print(status)
         return status
 
 #PDF Viewer controller
@@ -103,21 +127,22 @@ def ViewDocument(request,*args,**kwargs):
     if doc_complete(kwargs['bank_id']):
 
         file_object = ViewInterface.viewer.document(DocID = kwargs['bank_id'])
+        financier = None
 
         # UNIX (Linux-posix os)
         if os.name == 'posix' and changeDirHeroku():
-            addPropertyDataToExcel(file_object)
+            financier = addPropertyDataToExcel(file_object)
 
         # windows os
         if os.name == 'nt' and changeDirLocal():
-            addPropertyDataToExcel(file_object)
+            financier = addPropertyDataToExcel(file_object)
 
         import requests
         import base64
         import json
 
         excel_base64_data = None
-        with open('BFL.xlsx','rb') as excel:
+        with open(financier,'rb') as excel:
             read_excel_base64 = excel.read()
             encode_excel = base64.b64encode(read_excel_base64)
             excel_base64_data = encode_excel.decode('utf-8')
@@ -129,15 +154,17 @@ def ViewDocument(request,*args,**kwargs):
                 }
         headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
         call_api_convertPdf = requests.post(url, data=json.dumps(data), headers=headers)
-        #print(call_api_convertPdf.json())
+        print(call_api_convertPdf.json()['tokens_left'])
 
         pdf_base64_data = call_api_convertPdf.json()['pdf_base64']
         base64_img_bytes = pdf_base64_data.encode('utf-8')
 
-        with open('decoded_image.pdf', 'wb') as pdf:
+
+
+        with open('PropertValuation.pdf', 'wb') as pdf:
             decoded_image_data = base64.decodebytes(base64_img_bytes)
             pdf.write(decoded_image_data)
-        
+
         bank = get_object_or_404(BankRef,pk = kwargs['bank_id'])
         customer = get_object_or_404(ClientInfo,pk = kwargs['pk'])
 
@@ -145,10 +172,10 @@ def ViewDocument(request,*args,**kwargs):
 
         #Heroku deployment settings
         if os.name == 'posix':
-            context['path'] = 'https://klarheitvaluers.herokuapp.com/ImageUpload/media/decoded_image.pdf'
+            context['path'] = 'https://klarheitvaluers.herokuapp.com/ImageUpload/media/PropertValuation.pdf'
             context['env'] = True
         else:
-            context['path'] = 'http://127.0.0.1:8000/ImageUpload/media/decoded_image.pdf'
+            context['path'] = 'http://127.0.0.1:8000/ImageUpload/media/PropertValuation.pdf'
         return render(request,'Viewer/PDFviewer.html',context)
 
     else:

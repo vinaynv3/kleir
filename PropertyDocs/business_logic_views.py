@@ -58,7 +58,7 @@ def SearchView(request,*args,**kwargs):
     search_post = request.GET.get('RefNo')
     search_post = search_post.strip() #strip space
 
-    if len(search_post) is 0:
+    if len(search_post) == 0:
         current_url_path = request.headers.get('Referer')
         return HttpResponseRedirect(current_url_path)
 
@@ -83,3 +83,9 @@ def SearchView(request,*args,**kwargs):
             messages.info(request, 'Invalid Reference Number, please enter valid RefNo')
             current_url_path = request.headers.get('Referer')
             return HttpResponseRedirect(current_url_path)
+
+
+def about(request,*args,**kwargs):
+
+    if request.method == 'GET':
+        return render(request,'PropertyDocs/about.html' , {})

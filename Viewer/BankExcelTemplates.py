@@ -4,7 +4,7 @@ import pandas as pd
 Data representation & Manipulation classes
 """
 
-class BFL_Urban:
+class Data:
 
     def __init__(self,data = None):
         self.data = data
@@ -23,15 +23,16 @@ class BFL_Urban:
         df = pd.DataFrame(dict([ (k,pd.Series(v)) for k,v in data.items() ]))
         return df
 
-
-    """
-    Excel cell points data structuring
-    """
     def cleanData(self):
         self.df = self.clean()
 
-    def personalDetailsContainer(self):
 
+class BFL_Urban(Data):
+
+    def __init__(self,data = None):
+        super().__init__(data)
+
+    def personalDetailsContainer(self):
         df = self.df
         value_cell_points = ['A3','I4','C4','I5','C6','I6','D7','C8']
 
@@ -129,5 +130,77 @@ class BFL_Urban:
             sheet[value_cell_points[i]] = data_tuple[i]
 
         load_xlsx.save('BFL.xlsx')
+        load_xlsx.close()
+        del df
+
+
+
+class ABHFL(Data):
+
+    def __init__(self,data = None):
+        super().__init__(data)
+
+    def personalDetailsContainer(self):
+        df = self.df
+        value_cell_points = ['J2','J3','J4','E6','E7','E9','E10','E11','I13','G24','E8','J8']
+
+        # data is relative to value_cell_points position
+        data_tuple = (df['Documents'][2],str(df['ClientInfo'][5]),str(df['Documents'][1]),
+                     df['Documents'][3],df['Documents'][4],df['Address'][0],df['Address'][0],df['Address'][1],
+                     df['Address'][3],df['Address'][4],df['Insights'][0],df['Insights'][1])
+
+        load_xlsx = openpyxl.load_workbook('ABHFL.xlsx')
+        sheet = load_xlsx.active
+
+        for i in range(len(value_cell_points)):
+            sheet[value_cell_points[i]] = data_tuple[i]
+
+        load_xlsx.save('ABHFL.xlsx')
+        load_xlsx.close()
+        del df
+
+
+
+class LT(Data):
+
+    def __init__(self,data = None):
+        super().__init__(data)
+
+    def personalDetailsContainer(self):
+        df = self.df
+        value_cell_points = ['C2','F2','C3','F3','C6','C9']
+
+        # data is relative to value_cell_points position
+        data_tuple = (df['Documents'][3],df['Documents'][2],df['Documents'][0],df['Documents'][4],
+                        df['Address'][0],df['Address'][1],df['Address'][2])
+
+        load_xlsx = openpyxl.load_workbook('LT.xlsx')
+        sheet = load_xlsx.active
+
+        for i in range(len(value_cell_points)):
+            sheet[value_cell_points[i]] = data_tuple[i]
+
+        load_xlsx.save('LT.xlsx')
+        load_xlsx.close()
+        del df
+
+
+    def VerifyDocs(self):
+        df = self.df
+        value_cell_points = ['E14','G14','E15','G15','E16','G16','E17','G17',]
+
+
+        # data is relative to value_cell_points position
+        data_tuple = (df['LegalLandmarks'][0],df['SiteVisitLandmarks'][0],
+                        df['LegalLandmarks'][1],df['SiteVisitLandmarks'][1],
+                        df['LegalLandmarks'][2],df['SiteVisitLandmarks'][2],
+                        df['LegalLandmarks'][3],df['SiteVisitLandmarks'][3])
+        load_xlsx = openpyxl.load_workbook('LT.xlsx')
+        sheet = load_xlsx.active
+
+        for i in range(len(value_cell_points)):
+            sheet[value_cell_points[i]] = data_tuple[i]
+
+        load_xlsx.save('LT.xlsx')
         load_xlsx.close()
         del df

@@ -38,6 +38,7 @@ Bank_Ref_url_patterns = [
 urlpatterns = [
     path('', ListCustomers.as_view(), name='Home-Page'),
     path('search/', business_logic_views.SearchView , name='Search-Ref'),
+    path('About/', business_logic_views.about , name='about'),
     path('<slug:slug>/<int:pk>/details/', CustomerDetails.as_view(), name='Detail-Page'),
     path('CreateCustomerProfile/', CreateCustomer.as_view(), name='doc-customer'),
     path('<slug:slug>/<int:pk>/update/', UpdateCustomer.as_view(), name='doc-customer-update'),
