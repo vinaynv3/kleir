@@ -13,6 +13,8 @@
 
 ### How to use
 - go to link (https://klarheitvaluers.herokuapp.com/)
+  ![image](https://user-images.githubusercontent.com/34382681/114643478-b7ab6f00-9ca3-11eb-9891-9ad36f924445.png)
+
 - Register an account, if you dont have one
 - Once logged in, you can start creating customer property report corresponding to lender (Bank name)
 - Enter property details and complete the report
