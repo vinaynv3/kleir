@@ -11,6 +11,8 @@
 #### Cloud platform
 - Heroku (stack 20, PaaS)
 
+#### Browser Notes 
+Note, because this interactive edition makes use of lots of HTML 5 and Javascript I highly recommend either Chrome, or Safari. Firefox 67+ works too. Reportedly Edge works fine as well.
 ### How to use
 - go to link (https://klarheitvaluers.herokuapp.com/)
 - Register an account, if you dont have one
