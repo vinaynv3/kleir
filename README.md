@@ -10,3 +10,10 @@
 
 #### Cloud platform
 - Heroku (stack 20, PaaS)
+
+### How to use
+- go to link (https://klarheitvaluers.herokuapp.com/)
+- Register an account, if you dont have one
+- Once logged in, you can start creating customer property report corresponding to lender (Bank name)
+- Enter property details and complete the report
+- Finally, if details correct, trnasform data to bank template as PDF.
