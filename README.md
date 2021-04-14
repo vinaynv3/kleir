@@ -22,4 +22,6 @@
   ![image](https://user-images.githubusercontent.com/34382681/114644171-01488980-9ca5-11eb-81a4-61938a4a1bd2.png)
 
 - Finally, if details correct, trnasform data to bank template as PDF by clicking on book icon
+  ![image](https://user-images.githubusercontent.com/34382681/114644543-b67b4180-9ca5-11eb-8391-b59fcc3da75f.png)
+
   
