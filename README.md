@@ -8,5 +8,5 @@
 - Python 3.6.2
 - MySQL 8.0
 
-##### Cloud platform (PaaS)
+##### Cloud platform [PaaS]
 - Heroku (stack 20)
