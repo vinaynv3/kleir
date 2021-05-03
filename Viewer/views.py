@@ -102,11 +102,11 @@ def addPropertyDataToExcel(file_object):
 def changeDirHeroku():
 
     # file operations are done in below dir
-    cwd = '/app/ImageUpload/media'
+    cwd = '/app/staticfiles/DocCreation'
     if os.getcwd() == cwd:
         return True
     else:
-        path = os.getcwd()+r'/ImageUpload/media'
+        path = os.getcwd()+r'/staticfiles/DocCreation'
         os.chdir(path)
         if path == os.getcwd():
             return True
