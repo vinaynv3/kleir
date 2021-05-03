@@ -102,28 +102,28 @@ def addPropertyDataToExcel(file_object):
 def changeDirHeroku():
 
     # file operations are done in below dir
-    cwd = '/app/staticfiles/DocCreation'
+    cwd = r'/app/staticfiles/DocCreation'
     if os.getcwd() == cwd:
         return True
     else:
         path = os.getcwd()+r'/staticfiles/DocCreation'
         os.chdir(path)
-        if path == os.getcwd():
+        if cwd == os.getcwd():
             return True
         else:
             return False
 
 def changeDirLocal():
+
     cwd = r'C:\Project\kleir\staticfiles\DocCreation'
-    print(os.getcwd())
     if os.getcwd() == cwd:
         return True
     else:
 
         path = os.getcwd()+r'\\staticfiles\\DocCreation'
-        print(path)
         os.chdir(path)
-        if path == os.getcwd():
+        print('path:',path,'dir',os.getcwd())
+        if cwd == os.getcwd():
             return True
         else:
             return False
@@ -139,14 +139,16 @@ def ViewDocument(request,*args,**kwargs):
         financier = None
 
         # UNIX (Linux-posix os)
-        print(os.name, changeDirLocal())
+        print('local:',changeDirLocal() ,'os:',os.name)
+        #print('cloud:',changeDirHeroku())
         if os.name == 'posix' and changeDirHeroku():
             financier = addPropertyDataToExcel(file_object)
             print(financier)
         # windows os
         if os.name == 'nt' and changeDirLocal():
             financier = addPropertyDataToExcel(file_object)
-            print(financier)
+
+
 
         import requests
         import base64
@@ -182,7 +184,7 @@ def ViewDocument(request,*args,**kwargs):
             pdf.write(decoded_image_data)
         y2 = time.time()
         print('PDF creation time ',y2-y1,' m_sec')
-
+        
         bank = get_object_or_404(BankRef,pk = kwargs['bank_id'])
         customer = get_object_or_404(ClientInfo,pk = kwargs['pk'])
 
