@@ -27,8 +27,10 @@ SECRET_KEY = 'wwe&4m7#5p4zkt0bo1ov!@$@p$&u7jbmtamzf)@m%^pszp7(ma'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
 ALLOWED_HOSTS = []
+if not DEBUG:
+    ALLOWED_HOSTS = ['*']
+
 
 
 # Application definition
@@ -51,6 +53,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -59,6 +62,9 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 ROOT_URLCONF = 'kleir.urls'
@@ -137,27 +143,23 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATICFILES_DIRS = (
-    os.path.join(PROJECT_DIR, 'static'),
-)
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
-# Simplified static file serving.
-# https://warehouse.python.org/project/whitenoise/
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+"""
+MEDIA - Images
+"""
+
+MEDIA_URL = '/mediafiles/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'ImageUpload/media')
+#STATICFILES_DIRS = [ os.path.join(BASE_DIR, 'staticfiles'),os.path.join(BASE_DIR, 'ImageUpload/media'),]
+
 #forms template
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 #Login app variables
 LOGIN_REDIRECT_URL = 'Home-Page'
 LOGIN_URL = 'login'
-
-
-"""
-MEDIA - Images
-"""
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'ImageUpload/media')
 
 """
 HEROKU: Postgres database URL

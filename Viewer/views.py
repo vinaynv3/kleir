@@ -11,6 +11,7 @@ from django.db import models
 from django.views.decorators.clickjacking import xframe_options_sameorigin
 from .BankExcelTemplates import *
 from django.contrib import messages
+import time
 
 db_models = [Documents,Address,Insights,MarketingValue,Plan,LegalLandmarks,
             SiteVisitLandmarks,Photos,Maps,AsPerDocuments,AsPerPlan,
@@ -67,6 +68,7 @@ def doc_complete(bank_id):
 
 def addPropertyDataToExcel(file_object):
     Lender = None
+    t1 = time.time()
     if str(file_object[1]) == 'BFL':
         Lender = 'BFL.xlsx'
 
@@ -92,33 +94,39 @@ def addPropertyDataToExcel(file_object):
         xlsx_doc.cleanData()
         xlsx_doc.personalDetailsContainer()
         xlsx_doc.VerifyDocs()
-
+    t2 = time.time()
+    print('Excel time',t2-t1,' m_sec')
     return Lender
 
 
 def changeDirHeroku():
 
     # file operations are done in below dir
-
     cwd = '/app/ImageUpload/media'
     if os.getcwd() == cwd:
         return True
     else:
         path = os.getcwd()+r'/ImageUpload/media'
         os.chdir(path)
-        status = True if path == os.getcwd() else False
-        return status
+        if path == os.getcwd():
+            return True
+        else:
+            return False
 
 def changeDirLocal():
-    cwd = r'C:\Project\kleir\ImageUpload\media'
+    cwd = r'C:\Project\kleir\staticfiles\DocCreation'
+    print(os.getcwd())
     if os.getcwd() == cwd:
         return True
     else:
-        path = os.getcwd()+r'\\ImageUpload\\media'
+
+        path = os.getcwd()+r'\\staticfiles\\DocCreation'
+        print(path)
         os.chdir(path)
-        status = True if path == os.getcwd() else False
-        print(status)
-        return status
+        if path == os.getcwd():
+            return True
+        else:
+            return False
 
 #PDF Viewer controller
 @xframe_options_sameorigin
@@ -126,22 +134,28 @@ def ViewDocument(request,*args,**kwargs):
 
     if doc_complete(kwargs['bank_id']):
 
+
         file_object = ViewInterface.viewer.document(DocID = kwargs['bank_id'])
         financier = None
 
         # UNIX (Linux-posix os)
+        print(os.name, changeDirLocal())
         if os.name == 'posix' and changeDirHeroku():
             financier = addPropertyDataToExcel(file_object)
-
+            print(financier)
         # windows os
         if os.name == 'nt' and changeDirLocal():
             financier = addPropertyDataToExcel(file_object)
+            print(financier)
 
         import requests
         import base64
         import json
 
         excel_base64_data = None
+
+        x1 = time.time()
+
         with open(financier,'rb') as excel:
             read_excel_base64 = excel.read()
             encode_excel = base64.b64encode(read_excel_base64)
@@ -159,23 +173,26 @@ def ViewDocument(request,*args,**kwargs):
         pdf_base64_data = call_api_convertPdf.json()['pdf_base64']
         base64_img_bytes = pdf_base64_data.encode('utf-8')
 
+        x2 = time.time()
+        print('API time ',x2-x1,' m_sec')
 
-
-        with open('PropertValuation.pdf', 'wb') as pdf:
+        y1 = time.time()
+        with open('PropertyValuation.pdf', 'wb') as pdf:
             decoded_image_data = base64.decodebytes(base64_img_bytes)
             pdf.write(decoded_image_data)
+        y2 = time.time()
+        print('PDF creation time ',y2-y1,' m_sec')
 
         bank = get_object_or_404(BankRef,pk = kwargs['bank_id'])
         customer = get_object_or_404(ClientInfo,pk = kwargs['pk'])
 
         context = {'bank':bank,'customer':customer,'path':None,'env':False}
 
+
         #Heroku deployment settings
         if os.name == 'posix':
-            context['path'] = 'https://klarheitvaluers.herokuapp.com/ImageUpload/media/PropertValuation.pdf'
             context['env'] = True
-        else:
-            context['path'] = 'http://127.0.0.1:8000/ImageUpload/media/PropertValuation.pdf'
+
         return render(request,'Viewer/PDFviewer.html',context)
 
     else:
