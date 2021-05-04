@@ -141,12 +141,13 @@ def ViewDocument(request,*args,**kwargs):
         # UNIX (Linux-posix os)
         print('local:',changeDirLocal() ,'os:',os.name)
         #print('cloud:',changeDirHeroku())
-        if os.name == 'posix' and changeDirHeroku():
-            financier = addPropertyDataToExcel(file_object)
-            print(financier)
+        if os.name == 'posix':
+            if changeDirHeroku():
+                financier = addPropertyDataToExcel(file_object)
         # windows os
-        if os.name == 'nt' and changeDirLocal():
-            financier = addPropertyDataToExcel(file_object)
+        if os.name == 'nt':
+            if changeDirLocal():
+                financier = addPropertyDataToExcel(file_object)
 
 
 
@@ -184,7 +185,7 @@ def ViewDocument(request,*args,**kwargs):
             pdf.write(decoded_image_data)
         y2 = time.time()
         print('PDF creation time ',y2-y1,' m_sec')
-        
+
         bank = get_object_or_404(BankRef,pk = kwargs['bank_id'])
         customer = get_object_or_404(ClientInfo,pk = kwargs['pk'])
 
