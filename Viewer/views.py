@@ -139,7 +139,6 @@ def ViewDocument(request,*args,**kwargs):
         financier = None
 
         # UNIX (Linux-posix os)
-        print('local:',changeDirLocal() ,'os:',os.name)
         #print('cloud:',changeDirHeroku())
         if os.name == 'posix':
             if changeDirHeroku():
