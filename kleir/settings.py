@@ -26,7 +26,7 @@ PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))
 SECRET_KEY = 'wwe&4m7#5p4zkt0bo1ov!@$@p$&u7jbmtamzf)@m%^pszp7(ma'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 ALLOWED_HOSTS = []
 if not DEBUG:
     ALLOWED_HOSTS = ['*']
@@ -63,7 +63,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+#STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 
@@ -80,6 +80,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',
             ],
         },
     },
@@ -92,20 +93,12 @@ WSGI_APPLICATION = 'kleir.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-if PROJECT_DIR == 'C:\Project\kleir\kleir':
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            #'OPTIONS': {
-            #    'read_default_file': 'C:\Program Files\MySQL\MySQL Server 8.0\kleir.cnf',
-            #},
-                'NAME': 'kleir',
-                'USER': 'root',
-                'PASSWORD': 'WinterMute531@',
-                'HOST': 'localhost',
-                'PORT': '3306',
-            }
-        }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -150,9 +143,9 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA - Images
 """
 
-MEDIA_URL = '/mediafiles/'
+MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'ImageUpload/media')
-#STATICFILES_DIRS = [ os.path.join(BASE_DIR, 'staticfiles'),os.path.join(BASE_DIR, 'ImageUpload/media'),]
+STATICFILES_DIRS = [ os.path.join(BASE_DIR, 'ImageUpload/media'),]
 
 #forms template
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -160,6 +153,9 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 #Login app variables
 LOGIN_REDIRECT_URL = 'Home-Page'
 LOGIN_URL = 'login'
+
+# In Django 3.2, the default type for primary keys is set to a BigAutoField which is a 64 bit integer.
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 """
 HEROKU: Postgres database URL

@@ -54,8 +54,7 @@ class ViewInterface(BankRef):
 
 def doc_complete(bank_id):
     """
-    Document completion status is in relation Data Entry team
-    Note: Data entry team doesn't enter technical detail data
+    Document complete status
     """
     try:
         #Check in final model
@@ -137,17 +136,20 @@ def ViewDocument(request,*args,**kwargs):
 
         file_object = ViewInterface.viewer.document(DocID = kwargs['bank_id'])
         financier = None
+        if os.name == 'posix':
+            financier = addPropertyDataToExcel(file_object)
 
+        """
         # UNIX (Linux-posix os)
         #print('cloud:',changeDirHeroku())
         if os.name == 'posix':
             if changeDirHeroku():
-                financier = addPropertyDataToExcel(file_object)
+            financier = addPropertyDataToExcel(file_object)
         # windows os
         if os.name == 'nt':
             if changeDirLocal():
                 financier = addPropertyDataToExcel(file_object)
-
+        """
 
 
         import requests
