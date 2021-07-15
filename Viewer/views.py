@@ -144,7 +144,7 @@ def ViewDocument(request,*args,**kwargs):
         #print('cloud:',changeDirHeroku())
         if os.name == 'posix':
             if changeDirHeroku():
-            financier = addPropertyDataToExcel(file_object)
+                financier = addPropertyDataToExcel(file_object)
         # windows os
         if os.name == 'nt':
             if changeDirLocal():
