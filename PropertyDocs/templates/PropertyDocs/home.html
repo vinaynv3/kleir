@@ -15,7 +15,7 @@
               {% if customer_list|get_slug:0  %}
               <a style="color:black" href="{% url 'Detail-Page' customer_list|get_slug:0 customer_list|get_id:0 %}">
                 <img src = "{% static 'PropertyDocs/customer.png' %}"
-                     alt="Img" width="120" height="130"></a>
+                     alt="Img" width="40" height="30"></a>
               <Strong><b>{{ customer_list | get_firstname:0 }} {{ customer_list | get_lastname:0}}
                 {% if bank_record_update| Doc_Complete:0 %}
                 <i class="bi bi-check-circle-fill"></i>
@@ -140,7 +140,7 @@
                 {% else %}
                 <a style="color:black" href="#">
                   <img src = "{% static 'PropertyDocs/customer.png' %}"
-                       alt="Img" width="120" height="130"></a>
+                       alt="Img" width="40" height="30"></a>
                 <Strong><b> + </b></strong>
                 {% endif %}
             </div>
@@ -189,7 +189,7 @@
                 <a style="color:black" href="#">
                   <img src = "{% static 'PropertyDocs/customer.png' %}"
                        alt="Img" width="120" height="130"></a>
-                <Strong><b> + </b></strong>
+                <Strong><b> test2 </b></strong>
                 {% endif %}
             </div>
 
@@ -218,8 +218,8 @@
                 {% else %}
                 <a style="color:black" href="#">
                   <img src = "{% static 'PropertyDocs/customer.png' %}"
-                       alt="Img" width="120" height="130"></a>
-                <Strong><b> + </b></strong>
+                       alt="Img" width="20" height="10"></a>
+                <Strong><b> test </b></strong>
                 {% endif %}
             </div>
 
@@ -237,7 +237,7 @@
                 <a style="color:black" href="#">
                   <img src = "{% static 'PropertyDocs/customer.png' %}"
                        alt="Img" width="120" height="130"></a>
-                <Strong><b> + </b></strong>
+                <Strong><b> test1 </b></strong>
                 {% endif %}
             </div>
 

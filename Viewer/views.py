@@ -192,11 +192,11 @@ def ViewDocument(request,*args,**kwargs):
 
         context = {'bank':bank,'customer':customer,'path':None,'env':False}
 
-
+        """
         #Heroku deployment settings
         if os.name == 'posix':
             context['env'] = True
-
+        """
         return render(request,'Viewer/PDFviewer.html',context)
 
     else:

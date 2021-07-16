@@ -9,461 +9,572 @@
 
     {% if user.is_authenticated %}
 
-    <div class="container mr-2 border-right-0" >
-          <div class="row">
-            <div class="col">
-              {% if customer_list|get_slug:0  %}
-              <a style="color:black" href="{% url 'Detail-Page' customer_list|get_slug:0 customer_list|get_id:0 %}">
-                <img src = "{% static 'PropertyDocs/customer.png' %}"
-                     alt="Img" width="120" height="130"></a>
-              <Strong><b>{{ customer_list | get_firstname:0 }} {{ customer_list | get_lastname:0}}</b></strong>
+    <div class="container mt-5 " >
+      <div class="row">
+                <div class="col-md-6">
 
-                {% if bank_record_update|Doc_Complete:0 %}
-                <i class="bi bi-check-circle-fill"></i>
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
-                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-                </svg>
+                  {# icons-left #}
+                    <div class="demo-content">
 
-                {% else %}
-                <i class="bi bi-exclamation-circle-fill"></i>
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="blue" class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16">
-                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
-                </svg>
-                {% endif %}
-                {% endif %}
+                      <a href="{% url 'doc-customer' %}">
+                      <i class="bi bi-pencil-square"></i>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="86" height="76" fill="black" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                      </svg>
+                      </a>
+
+                      <a href="{% url 'multi-filter-search' %}">
+                      <i class="bi bi-filter p-3"></i>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="96" height="86" fill="black" class="bi bi-filter" viewBox="0 0 16 16">
+                        <path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/>
+                      </svg>
+                      </a>
+
+                      <a href ="https://www.theweathernetwork.com/ca" target="_blank" rel="noopener noreferrer">
+                      <i class="bi bi-cloud-lightning-rain p-3"></i>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="86" height="76" fill="black" class="bi bi-cloud-lightning-rain" viewBox="0 0 16 16">
+                        <path d="M2.658 11.026a.5.5 0 0 1 .316.632l-.5 1.5a.5.5 0 1 1-.948-.316l.5-1.5a.5.5 0 0 1 .632-.316zm9.5 0a.5.5 0 0 1 .316.632l-.5 1.5a.5.5 0 1 1-.948-.316l.5-1.5a.5.5 0 0 1 .632-.316zm-7.5 1.5a.5.5 0 0 1 .316.632l-.5 1.5a.5.5 0 1 1-.948-.316l.5-1.5a.5.5 0 0 1 .632-.316zm9.5 0a.5.5 0 0 1 .316.632l-.5 1.5a.5.5 0 1 1-.948-.316l.5-1.5a.5.5 0 0 1 .632-.316zm-.753-8.499a5.001 5.001 0 0 0-9.499-1.004A3.5 3.5 0 1 0 3.5 10H13a3 3 0 0 0 .405-5.973zM8.5 1a4 4 0 0 1 3.976 3.555.5.5 0 0 0 .5.445H13a2 2 0 0 1 0 4H3.5a2.5 2.5 0 1 1 .605-4.926.5.5 0 0 0 .596-.329A4.002 4.002 0 0 1 8.5 1zM7.053 11.276A.5.5 0 0 1 7.5 11h1a.5.5 0 0 1 .474.658l-.28.842H9.5a.5.5 0 0 1 .39.812l-2 2.5a.5.5 0 0 1-.875-.433L7.36 14H6.5a.5.5 0 0 1-.447-.724l1-2z"/>
+                      </svg>
+                      </a>
+
+                      <i class="bi bi-file-earmark-bar-graph p-3"></i>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="86" height="76" fill="black" class="bi bi-file-earmark-bar-graph" viewBox="0 0 16 16">
+                        <path d="M10 13.5a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-6a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v6zm-2.5.5a.5.5 0 0 1-.5-.5v-4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-1zm-3 0a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-1z"/>
+                        <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/>
+                      </svg>
+
+                      </div>
+
+                      <br><br><br>
+
+                  {# docs-stats #}
+                    <div class="container p-3 my-3 ">
+                      <div class="row">
+                        <div class="col"><h3><b>Approved</b></h3>
+                            <p style="font-size:5vw">15</p>
+                        </div>
+                        <div class="col"><h3><b>Pending</b></h3>
+                            <p style="font-size:5vw">12</p>
+                        </div>
+                        <div class="col"><h3><b>Declined</b></h3>
+                            <p style="font-size:5vw">03</p>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+
+                <div class="col-md-15 p-3">
+
+                    <div class="demo-content bg-alt">
+
+                      {# customer-1 #}
+                      {% if customer_list|get_slug:0  %}
+                  <p> <a style="color:black" href="{% url 'Detail-Page' customer_list|get_slug:0 customer_list|get_id:0 %}">
+                        <img src = "{% static 'PropertyDocs/customer.png' %}"
+                             alt="Img" width="40" height="40"></a>
+                      <Strong><b>{{ customer_list | get_firstname:0 }} {{ customer_list | get_lastname:0}} </b></strong>
+
+                                        {% if bank_record_update|Doc_Complete:0 %}
+                                        <i class="bi bi-check-circle-fill"></i>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                        </svg>
+
+                                        {% else %}
+                                        <i class="bi bi-exclamation-circle-fill"></i>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="blue" class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16">
+                                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+                                        </svg>
+                                        {% endif %}
+                        {% else %}
+                        {% endif %}
+
+                        {# customer-2 #}
+                        {% if customer_list|get_slug:1  %}
+                        <br>
+                          <a style="color:black" href="{% url 'Detail-Page' customer_list|get_slug:1 customer_list|get_id:1 %}">
+                            <img src = "{% static 'PropertyDocs/customer.png' %}"
+                            alt="Img" width="40" height="40"></a>
+                            <Strong><b>{{ customer_list | get_firstname:1 }} {{ customer_list | get_lastname:1}} </b></strong>
+
+                              {% if bank_record_update|Doc_Complete:1 %}
+                              <i class="bi bi-check-circle-fill"></i>
+                              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                              </svg>
+
+                              {% else %}
+                              <i class="bi bi-exclamation-circle-fill"></i>
+                              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="blue" class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16">
+                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+                              </svg>
+                              {% endif %}
+
+                              {% else %}
+                              {% endif %}
+
+
+                              {# customer-3 #}
+                              {% if customer_list|get_slug:2  %}
+                              <br>
+                                <a style="color:black" href="{% url 'Detail-Page' customer_list|get_slug:2 customer_list|get_id:2 %}">
+                                  <img src = "{% static 'PropertyDocs/customer.png' %}"
+                                  alt="Img" width="40" height="40"></a>
+                                  <Strong><b>{{ customer_list | get_firstname:2 }} {{ customer_list | get_lastname:2 }} </b></strong>
+
+                                    {% if bank_record_update|Doc_Complete:2 %}
+                                    <i class="bi bi-check-circle-fill"></i>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                                      <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                    </svg>
+
+                                    {% else %}
+                                    <i class="bi bi-exclamation-circle-fill"></i>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="blue" class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16">
+                                      <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+                                    </svg>
+                                    {% endif %}
+
+                                  {% else %}
+                                  {% endif %}
+
+                                  {# customer-4 #}
+                                  {% if customer_list|get_slug:3  %}
+                                  <br>
+                                    <a style="color:black" href="{% url 'Detail-Page' customer_list|get_slug:3 customer_list|get_id:3 %}">
+                                      <img src = "{% static 'PropertyDocs/customer.png' %}"
+                                      alt="Img" width="40" height="40"></a>
+                                      <Strong><b>{{ customer_list | get_firstname:3 }} {{ customer_list | get_lastname:3}} </b></strong>
+
+                                        {% if bank_record_update|Doc_Complete:3 %}
+                                        <i class="bi bi-check-circle-fill"></i>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                        </svg>
+
+                                        {% else %}
+                                        <i class="bi bi-exclamation-circle-fill"></i>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="blue" class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16">
+                                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+                                        </svg>
+                                        {% endif %}
+
+                                        {% else %}
+                                        {% endif %}
+
+                                        {# customer-5 #}
+                                        {% if customer_list|get_slug:4  %}
+                                        <br>
+                                          <a style="color:black" href="{% url 'Detail-Page' customer_list|get_slug:4 customer_list|get_id:4 %}">
+                                            <img src = "{% static 'PropertyDocs/customer.png' %}"
+                                            alt="Img" width="40" height="40"></a>
+                                            <Strong><b>{{ customer_list | get_firstname:4 }} {{ customer_list | get_lastname:4}} </b></strong>
+
+                                              {% if bank_record_update|Doc_Complete:4 %}
+                                              <i class="bi bi-check-circle-fill"></i>
+                                              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                              </svg>
+
+                                              {% else %}
+                                              <i class="bi bi-exclamation-circle-fill"></i>
+                                              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="blue" class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16">
+                                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+                                              </svg>
+                                              {% endif %}
+
+                                              {% else %}
+                                              {% endif %}
+
+                                              {# customer-6 #}
+                                              {% if customer_list|get_slug:5  %}
+                                              <br>
+                                                <a style="color:black" href="{% url 'Detail-Page' customer_list|get_slug:5 customer_list|get_id:5 %}">
+                                                  <img src = "{% static 'PropertyDocs/customer.png' %}"
+                                                  alt="Img" width="40" height="40"></a>
+                                                  <Strong><b>{{ customer_list | get_firstname:5 }} {{ customer_list | get_lastname:5}} </b></strong>
+
+                                                    {% if bank_record_update|Doc_Complete:5 %}
+                                                    <i class="bi bi-check-circle-fill"></i>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                                                      <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                                    </svg>
+
+                                                    {% else %}
+                                                    <i class="bi bi-exclamation-circle-fill"></i>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="blue" class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16">
+                                                      <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+                                                    </svg>
+                                                    {% endif %}
+
+                                                    {% else %}
+                                                    {% endif %}
+
+                                                    {# customer-7 #}
+                                                    {% if customer_list|get_slug:6  %}
+                                                    <br>
+                                                      <a style="color:black" href="{% url 'Detail-Page' customer_list|get_slug:6 customer_list|get_id:6 %}">
+                                                        <img src = "{% static 'PropertyDocs/customer.png' %}"
+                                                        alt="Img" width="40" height="40"></a>
+                                                        <Strong><b>{{ customer_list | get_firstname:6 }} {{ customer_list | get_lastname:6}} </b></strong>
+
+                                                          {% if bank_record_update|Doc_Complete:6 %}
+                                                          <i class="bi bi-check-circle-fill"></i>
+                                                          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                                                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                                          </svg>
+
+                                                          {% else %}
+                                                          <i class="bi bi-exclamation-circle-fill"></i>
+                                                          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="blue" class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16">
+                                                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+                                                          </svg>
+                                                          {% endif %}
+
+                                                          {% else %}
+                                                          {% endif %}
+
+                                                          {# customer-8 #}
+                                                          {% if customer_list|get_slug:7  %}
+                                                          <br>
+                                                            <a style="color:black" href="{% url 'Detail-Page' customer_list|get_slug:7 customer_list|get_id:7 %}">
+                                                              <img src = "{% static 'PropertyDocs/customer.png' %}"
+                                                              alt="Img" width="40" height="40"></a>
+                                                              <Strong><b>{{ customer_list | get_firstname:7 }} {{ customer_list | get_lastname:7}} </b></strong>
+
+                                                                {% if bank_record_update|Doc_Complete:7 %}
+                                                                <i class="bi bi-check-circle-fill"></i>
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                                                                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                                                </svg>
+
+                                                                {% else %}
+                                                                <i class="bi bi-exclamation-circle-fill"></i>
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="blue" class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16">
+                                                                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+                                                                </svg>
+                                                                {% endif %}
+
+                                                                {% else %}
+                                                                {% endif %}
+
+
+                                                                {# customer-9 #}
+                                                                {% if customer_list|get_slug:8  %}
+                                                                <br>
+                                                                  <a style="color:black" href="{% url 'Detail-Page' customer_list|get_slug:8 customer_list|get_id:8 %}">
+                                                                    <img src = "{% static 'PropertyDocs/customer.png' %}"
+                                                                    alt="Img" width="40" height="40"></a>
+                                                                    <Strong><b>{{ customer_list | get_firstname:8 }} {{ customer_list | get_lastname:8}} </b></strong>
+
+                                                                      {% if bank_record_update|Doc_Complete:8 %}
+                                                                      <i class="bi bi-check-circle-fill"></i>
+                                                                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                                                                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                                                      </svg>
+
+                                                                      {% else %}
+                                                                      <i class="bi bi-exclamation-circle-fill"></i>
+                                                                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="blue" class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16">
+                                                                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+                                                                      </svg>
+                                                                      {% endif %}
+
+                                                                      {% else %}
+                                                                      {% endif %}
+
+                              </p>
+                      </div>
+                </div>
             </div>
+    </div>
 
-            <div class="col">
-              {% if customer_list|get_slug:1  %}
-              <a style="color:black" href="{% url 'Detail-Page' customer_list|get_slug:1 customer_list|get_id:1 %}">
-                <img src = "{% static 'PropertyDocs/customer.png' %}"
-                     alt="Img" width="120" height="130"></a>
-              <Strong><b>{{ customer_list | get_firstname:1 }} {{ customer_list | get_lastname:1}} </b></strong>
-
-                                {% if bank_record_update|Doc_Complete:1 %}
-                                <i class="bi bi-check-circle-fill"></i>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
-                                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-                                </svg>
-
-                                {% else %}
-                                <i class="bi bi-exclamation-circle-fill"></i>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="blue" class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16">
-                                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
-                                </svg>
-                                {% endif %}
-
-                {% endif %}
-            </div>
-
-            <div class="col">
-              {% if customer_list|get_slug:2  %}
-              <a style="color:black" href="{% url 'Detail-Page' customer_list|get_slug:2 customer_list|get_id:2 %}">
-                <img src = "{% static 'PropertyDocs/customer.png' %}"
-                     alt="Img" width="120" height="130"></a>
-              <Strong><b>{{ customer_list | get_firstname:2 }} {{ customer_list | get_lastname:2}} </b></strong>
-
-                                {% if bank_record_update|Doc_Complete:2 %}
-                                <i class="bi bi-check-circle-fill"></i>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
-                                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-                                </svg>
-
-                                {% else %}
-                                <i class="bi bi-exclamation-circle-fill"></i>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="blue" class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16">
-                                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
-                                </svg>
-                                {% endif %}
-                {% endif %}
-            </div>
-
-          </div>
-
-          <div class="row">
-            <div class="col">
-              {% if customer_list|get_slug:3  %}
-              <a style="color:black" href="{% url 'Detail-Page' customer_list|get_slug:3 customer_list|get_id:3 %}">
-                <img src = "{% static 'PropertyDocs/customer.png' %}"
-                     alt="Img" width="120" height="130"></a>
-              <Strong><b>{{ customer_list | get_firstname:3 }} {{ customer_list | get_lastname:3}} </b></strong>
-
-                                {% if bank_record_update|Doc_Complete:3 %}
-                                <i class="bi bi-check-circle-fill"></i>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
-                                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-                                </svg>
-
-                                {% else %}
-                                <i class="bi bi-exclamation-circle-fill"></i>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="blue" class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16">
-                                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
-                                </svg>
-                                {% endif %}
-
-                {% endif %}
-            </div>
-
-            <div class="col">
-              {% if customer_list|get_slug:4  %}
-              <a style="color:black" href="{% url 'Detail-Page' customer_list|get_slug:4 customer_list|get_id:4 %}">
-                <img src = "{% static 'PropertyDocs/customer.png' %}"
-                     alt="Img" width="120" height="130"></a>
-              <Strong><b>{{ customer_list | get_firstname:4 }} {{ customer_list | get_lastname:4}} </b></strong>
-
-                                {% if bank_record_update|Doc_Complete:4 %}
-                                <i class="bi bi-check-circle-fill"></i>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
-                                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-                                </svg>
-
-                                {% else %}
-                                <i class="bi bi-exclamation-circle-fill"></i>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="blue" class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16">
-                                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
-                                </svg>
-                                {% endif %}
-                {% endif %}
-            </div>
-
-            <div class="col">
-              {% if customer_list|get_slug:5  %}
-              <a style="color:black" href="{% url 'Detail-Page' customer_list|get_slug:5 customer_list|get_id:5 %}">
-                <img src = "{% static 'PropertyDocs/customer.png' %}"
-                     alt="Img" width="120" height="130"></a>
-              <Strong><b>{{ customer_list | get_firstname:5 }} {{ customer_list | get_lastname:5 }} </b></strong>
-
-                                {% if bank_record_update|Doc_Complete:5 %}
-                                <i class="bi bi-check-circle-fill"></i>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
-                                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-                                </svg>
-
-                                {% else %}
-                                <i class="bi bi-exclamation-circle-fill"></i>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="blue" class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16">
-                                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
-                                </svg>
-                                {% endif %}
-                {% endif %}
-            </div>
-
-          </div>
-
-          <div class="row">
-            <div class="col">
-              {% if customer_list|get_slug:6  %}
-              <a style="color:black" href="{% url 'Detail-Page' customer_list|get_slug:6 customer_list|get_id:6 %}">
-                <img src = "{% static 'PropertyDocs/customer.png' %}"
-                     alt="Img" width="120" height="130"></a>
-              <Strong><b>{{ customer_list | get_firstname:6 }} {{ customer_list | get_lastname:6}} </b></strong>
-
-                                {% if bank_record_update|Doc_Complete:6 %}
-                                <i class="bi bi-check-circle-fill"></i>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
-                                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-                                </svg>
-
-                                {% else %}
-                                <i class="bi bi-exclamation-circle-fill"></i>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="blue" class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16">
-                                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
-                                </svg>
-                                {% endif %}
-                {% endif %}
-            </div>
-
-            <div class="col">
-              {% if customer_list|get_slug:7  %}
-              <a style="color:black" href="{% url 'Detail-Page' customer_list|get_slug:7 customer_list|get_id:7 %}">
-                <img src = "{% static 'PropertyDocs/customer.png' %}"
-                     alt="Img" width="120" height="130"></a>
-              <Strong><b>{{ customer_list | get_firstname:7 }} {{ customer_list | get_lastname:7 }} </b></strong>
-
-                                {% if bank_record_update|Doc_Complete:7 %}
-                                <i class="bi bi-check-circle-fill"></i>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
-                                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-                                </svg>
-
-                                {% else %}
-                                <i class="bi bi-exclamation-circle-fill"></i>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="blue" class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16">
-                                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
-                                </svg>
-                                {% endif %}
-                {% endif %}
-            </div>
-
-            <div class="col">
-              {% if customer_list|get_slug:8  %}
-              <a style="color:black" href="{% url 'Detail-Page' customer_list|get_slug:8 customer_list|get_id:8 %}">
-                <img src = "{% static 'PropertyDocs/customer.png' %}"
-                     alt="Img" width="120" height="130"></a>
-              <Strong><b>{{ customer_list | get_firstname:8 }} {{ customer_list | get_lastname:8 }} </b></strong>
-
-                                {% if bank_record_update|Doc_Complete:8 %}
-                                <i class="bi bi-check-circle-fill"></i>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
-                                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-                                </svg>
-
-                                {% else %}
-                                <i class="bi bi-exclamation-circle-fill"></i>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="blue" class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16">
-                                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
-                                </svg>
-                                {% endif %}
-                {% endif %}
-            </div>
-
-          </div>
-
+{# No authentication display #}
     {% else %}
-    <div class="container mr-2 border-right-0" >
-          <div class="row">
-            <div class="col">
-              {% if customer_list|get_slug:0  %}
-              <a style="color:black" href="{% url 'Detail-Page' customer_list|get_slug:0 customer_list|get_id:0 %}">
-                <img src = "{% static 'PropertyDocs/customer.png' %}"
-                     alt="Img" width="120" height="130"></a>
-              <Strong><b>{{ customer_list | get_firstname:0 }} {{ customer_list | get_lastname:0}} </b></strong>
+    <div class="container mt-5 " >
+      <div class="row">
+                <div class="col-md-6">
 
-                                {% if bank_record_update|Doc_Complete:0 %}
-                                <i class="bi bi-check-circle-fill"></i>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
-                                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-                                </svg>
+                  {# icons-left #}
+                    <div class="demo-content">
 
-                                {% else %}
-                                <i class="bi bi-exclamation-circle-fill"></i>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="blue" class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16">
-                                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
-                                </svg>
-                                {% endif %}
-                {% else %}
-                <a style="color:black" href="#">
-                  <img src = "{% static 'PropertyDocs/customer.png' %}"
-                       alt="Img" width="120" height="130"></a>
-                <Strong><b> + </b></strong>
-                {% endif %}
+                      <a href="{% url 'doc-customer' %}">
+                      <i class="bi bi-pencil-square"></i>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="86" height="76" fill="black" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                      </svg>
+                      </a>
+
+                      <a href="{% url 'multi-filter-search' %}">
+                      <i class="bi bi-filter p-3"></i>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="96" height="86" fill="black" class="bi bi-filter" viewBox="0 0 16 16">
+                        <path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/>
+                      </svg>
+                      </a>
+
+                      <a href ="https://www.theweathernetwork.com/ca" target="_blank" rel="noopener noreferrer">
+                      <i class="bi bi-cloud-lightning-rain p-3"></i>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="86" height="76" fill="black" class="bi bi-cloud-lightning-rain" viewBox="0 0 16 16">
+                        <path d="M2.658 11.026a.5.5 0 0 1 .316.632l-.5 1.5a.5.5 0 1 1-.948-.316l.5-1.5a.5.5 0 0 1 .632-.316zm9.5 0a.5.5 0 0 1 .316.632l-.5 1.5a.5.5 0 1 1-.948-.316l.5-1.5a.5.5 0 0 1 .632-.316zm-7.5 1.5a.5.5 0 0 1 .316.632l-.5 1.5a.5.5 0 1 1-.948-.316l.5-1.5a.5.5 0 0 1 .632-.316zm9.5 0a.5.5 0 0 1 .316.632l-.5 1.5a.5.5 0 1 1-.948-.316l.5-1.5a.5.5 0 0 1 .632-.316zm-.753-8.499a5.001 5.001 0 0 0-9.499-1.004A3.5 3.5 0 1 0 3.5 10H13a3 3 0 0 0 .405-5.973zM8.5 1a4 4 0 0 1 3.976 3.555.5.5 0 0 0 .5.445H13a2 2 0 0 1 0 4H3.5a2.5 2.5 0 1 1 .605-4.926.5.5 0 0 0 .596-.329A4.002 4.002 0 0 1 8.5 1zM7.053 11.276A.5.5 0 0 1 7.5 11h1a.5.5 0 0 1 .474.658l-.28.842H9.5a.5.5 0 0 1 .39.812l-2 2.5a.5.5 0 0 1-.875-.433L7.36 14H6.5a.5.5 0 0 1-.447-.724l1-2z"/>
+                      </svg>
+                      </a>
+
+                      <i class="bi bi-file-earmark-bar-graph p-3"></i>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="86" height="76" fill="black" class="bi bi-file-earmark-bar-graph" viewBox="0 0 16 16">
+                        <path d="M10 13.5a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-6a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v6zm-2.5.5a.5.5 0 0 1-.5-.5v-4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-1zm-3 0a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-1z"/>
+                        <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/>
+                      </svg>
+
+                      </div>
+
+                      <br><br><br>
+
+                  {# docs-stats #}
+                    <div class="container p-3 my-3 ">
+                      <div class="row">
+                        <div class="col"><h3><b>Approved</b></h3>
+                            <p style="font-size:5vw">15</p>
+                        </div>
+                        <div class="col"><h3><b>Pending</b></h3>
+                            <p style="font-size:5vw">12</p>
+                        </div>
+                        <div class="col"><h3><b>Declined</b></h3>
+                            <p style="font-size:5vw">03</p>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+
+                <div class="col-md-15 p-3">
+
+                    <div class="demo-content bg-alt">
+
+                      {# customer-1 #}
+                      {% if customer_list|get_slug:0  %}
+                  <p> <a style="color:black" href="{% url 'Detail-Page' customer_list|get_slug:0 customer_list|get_id:0 %}">
+                        <img src = "{% static 'PropertyDocs/customer.png' %}"
+                             alt="Img" width="40" height="40"></a>
+                      <Strong><b>{{ customer_list | get_firstname:0 }} {{ customer_list | get_lastname:0}} </b></strong>
+
+                                        {% if bank_record_update|Doc_Complete:0 %}
+                                        <i class="bi bi-check-circle-fill"></i>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                        </svg>
+
+                                        {% else %}
+                                        <i class="bi bi-exclamation-circle-fill"></i>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="blue" class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16">
+                                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+                                        </svg>
+                                        {% endif %}
+                        {% else %}
+                        {% endif %}
+
+                        {# customer-2 #}
+                        {% if customer_list|get_slug:1  %}
+                        <br>
+                          <a style="color:black" href="{% url 'Detail-Page' customer_list|get_slug:1 customer_list|get_id:1 %}">
+                            <img src = "{% static 'PropertyDocs/customer.png' %}"
+                            alt="Img" width="40" height="40"></a>
+                            <Strong><b>{{ customer_list | get_firstname:1 }} {{ customer_list | get_lastname:1}} </b></strong>
+
+                              {% if bank_record_update|Doc_Complete:1 %}
+                              <i class="bi bi-check-circle-fill"></i>
+                              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                              </svg>
+
+                              {% else %}
+                              <i class="bi bi-exclamation-circle-fill"></i>
+                              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="blue" class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16">
+                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+                              </svg>
+                              {% endif %}
+
+                              {% else %}
+                              {% endif %}
+
+
+                              {# customer-3 #}
+                              {% if customer_list|get_slug:2  %}
+                              <br>
+                                <a style="color:black" href="{% url 'Detail-Page' customer_list|get_slug:2 customer_list|get_id:2 %}">
+                                  <img src = "{% static 'PropertyDocs/customer.png' %}"
+                                  alt="Img" width="40" height="40"></a>
+                                  <Strong><b>{{ customer_list | get_firstname:2 }} {{ customer_list | get_lastname:2 }} </b></strong>
+
+                                    {% if bank_record_update|Doc_Complete:2 %}
+                                    <i class="bi bi-check-circle-fill"></i>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                                      <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                    </svg>
+
+                                    {% else %}
+                                    <i class="bi bi-exclamation-circle-fill"></i>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="blue" class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16">
+                                      <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+                                    </svg>
+                                    {% endif %}
+
+                                  {% else %}
+                                  {% endif %}
+
+                                  {# customer-4 #}
+                                  {% if customer_list|get_slug:3  %}
+                                  <br>
+                                    <a style="color:black" href="{% url 'Detail-Page' customer_list|get_slug:3 customer_list|get_id:3 %}">
+                                      <img src = "{% static 'PropertyDocs/customer.png' %}"
+                                      alt="Img" width="40" height="40"></a>
+                                      <Strong><b>{{ customer_list | get_firstname:3 }} {{ customer_list | get_lastname:3}} </b></strong>
+
+                                        {% if bank_record_update|Doc_Complete:3 %}
+                                        <i class="bi bi-check-circle-fill"></i>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                        </svg>
+
+                                        {% else %}
+                                        <i class="bi bi-exclamation-circle-fill"></i>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="blue" class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16">
+                                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+                                        </svg>
+                                        {% endif %}
+
+                                        {% else %}
+                                        {% endif %}
+
+                                        {# customer-5 #}
+                                        {% if customer_list|get_slug:4  %}
+                                        <br>
+                                          <a style="color:black" href="{% url 'Detail-Page' customer_list|get_slug:4 customer_list|get_id:4 %}">
+                                            <img src = "{% static 'PropertyDocs/customer.png' %}"
+                                            alt="Img" width="40" height="40"></a>
+                                            <Strong><b>{{ customer_list | get_firstname:4 }} {{ customer_list | get_lastname:4}} </b></strong>
+
+                                              {% if bank_record_update|Doc_Complete:4 %}
+                                              <i class="bi bi-check-circle-fill"></i>
+                                              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                              </svg>
+
+                                              {% else %}
+                                              <i class="bi bi-exclamation-circle-fill"></i>
+                                              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="blue" class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16">
+                                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+                                              </svg>
+                                              {% endif %}
+
+                                              {% else %}
+                                              {% endif %}
+
+                                              {# customer-6 #}
+                                              {% if customer_list|get_slug:5  %}
+                                              <br>
+                                                <a style="color:black" href="{% url 'Detail-Page' customer_list|get_slug:5 customer_list|get_id:5 %}">
+                                                  <img src = "{% static 'PropertyDocs/customer.png' %}"
+                                                  alt="Img" width="40" height="40"></a>
+                                                  <Strong><b>{{ customer_list | get_firstname:5 }} {{ customer_list | get_lastname:5}} </b></strong>
+
+                                                    {% if bank_record_update|Doc_Complete:5 %}
+                                                    <i class="bi bi-check-circle-fill"></i>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                                                      <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                                    </svg>
+
+                                                    {% else %}
+                                                    <i class="bi bi-exclamation-circle-fill"></i>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="blue" class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16">
+                                                      <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+                                                    </svg>
+                                                    {% endif %}
+
+                                                    {% else %}
+                                                    {% endif %}
+
+                                                    {# customer-7 #}
+                                                    {% if customer_list|get_slug:6  %}
+                                                    <br>
+                                                      <a style="color:black" href="{% url 'Detail-Page' customer_list|get_slug:6 customer_list|get_id:6 %}">
+                                                        <img src = "{% static 'PropertyDocs/customer.png' %}"
+                                                        alt="Img" width="40" height="40"></a>
+                                                        <Strong><b>{{ customer_list | get_firstname:6 }} {{ customer_list | get_lastname:6}} </b></strong>
+
+                                                          {% if bank_record_update|Doc_Complete:6 %}
+                                                          <i class="bi bi-check-circle-fill"></i>
+                                                          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                                                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                                          </svg>
+
+                                                          {% else %}
+                                                          <i class="bi bi-exclamation-circle-fill"></i>
+                                                          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="blue" class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16">
+                                                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+                                                          </svg>
+                                                          {% endif %}
+
+                                                          {% else %}
+                                                          {% endif %}
+
+                                                          {# customer-8 #}
+                                                          {% if customer_list|get_slug:7  %}
+                                                          <br>
+                                                            <a style="color:black" href="{% url 'Detail-Page' customer_list|get_slug:7 customer_list|get_id:7 %}">
+                                                              <img src = "{% static 'PropertyDocs/customer.png' %}"
+                                                              alt="Img" width="40" height="40"></a>
+                                                              <Strong><b>{{ customer_list | get_firstname:7 }} {{ customer_list | get_lastname:7}} </b></strong>
+
+                                                                {% if bank_record_update|Doc_Complete:7 %}
+                                                                <i class="bi bi-check-circle-fill"></i>
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                                                                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                                                </svg>
+
+                                                                {% else %}
+                                                                <i class="bi bi-exclamation-circle-fill"></i>
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="blue" class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16">
+                                                                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+                                                                </svg>
+                                                                {% endif %}
+
+                                                                {% else %}
+                                                                {% endif %}
+
+
+                                                                {# customer-9 #}
+                                                                {% if customer_list|get_slug:8  %}
+                                                                <br>
+                                                                  <a style="color:black" href="{% url 'Detail-Page' customer_list|get_slug:8 customer_list|get_id:8 %}">
+                                                                    <img src = "{% static 'PropertyDocs/customer.png' %}"
+                                                                    alt="Img" width="40" height="40"></a>
+                                                                    <Strong><b>{{ customer_list | get_firstname:8 }} {{ customer_list | get_lastname:8}} </b></strong>
+
+                                                                      {% if bank_record_update|Doc_Complete:8 %}
+                                                                      <i class="bi bi-check-circle-fill"></i>
+                                                                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                                                                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                                                      </svg>
+
+                                                                      {% else %}
+                                                                      <i class="bi bi-exclamation-circle-fill"></i>
+                                                                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="blue" class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16">
+                                                                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+                                                                      </svg>
+                                                                      {% endif %}
+
+                                                                      {% else %}
+                                                                      {% endif %}
+
+                              </p>
+                      </div>
+                </div>
             </div>
+</div>
 
-            <div class="col">
-              {% if customer_list|get_slug:1  %}
-              <a style="color:black" href="{% url 'Detail-Page' customer_list|get_slug:1 customer_list|get_id:1 %}">
-                <img src = "{% static 'PropertyDocs/customer.png' %}"
-                     alt="Img" width="120" height="130"></a>
-              <Strong><b>{{ customer_list | get_firstname:1 }} {{ customer_list | get_lastname:1}} </b></strong>
 
-                                {% if bank_record_update|Doc_Complete:1 %}
-                                <i class="bi bi-check-circle-fill"></i>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
-                                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-                                </svg>
-
-                                {% else %}
-                                <i class="bi bi-exclamation-circle-fill"></i>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="blue" class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16">
-                                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
-                                </svg>
-                                {% endif %}
-                {% else %}
-                <a style="color:black" href="#">
-                  <img src = "{% static 'PropertyDocs/customer.png' %}"
-                       alt="Img" width="120" height="130"></a>
-                <Strong><b> + </b></strong>
-                {% endif %}
-            </div>
-
-            <div class="col">
-              {% if customer_list|get_slug:2  %}
-              <a style="color:black" href="{% url 'Detail-Page' customer_list|get_slug:2 customer_list|get_id:2 %}">
-                <img src = "{% static 'PropertyDocs/customer.png' %}"
-                     alt="Img" width="120" height="130"></a>
-              <Strong><b>{{ customer_list | get_firstname:2 }} {{ customer_list | get_lastname:2}} </b></strong>
-
-                                {% if bank_record_update|Doc_Complete:2 %}
-                                <i class="bi bi-check-circle-fill"></i>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
-                                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-                                </svg>
-
-                                {% else %}
-                                <i class="bi bi-exclamation-circle-fill"></i>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="blue" class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16">
-                                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
-                                </svg>
-                                {% endif %}
-                {% else %}
-                <a style="color:black" href="#">
-                  <img src = "{% static 'PropertyDocs/customer.png' %}"
-                       alt="Img" width="120" height="130"></a>
-                <Strong><b> + </b></strong>
-                {% endif %}
-            </div>
-
-          </div>
-
-          <div class="row">
-            <div class="col">
-              {% if customer_list|get_slug:3  %}
-              <a style="color:black" href="{% url 'Detail-Page' customer_list|get_slug:3 customer_list|get_id:3 %}">
-                <img src = "{% static 'PropertyDocs/customer.png' %}"
-                     alt="Img" width="120" height="130"></a>
-              <Strong><b>{{ customer_list | get_firstname:3 }} {{ customer_list | get_lastname:3}} </b></strong>
-
-                                {% if bank_record_update|Doc_Complete:3 %}
-                                <i class="bi bi-check-circle-fill"></i>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
-                                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-                                </svg>
-
-                                {% else %}
-                                <i class="bi bi-exclamation-circle-fill"></i>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="blue" class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16">
-                                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
-                                </svg>
-                                {% endif %}
-                {% else %}
-                <a style="color:black" href="#">
-                  <img src = "{% static 'PropertyDocs/customer.png' %}"
-                       alt="Img" width="120" height="130"></a>
-                <Strong><b> + </b></strong>
-                {% endif %}
-            </div>
-
-            <div class="col">
-              {% if customer_list|get_slug:4  %}
-              <a style="color:black" href="{% url 'Detail-Page' customer_list|get_slug:4 customer_list|get_id:4 %}">
-                <img src = "{% static 'PropertyDocs/customer.png' %}"
-                     alt="Img" width="120" height="130"></a>
-              <Strong><b>{{ customer_list | get_firstname:4 }} {{ customer_list | get_lastname:4}} </b></strong>
-
-                                {% if bank_record_update|Doc_Complete:4 %}
-                                <i class="bi bi-check-circle-fill"></i>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
-                                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-                                </svg>
-
-                                {% else %}
-                                <i class="bi bi-exclamation-circle-fill"></i>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="blue" class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16">
-                                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
-                                </svg>
-                                {% endif %}
-                {% else %}
-                <a style="color:black" href="#">
-                  <img src = "{% static 'PropertyDocs/customer.png' %}"
-                       alt="Img" width="120" height="130"></a>
-                <Strong><b> + </b></strong>
-                {% endif %}
-            </div>
-
-            <div class="col">
-              {% if customer_list|get_slug:5  %}
-              <a style="color:black" href="{% url 'Detail-Page' customer_list|get_slug:5 customer_list|get_id:5 %}">
-                <img src = "{% static 'PropertyDocs/customer.png' %}"
-                     alt="Img" width="120" height="130"></a>
-              <Strong><b>{{ customer_list | get_firstname:5 }} {{ customer_list | get_lastname:5 }} </b></strong>
-
-                                {% if bank_record_update|Doc_Complete:5 %}
-                                <i class="bi bi-check-circle-fill"></i>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
-                                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-                                </svg>
-
-                                {% else %}
-                                <i class="bi bi-exclamation-circle-fill"></i>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="blue" class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16">
-                                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
-                                </svg>
-                                {% endif %}
-                {% else %}
-                <a style="color:black" href="#">
-                  <img src = "{% static 'PropertyDocs/customer.png' %}"
-                       alt="Img" width="120" height="130"></a>
-                <Strong><b> + </b></strong>
-                {% endif %}
-            </div>
-
-          </div>
-
-          <div class="row">
-            <div class="col">
-              {% if customer_list|get_slug:6  %}
-              <a style="color:black" href="{% url 'Detail-Page' customer_list|get_slug:6 customer_list|get_id:6 %}">
-                <img src = "{% static 'PropertyDocs/customer.png' %}"
-                     alt="Img" width="120" height="130"></a>
-              <Strong><b>{{ customer_list | get_firstname:6 }} {{ customer_list | get_lastname:6}} </b></strong>
-
-                                {% if bank_record_update|Doc_Complete:6 %}
-                                <i class="bi bi-check-circle-fill"></i>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
-                                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-                                </svg>
-
-                                {% else %}
-                                <i class="bi bi-exclamation-circle-fill"></i>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="blue" class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16">
-                                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
-                                </svg>
-                                {% endif %}
-                {% else %}
-                <a style="color:black" href="#">
-                  <img src = "{% static 'PropertyDocs/customer.png' %}"
-                       alt="Img" width="120" height="130"></a>
-                <Strong><b> + </b></strong>
-                {% endif %}
-            </div>
-
-            <div class="col">
-              {% if customer_list|get_slug:7  %}
-              <a style="color:black" href="{% url 'Detail-Page' customer_list|get_slug:7 customer_list|get_id:7 %}">
-                <img src = "{% static 'PropertyDocs/customer.png' %}"
-                     alt="Img" width="120" height="130"></a>
-              <Strong><b>{{ customer_list | get_firstname:7 }} {{ customer_list | get_lastname:7 }} </b></strong>
-
-                                {% if bank_record_update|Doc_Complete:7 %}
-                                <i class="bi bi-check-circle-fill"></i>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
-                                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-                                </svg>
-
-                                {% else %}
-                                <i class="bi bi-exclamation-circle-fill"></i>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="blue" class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16">
-                                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
-                                </svg>
-                                {% endif %}
-                {% endif %}
-            </div>
-
-            <div class="col">
-              {% if customer_list|get_slug:8  %}
-              <a style="color:black" href="{% url 'Detail-Page' customer_list|get_slug:8 customer_list|get_id:8 %}">
-                <img src = "{% static 'PropertyDocs/customer.png' %}"
-                     alt="Img" width="120" height="130"></a>
-              <Strong><b>{{ customer_list | get_firstname:8 }} {{ customer_list | get_lastname:8 }} </b></strong>
-
-                                {% if bank_record_update|Doc_Complete:8 %}
-                                <i class="bi bi-check-circle-fill"></i>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
-                                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-                                </svg>
-
-                                {% else %}
-                                <i class="bi bi-exclamation-circle-fill"></i>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="blue" class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16">
-                                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
-                                </svg>
-                                {% endif %}
-                {% endif %}
-            </div>
-
-          </div>
-
-    {%endif%}
-
+  {%endif%}
+</div>
 
 {% endblock content %}

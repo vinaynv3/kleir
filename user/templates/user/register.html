@@ -4,11 +4,15 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
+
+<div class="row">
+  <div class="col"></div>
+  <div class="col">
     <div class="content-section">
         <form method="POST">
             {% csrf_token %}
             <fieldset class="form-group">
-                <legend class="border-bottom mb-4"><b>Join Today</b></legend>
+                <legend class="border-bottom "><b>Join Today</b></legend>
                 {{ form | crispy}}
             </fieldset>
             <div class="form-group">
@@ -21,4 +25,9 @@
             </small>
         </div>
     </div>
+
+
+      </div>
+      <div class="col"></div>
+  </div>
 {% endblock content %}
