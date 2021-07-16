@@ -94,7 +94,7 @@ def addPropertyDataToExcel(file_object):
         xlsx_doc.personalDetailsContainer()
         xlsx_doc.VerifyDocs()
     t2 = time.time()
-    print('Excel time',t2-t1,' m_sec')
+    print('Excel processing time',t2-t1,' m_sec')
     return Lender
 
 
@@ -136,6 +136,7 @@ def ViewDocument(request,*args,**kwargs):
 
         file_object = ViewInterface.viewer.document(DocID = kwargs['bank_id'])
         financier = None
+
         if os.name == 'posix':
             financier = addPropertyDataToExcel(file_object)
 
@@ -167,18 +168,19 @@ def ViewDocument(request,*args,**kwargs):
 
         url = 'https://getoutpdf.com/api/convert/document-to-pdf'
         data = {
-                "api_key": "32ffa3a2686cf2a8bc16d98541e9c2f0997de23636adc0d9df7b1b00b9da24b8",
+                "api_key": "e324926a74b79fa7827fe317bbac516ac4b49d4f51acd10c8e8f2f44731af60c",
                 "document": excel_base64_data,
                 }
         headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
+        print("API call iinititated")
         call_api_convertPdf = requests.post(url, data=json.dumps(data), headers=headers)
-        print(call_api_convertPdf.json()['tokens_left'])
+        print("Tokens left: ",call_api_convertPdf.json()['tokens_left'])
 
         pdf_base64_data = call_api_convertPdf.json()['pdf_base64']
         base64_img_bytes = pdf_base64_data.encode('utf-8')
 
         x2 = time.time()
-        print('API time ',x2-x1,' m_sec')
+        print('API processing time ',x2-x1,' m_sec')
 
         y1 = time.time()
         with open('PropertyValuation.pdf', 'wb') as pdf:
@@ -192,11 +194,11 @@ def ViewDocument(request,*args,**kwargs):
 
         context = {'bank':bank,'customer':customer,'path':None,'env':False}
 
-
+        """
         #Heroku deployment settings
         if os.name == 'posix':
             context['env'] = True
-
+        """
         return render(request,'Viewer/PDFviewer.html',context)
 
     else:

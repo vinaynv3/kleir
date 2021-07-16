@@ -31,6 +31,7 @@ class DisplayDetails:
 
 
 # Create your views here.
+@login_required
 def ReportsHomeView(request,*args,**kwargs):
     return render(request,'Reports/multi_filter_search.html')
 
@@ -65,7 +66,7 @@ def getObjects(data):
             bank_reports = BankRef.objects.filter(Date =  today).filter( Bank_Type = data['bank'])
             return bank_reports
 
-
+@login_required
 def ReportsDispalyView(request,*args,**kwargs):
     page_no = kwargs['page']
 
@@ -99,6 +100,7 @@ def ReportsDispalyView(request,*args,**kwargs):
 
         return render(request,'Reports/multi_filter_search.html',context)
 
+@login_required
 def ReportOptions(request,*args,**kwargs):
 
     bank_id = kwargs['bank_id']
