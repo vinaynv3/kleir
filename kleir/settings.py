@@ -26,8 +26,8 @@ PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))
 SECRET_KEY = 'wwe&4m7#5p4zkt0bo1ov!@$@p$&u7jbmtamzf)@m%^pszp7(ma'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-ALLOWED_HOSTS = ['*']
+DEBUG = False
+ALLOWED_HOSTS = []
 if not DEBUG:
     ALLOWED_HOSTS = ['*']
 
@@ -123,13 +123,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
 
 
@@ -137,7 +133,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, '')
 
 """
 MEDIA - Images
@@ -145,7 +141,7 @@ MEDIA - Images
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'ImageUpload/media')
-STATICFILES_DIRS = [ os.path.join(BASE_DIR, 'ImageUpload/media'),]
+#STATICFILES_DIRS = [ os.path.join(BASE_DIR, 'ImageUpload/media'), os.path.join(BASE_DIR, 'staticfiles')]
 
 #forms template
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

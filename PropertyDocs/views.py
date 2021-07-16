@@ -40,7 +40,12 @@ class ListCustomers(ListView):
                 bank_record_update[counter]=False
             counter +=1
 
-        context = {'customer_list':customer_list,'bank_record_update':bank_record_update}
+        total = ClientInfo.objects.all().count()
+        approved = FinalNotes.objects.all().count()
+        InProgress = total - approved
+
+        context = {'customer_list':customer_list,'bank_record_update':bank_record_update,
+                    'total':total,'approved':approved,'InProgress':InProgress}
         return context
 
 #DetailView
