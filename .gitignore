@@ -133,3 +133,9 @@ dmypy.json
 
 *SETTINGS FILE
 *settings.py
+
+#pdf api
+pdf_api.txt
+
+#csrf key
+SECRET_KEY.txt
