@@ -166,9 +166,17 @@ def ViewDocument(request,*args,**kwargs):
             encode_excel = base64.b64encode(read_excel_base64)
             excel_base64_data = encode_excel.decode('utf-8')
 
+        pdf_token = None
+        with open('pdf_api.txt') as f:
+            pdf_token = f.read().strip()
+
+
+
+
+
         url = 'https://getoutpdf.com/api/convert/document-to-pdf'
         data = {
-                "api_key": "e324926a74b79fa7827fe317bbac516ac4b49d4f51acd10c8e8f2f44731af60c",
+                "api_key": pdf_token,
                 "document": excel_base64_data,
                 }
         headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}

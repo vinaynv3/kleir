@@ -23,7 +23,10 @@ PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'wwe&4m7#5p4zkt0bo1ov!@$@p$&u7jbmtamzf)@m%^pszp7(ma'
+csrf_key = None
+with open('SECRET_KEY.txt') as f:
+    csrf_key = f.read().strip()
+SECRET_KEY = csrf_key
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
