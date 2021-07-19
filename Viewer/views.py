@@ -204,7 +204,7 @@ def ViewDocument(request,*args,**kwargs):
 
 
         #Heroku deployment settings
-        if if os.getcwd() == '/app':
+        if os.getcwd() == '/app':
             context['env'] = True
 
         return render(request,'Viewer/PDFviewer.html',context)
