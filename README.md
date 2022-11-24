@@ -6,7 +6,7 @@
 #### Dependencies
 - Django 3.1.8
 - Python 3.6.2
-- Postgres (Deployment), sqlite3 (development)
+- Postgres (Production), sqlite3 (development)
 
 #### Cloud platform
 - Heroku (stack 20, PaaS)
