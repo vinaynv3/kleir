@@ -14,7 +14,7 @@
 #### Browser Notes
 This interactive edition makes use of lots of HTML 5 and Javascript I highly recommend either Chrome, or Safari. Firefox 67+ works too. Reportedly Edge works fine as well.
 ### How to use
-- go to link (https://klarheitvaluers.herokuapp.com/)
+- go to link (https://kleir.herokuapp.com/)
 - Register an account, if you dont have one
   ![image](https://user-images.githubusercontent.com/34382681/114643478-b7ab6f00-9ca3-11eb-9891-9ad36f924445.png)
 - Once logged in, you can start creating customer property report corresponding to lender (Bank name)
